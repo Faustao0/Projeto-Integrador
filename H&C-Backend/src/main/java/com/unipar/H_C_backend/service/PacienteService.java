@@ -47,4 +47,9 @@ public class PacienteService {
 
         pacienteRepository.delete(paciente);
     }
+
+    public Paciente findByName(String nome) throws BusinessException {
+        return pacienteRepository.findByNome(nome)
+                .orElseThrow(() -> new BusinessException("Paciente não encontrado com nome: " + nome));
+    }
 }

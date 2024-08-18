@@ -64,4 +64,14 @@ public class PacienteController {
         pacienteService.delete(id);
         return ResponseEntity.noContent().build();
     }
+    
+    @GetMapping("/nome/{nome}")
+    public ResponseEntity<Paciente> getPacienteByName(@PathVariable("nome") String nome) {
+        try {
+            Paciente paciente = pacienteService.findByName(nome);
+            return ResponseEntity.ok(paciente);
+        } catch (BusinessException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+    }
 }
