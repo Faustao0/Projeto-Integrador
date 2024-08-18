@@ -1,22 +1,68 @@
 package com.example.hc_frontend;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageButton;
 
 import androidx.fragment.app.FragmentActivity;
 
-/*
- * Main Activity class that loads {@link MainFragment}.
- */
 public class MenuActivity extends FragmentActivity {
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
-        if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.main_browse_fragment, new MainFragment())
-                    .commitNow();
-        }
+
+        ImageButton btnProfile = findViewById(R.id.btnProfile);
+        ImageButton btnAppointments = findViewById(R.id.btnAppointments);
+        ImageButton btnExams = findViewById(R.id.btnExams);
+        ImageButton btnMedications = findViewById(R.id.btnMedications);
+        ImageButton btnMessages = findViewById(R.id.btnMessages);
+
+//        btnProfile.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                // Navegar para a tela de Perfil
+//                Intent intent = new Intent(MenuActivity.this, ProfileActivity.class);
+//                startActivity(intent);
+//            }
+//        });
+//
+//        btnAppointments.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                // Navegar para a tela de Consultas
+//                Intent intent = new Intent(MenuActivity.this, AppointmentsActivity.class);
+//                startActivity(intent);
+//            }
+//        });
+
+//        btnExams.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                // Navegar para a tela de Exames
+//                Intent intent = new Intent(MenuActivity.this, ExamsActivity.class);
+//                startActivity(intent);
+//            }
+//        });
+
+        btnMedications.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Navegar para a tela de Medicamentos
+                Intent intent = new Intent(MenuActivity.this, TelaMedicamentosActivity.class);
+                startActivity(intent);
+            }
+        });
+
+//        btnMessages.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                // Navegar para a tela de Mensagens
+//                Intent intent = new Intent(MenuActivity.this, MessagesActivity.class);
+//                startActivity(intent);
+//            }
+//        });
     }
 }

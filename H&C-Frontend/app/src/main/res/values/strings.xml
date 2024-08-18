@@ -19,4 +19,5 @@
     <string name="dismiss_error">Dismiss</string>
     <string name="title_activity_tela_medicamentos">Leanback TelaMedicamentosActivity</string>
     <string name="title_activity_details4">Leanback DetailsActivity4</string>
+    <string name="title_activity_paciente">Leanback PacienteActivity</string>
 </resources>

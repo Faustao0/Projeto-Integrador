@@ -1,5 +1,6 @@
 package com.example.hc_frontend;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.SpannableString;
 import android.text.Spanned;
@@ -52,12 +53,13 @@ public class MainActivity extends AppCompatActivity {
                 String email = etEmail.getText().toString();
                 String password = etPassword.getText().toString();
 
-                // Validação básica
                 if(email.isEmpty() || password.isEmpty()) {
                     Toast.makeText(MainActivity.this, "Por favor, preencha todos os campos", Toast.LENGTH_SHORT).show();
                 } else {
-                    // Lógica de login aqui
                     Toast.makeText(MainActivity.this, "Login efetuado com sucesso", Toast.LENGTH_SHORT).show();
+
+                    Intent intent = new Intent(MainActivity.this, MenuActivity.class);
+                    startActivity(intent);
                 }
             }
         });
@@ -72,7 +74,6 @@ public class MainActivity extends AppCompatActivity {
         tvRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Lógica para "Fazer cadastro"
                 Toast.makeText(MainActivity.this, "Redirecionar para cadastro de novo usuário", Toast.LENGTH_SHORT).show();
             }
         });
