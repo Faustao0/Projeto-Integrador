@@ -1,6 +1,7 @@
 package com.unipar.H_C_backend.controller;
 
 import com.unipar.H_C_backend.domain.Medicamento;
+import com.unipar.H_C_backend.domain.Paciente;
 import com.unipar.H_C_backend.exceptions.BusinessException;
 import com.unipar.H_C_backend.service.MedicamentoService;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -57,5 +58,15 @@ public class MedicamentoController {
     public ResponseEntity<Void> deleteMedicamento(@PathVariable Long id) throws BusinessException {
         medicamentoService.delete(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/nome/{nome}")
+    public ResponseEntity<Medicamento> getMedicamentoByName(@PathVariable("nome") String nome) {
+        try {
+            Medicamento medicamento = medicamentoService.findByName(nome);
+            return ResponseEntity.ok(medicamento);
+        } catch (BusinessException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
     }
 }
