@@ -23,9 +23,11 @@
         android:layout_width="64dp"
         android:layout_height="64dp"
         android:layout_gravity="center_horizontal"
+        android:src="@drawable/profile"
         android:layout_marginTop="32dp"
+        android:scaleType="fitCenter"
         android:background="?attr/selectableItemBackgroundBorderless"
-        android:contentDescription="Perfil"/>
+        android:contentDescription="Perfil" />
 
     <TextView
         android:id="@+id/tvProfile"
@@ -40,7 +42,9 @@
         android:layout_width="64dp"
         android:layout_height="64dp"
         android:layout_gravity="center_horizontal"
+        android:src="@drawable/elder"
         android:layout_marginTop="32dp"
+        android:scaleType="fitCenter"
         android:background="?attr/selectableItemBackgroundBorderless"
         android:contentDescription="Paciente"/>
 
@@ -54,12 +58,14 @@
 
     <ImageButton
         android:id="@+id/btnAppointments"
-        android:layout_width="64dp"
-        android:layout_height="64dp"
+        android:layout_width="75dp"
+        android:layout_height="66dp"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="24dp"
         android:background="?attr/selectableItemBackgroundBorderless"
-        android:contentDescription="Consultas" />
+        android:contentDescription="Consultas"
+        android:scaleType="fitCenter"
+        android:src="@drawable/consulta" />
 
     <TextView
         android:id="@+id/tvAppointments"
@@ -71,12 +77,14 @@
 
     <ImageButton
         android:id="@+id/btnExams"
-        android:layout_width="64dp"
-        android:layout_height="64dp"
+        android:layout_width="85dp"
+        android:layout_height="74dp"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="24dp"
         android:background="?attr/selectableItemBackgroundBorderless"
-        android:contentDescription="Exames" />
+        android:contentDescription="Exames"
+        android:scaleType="fitCenter"
+        android:src="@drawable/exames" />
 
     <TextView
         android:id="@+id/tvExams"
@@ -88,12 +96,14 @@
 
     <ImageButton
         android:id="@+id/btnMedications"
-        android:layout_width="64dp"
-        android:layout_height="64dp"
+        android:layout_width="62dp"
+        android:layout_height="53dp"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="24dp"
         android:background="?attr/selectableItemBackgroundBorderless"
-        android:contentDescription="Medicamentos" />
+        android:contentDescription="Medicamentos"
+        android:scaleType="fitCenter"
+        android:src="@drawable/pills" />
 
     <TextView
         android:id="@+id/tvMedications"
@@ -108,7 +118,9 @@
         android:layout_width="64dp"
         android:layout_height="64dp"
         android:layout_gravity="center_horizontal"
+        android:src="@drawable/messagens"
         android:layout_marginTop="24dp"
+        android:scaleType="fitCenter"
         android:background="?attr/selectableItemBackgroundBorderless"
         android:contentDescription="Mensagens" />
 
