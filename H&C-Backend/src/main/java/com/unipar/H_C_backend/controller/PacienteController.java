@@ -2,6 +2,7 @@ package com.unipar.H_C_backend.controller;
 
 import com.unipar.H_C_backend.domain.Paciente;
 import com.unipar.H_C_backend.exceptions.BusinessException;
+import com.unipar.H_C_backend.service.MedicamentoService;
 import com.unipar.H_C_backend.service.PacienteService;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -21,6 +22,9 @@ public class PacienteController {
 
     @Autowired
     private PacienteService pacienteService;
+
+    @Autowired
+    private MedicamentoService medicamentoService;
 
     @GetMapping
     public List<Paciente> getAllPacientes() {
@@ -70,6 +74,38 @@ public class PacienteController {
         try {
             Paciente paciente = pacienteService.findByName(nome);
             return ResponseEntity.ok(paciente);
+        } catch (BusinessException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+    }
+
+    @PostMapping("/nome/{nome}/medicamentos/{medicamentoId}")
+    public ResponseEntity<Paciente> addMedicamentoToPaciente(
+            @PathVariable String nome,
+            @PathVariable Long medicamentoId) {
+
+        try {
+            Paciente paciente = pacienteService.vincularMedicamento(nome, medicamentoId);
+            return ResponseEntity.ok(paciente);
+        } catch (BusinessException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+    }
+
+    @PutMapping("/nome/{nome}")
+    public ResponseEntity<Paciente> updatePacienteByName(
+            @PathVariable String nome,
+            @RequestParam(required = false) Long medicamentoId,  // Parâmetro opcional
+            @Valid @RequestBody Paciente pacienteDetails) throws BusinessException {
+
+        try {
+            Paciente updatedPaciente = pacienteService.updateByName(nome, pacienteDetails);
+
+            if (medicamentoId != null) {
+                updatedPaciente = pacienteService.vincularMedicamento(nome, medicamentoId);
+            }
+
+            return ResponseEntity.ok(updatedPaciente);
         } catch (BusinessException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }

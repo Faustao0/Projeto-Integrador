@@ -5,7 +5,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.NotNull;
-
 import java.util.List;
 
 @Entity
@@ -17,6 +16,9 @@ public class Paciente extends Pessoa {
     @NotNull(message = "O histórico médico é obrigatório.")
     private String historicoMedico;
 
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<Medicamento> medicamentos;
+
     public Paciente() {
     }
 
@@ -25,6 +27,8 @@ public class Paciente extends Pessoa {
         this.idade = idade;
         this.historicoMedico = historicoMedico;
     }
+
+    // Getters e Setters
 
     public Integer getIdade() {
         return idade;
@@ -40,5 +44,17 @@ public class Paciente extends Pessoa {
 
     public void setHistoricoMedico(String historicoMedico) {
         this.historicoMedico = historicoMedico;
+    }
+
+    public List<Medicamento> getMedicamentos() {
+        return medicamentos;
+    }
+
+    public void setMedicamentos(List<Medicamento> medicamentos) {
+        this.medicamentos = medicamentos;
+    }
+
+    public void addMedicamento(Medicamento medicamento) {
+        this.medicamentos.add(medicamento);
     }
 }
