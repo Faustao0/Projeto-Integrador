@@ -67,18 +67,6 @@
         android:text="Histórico Médico"
         android:textSize="18sp" />
 
-    <EditText
-        android:id="@+id/etMedicamrntoName"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Digite o nome do medicamtno" />
-
-    <Button
-        android:id="@+id/BotaoPesquisarMedicamntos"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Pesquisar" />
-
     <TextView
         android:id="@+id/tvMedicamentoNome"
         android:layout_width="match_parent"
