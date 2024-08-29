@@ -1,10 +1,8 @@
 package com.unipar.H_C_backend.domain;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
+
 import java.util.List;
 
 @Entity
@@ -17,18 +15,18 @@ public class Paciente extends Pessoa {
     private String historicoMedico;
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "paciente_id")
     private List<Medicamento> medicamentos;
 
     public Paciente() {
     }
 
-    public Paciente(Long id, String nome, String telefone, String email, String cpf, Integer idade, String historicoMedico) {
+    public Paciente(Long id, String nome, String telefone, String email, String cpf, Integer idade, String historicoMedico, List<Medicamento> medicamentos) {
         super(id, nome, telefone, email, cpf);
         this.idade = idade;
         this.historicoMedico = historicoMedico;
+        this.medicamentos = medicamentos;
     }
-
-    // Getters e Setters
 
     public Integer getIdade() {
         return idade;
@@ -52,9 +50,5 @@ public class Paciente extends Pessoa {
 
     public void setMedicamentos(List<Medicamento> medicamentos) {
         this.medicamentos = medicamentos;
-    }
-
-    public void addMedicamento(Medicamento medicamento) {
-        this.medicamentos.add(medicamento);
     }
 }
