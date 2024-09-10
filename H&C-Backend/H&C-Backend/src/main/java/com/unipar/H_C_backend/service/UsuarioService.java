@@ -2,7 +2,7 @@ package com.unipar.H_C_backend.service;
 
 
 
-import com.unipar.H_C_backend.domain.Usuario;
+import com.unipar.H_C_backend.domain.*;
 import com.unipar.H_C_backend.exceptions.BusinessException;
 import com.unipar.H_C_backend.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +37,27 @@ public class UsuarioService {
         usuario.setEmail(usuarioDetails.getEmail());
         usuario.setCpf(usuarioDetails.getCpf());
         usuario.setSenha(usuarioDetails.getSenha());
+
+        if (usuarioDetails.getConsultas() != null) {
+            for (Consulta consulta : usuarioDetails.getConsultas()) {
+                consulta.setUsuario(usuario);
+                for (Medico medico : consulta.getMedicos()) {
+                    medico.setConsulta(consulta);
+                }
+            }
+            usuario.setConsultas(usuarioDetails.getConsultas());
+        }
+
+//        if (usuarioDetails.getPacientes() != null) {
+//            for (Paciente paciente : usuarioDetails.getPacientes()) {
+//                paciente.setUsuario(usuario);
+//                for (Medicamento medicamento : paciente.getMedicamentos()) {
+//                    medicamento.setPaciente(paciente);
+//                }
+//            }
+//            usuario.setPacientes(usuarioDetails.getPacientes());
+//        }
+        usuario.setEnderecos(usuarioDetails.getEnderecos());
         return usuarioRepository.save(usuario);
     }
 

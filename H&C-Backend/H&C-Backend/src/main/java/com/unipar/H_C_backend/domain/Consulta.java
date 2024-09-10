@@ -1,5 +1,7 @@
 package com.unipar.H_C_backend.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -23,18 +25,27 @@ public class Consulta {
     @NotBlank(message = "O local da consulta é obrigatório.")
     private String local;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "consulta_id")
+    @NotNull(message =  "O valor da consulta é obrigatório.")
+    private Double valor;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "usuario_id")
+    @JsonBackReference
+    private Usuario usuario;
+
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JsonManagedReference
     private List<Medico> medicos;
 
 
     public Consulta() {}
 
-    public Consulta(Long id, LocalDate data, LocalTime hora, String local, List<Medico> medicos) {
+    public Consulta(Long id, LocalDate data, LocalTime hora, String local, double valor, List<Medico> medicos) {
         this.id = id;
         this.data = data;
         this.hora = hora;
         this.local = local;
+        this.valor = valor;
         this.medicos = medicos;
     }
 
@@ -66,8 +77,24 @@ public class Consulta {
         return local;
     }
 
+    public double getValor() {
+        return valor;
+    }
+
+    public void setValor(double valor) {
+        this.valor = valor;
+    }
+
     public void setLocal(String local) {
         this.local = local;
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 
     public List<Medico> getMedicos() {
@@ -76,5 +103,8 @@ public class Consulta {
 
     public void setMedicos(List<Medico> medicos) {
         this.medicos = medicos;
+        for (Medico medico : medicos) {
+            medico.setConsulta(this);
+        }
     }
 }

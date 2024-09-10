@@ -1,5 +1,6 @@
 package com.unipar.H_C_backend.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -29,17 +30,22 @@ public class Medicamento {
     @NotBlank(message = "O fabricante do medicamento é obrigatório.")
     private String fabricante;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "paciente_id")
+    @JsonBackReference
+    private Paciente paciente;
 
     public Medicamento() {
     }
 
-    public Medicamento(Long id, String nome, String dosagem, String frequencia, String validade, String fabricante) {
+    public Medicamento(Long id, String nome, String dosagem, String frequencia, String validade, String fabricante, Paciente paciente) {
         this.id = id;
         this.nome = nome;
         this.dosagem = dosagem;
         this.frequencia = frequencia;
         this.validade = validade;
         this.fabricante = fabricante;
+        this.paciente = paciente;
     }
 
     public Long getId() {
@@ -90,4 +96,11 @@ public class Medicamento {
         this.fabricante = fabricante;
     }
 
+    public Paciente getPaciente() {
+        return paciente;
+    }
+
+    public void setPaciente(Paciente paciente) {
+        this.paciente = paciente;
+    }
 }
