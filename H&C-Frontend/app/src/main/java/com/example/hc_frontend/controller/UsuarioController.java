@@ -1,9 +1,17 @@
 package com.example.hc_frontend.controller;
 
+import android.os.Build;
 import android.util.Log;
+import androidx.annotation.RequiresApi;
 import androidx.lifecycle.MutableLiveData;
+import com.example.hc_frontend.adapters.LocalDateAdapter;
+import com.example.hc_frontend.adapters.LocalTimeAdapter;
 import com.example.hc_frontend.domain.Usuario;
 import com.example.hc_frontend.repositories.UsuarioRepository;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -15,10 +23,16 @@ public class UsuarioController {
     private static final String TAG = "UsuarioController";
     private UsuarioRepository usuarioApi;
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public UsuarioController() {
+        Gson gson = new GsonBuilder()
+                .registerTypeAdapter(LocalDate.class, new LocalDateAdapter())
+                .registerTypeAdapter(LocalTime.class, new LocalTimeAdapter())
+                .create();
+
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("http://10.0.2.2:8080/")
-                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
 
         this.usuarioApi = retrofit.create(UsuarioRepository.class);
@@ -26,26 +40,21 @@ public class UsuarioController {
 
     public MutableLiveData<Usuario> login(String email, String senha) {
         MutableLiveData<Usuario> userData = new MutableLiveData<>();
-
         usuarioApi.login(email, senha).enqueue(new Callback<Usuario>() {
             @Override
             public void onResponse(Call<Usuario> call, Response<Usuario> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    Log.d(TAG, "Usuário autenticado: " + response.body().toString());
                     userData.postValue(response.body());
                 } else {
-                    Log.d(TAG, "Falha na autenticação: " + response.code());
                     userData.postValue(null);
                 }
             }
 
             @Override
             public void onFailure(Call<Usuario> call, Throwable t) {
-                Log.e(TAG, "Erro na chamada da API: " + t.getMessage());
                 userData.postValue(null);
             }
         });
-
         return userData;
     }
 }

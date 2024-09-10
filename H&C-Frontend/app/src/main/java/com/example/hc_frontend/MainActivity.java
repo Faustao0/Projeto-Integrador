@@ -13,6 +13,8 @@ import androidx.lifecycle.ViewModelProvider;
 import com.example.hc_frontend.domain.Usuario;
 import com.example.hc_frontend.domainViewModel.UsuarioViewModel;
 
+import java.io.Serializable;
+
 public class MainActivity extends AppCompatActivity {
 
     private EditText etEmail;
@@ -55,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
                 if (usuario != null) {
                     Toast.makeText(MainActivity.this, "Login efetuado com sucesso", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(MainActivity.this, MenuActivity.class);
+                    intent.putExtra("usuario", (Serializable) usuario);
                     startActivity(intent);
                 } else {
                     Toast.makeText(MainActivity.this, "Email ou senha incorretos", Toast.LENGTH_SHORT).show();

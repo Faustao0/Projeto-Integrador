@@ -7,12 +7,24 @@ import android.widget.ImageButton;
 
 import androidx.fragment.app.FragmentActivity;
 
+import com.example.hc_frontend.domain.Usuario;
+
+import java.io.Serializable;
+
 public class MenuActivity extends FragmentActivity {
+
+    private Usuario usuario;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
+
+        // Recebe o objeto Usuario da MainActivity
+        Intent intent = getIntent();
+        if (intent != null && intent.hasExtra("usuario")) {
+            usuario = (Usuario) intent.getSerializableExtra("usuario");
+        }
 
         ImageButton btnProfile = findViewById(R.id.btnProfile);
         ImageButton btnAppointments = findViewById(R.id.btnAppointments);
@@ -28,15 +40,24 @@ public class MenuActivity extends FragmentActivity {
 //                startActivity(intent);
 //            }
 //        });
-//
+
 //        btnAppointments.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {
-//                // Navegar para a tela de Consultas
-//                Intent intent = new Intent(MenuActivity.this, AppointmentsActivity.class);
-//                startActivity(intent);
+//                Intent consultaIntent = new Intent(MenuActivity.this, PacienteActivty.class);
+//                consultaIntent.putExtra("usuario", (Serializable) usuario);
+//                startActivity(consultaIntent);
 //            }
 //        });
+
+        btnAppointments.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent consultaIntent = new Intent(MenuActivity.this, ConsultaActivity.class);
+                consultaIntent.putExtra("usuario", (Serializable) usuario);
+                startActivity(consultaIntent);
+            }
+        });
 
 //        btnExams.setOnClickListener(new View.OnClickListener() {
 //            @Override

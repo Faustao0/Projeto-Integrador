@@ -1,26 +1,30 @@
 package com.example.hc_frontend.domain;
 
-import java.util.List;
 import java.io.Serializable;
 
-public class Usuario implements Serializable{
+public class Medico implements Serializable{
 
     private Long id;
     private String nome;
     private String telefone;
     private String email;
     private String cpf;
-    private String senha;
-    private List<Consulta> consultas;
+    private Integer idade;
+    private String crm;
+    private String especialidade;
 
-    public Usuario(Long id, String nome, String telefone, String email, String cpf, String senha, List<Consulta> consultas) {
+    public Medico(Long id, String nome, String telefone, String email, String cpf, Integer idade, String crm, String especialidade) {
         this.id = id;
         this.nome = nome;
         this.telefone = telefone;
         this.email = email;
         this.cpf = cpf;
-        this.senha = senha;
-        this.consultas = consultas;
+        this.idade = idade;
+        this.crm = crm;
+        this.especialidade = especialidade;
+    }
+
+    public Medico() {
     }
 
     public Long getId() {
@@ -63,19 +67,27 @@ public class Usuario implements Serializable{
         this.cpf = cpf;
     }
 
-    public String getSenha() {
-        return senha;
+    public Integer getIdade() {
+        return idade;
     }
 
-    public void setSenha(String senha) {
-        this.senha = senha;
+    public void setIdade(Integer idade) {
+        this.idade = idade;
     }
 
-    public List<Consulta> getConsultas() {
-        return consultas;
+    public String getCrm() {
+        return crm;
     }
 
-    public void setConsultas(List<Consulta> consultas) {
-        this.consultas = consultas;
+    public void setCrm(String crm) {
+        this.crm = crm;
+    }
+
+    public String getEspecialidade() {
+        return especialidade;
+    }
+
+    public void setEspecialidade(String especialidade) {
+        this.especialidade = especialidade;
     }
 }
