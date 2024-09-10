@@ -42,12 +42,15 @@ public class ConsultaController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Consulta createConsulta(@Valid @RequestBody Consulta consulta) {
+    public Consulta createConsulta(@Valid @RequestBody Consulta consulta) throws BusinessException {
         return consultaService.save(consulta);
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Consulta> updateConsulta(@PathVariable Long id, @Valid @RequestBody Consulta consultaDetails) throws BusinessException {
+    @PutMapping(value = "/{id}", consumes = "application/json")
+    public ResponseEntity<Consulta> updateConsulta(
+            @PathVariable Long id,
+            @Valid @RequestBody Consulta consultaDetails) throws BusinessException {
+
         Consulta updatedConsulta = consultaService.update(id, consultaDetails);
         return ResponseEntity.ok(updatedConsulta);
     }

@@ -2,11 +2,8 @@ package com.unipar.H_C_backend.domain;
 
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
@@ -30,8 +27,35 @@ public class Endereco {
     @Size(max = 2, message = "Estado deve ter 2 caracteres")
     private String estado;
 
+    @NotBlank(message = "O nome do bairro  não pode ser vazio!")
+    private String bairro;
+
     @NotBlank(message = "CEP não pode ser vazio")
     private String cep;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "usuario_id")
+    @JsonBackReference
+    private Usuario usuario;
+
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "paciente_id")
+//    @JsonBackReference
+//    private Paciente paciente;
+
+    public Endereco(Long id, String rua, String numero, String cidade, String estado, String bairro, String cep, Usuario usuario) {
+        this.id = id;
+        this.rua = rua;
+        this.numero = numero;
+        this.cidade = cidade;
+        this.estado = estado;
+        this.bairro = bairro;
+        this.cep = cep;
+        this.usuario = usuario;
+    }
+
+    public Endereco() {
+    }
 
     public Long getId() {
         return id;
@@ -80,6 +104,30 @@ public class Endereco {
     public void setCep(String cep) {
         this.cep = cep;
     }
+
+    public String getBairro() {
+        return bairro;
+    }
+
+    public void setBairro(String bairro) {
+        this.bairro = bairro;
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
+
+//    public Paciente getPaciente() {
+//        return paciente;
+//    }
+//
+//    public void setPaciente(Paciente paciente) {
+//        this.paciente = paciente;
+//    }
 }
 
 

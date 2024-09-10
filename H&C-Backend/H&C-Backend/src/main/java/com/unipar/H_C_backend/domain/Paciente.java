@@ -1,8 +1,9 @@
 package com.unipar.H_C_backend.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
-
 import java.util.List;
 
 @Entity
@@ -16,7 +17,18 @@ public class Paciente extends Pessoa {
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "paciente_id")
+    @JsonManagedReference
     private List<Medicamento> medicamentos;
+
+//    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+//    @JoinColumn(name = "usuario_id")
+//    @JsonManagedReference
+//    private List<Endereco> enderecos;
+
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "usuario_id")
+//    @JsonBackReference
+//    private Usuario usuario;
 
     public Paciente() {
     }
@@ -50,5 +62,24 @@ public class Paciente extends Pessoa {
 
     public void setMedicamentos(List<Medicamento> medicamentos) {
         this.medicamentos = medicamentos;
+        for (Medicamento medicamento : medicamentos) {
+            medicamento.setPaciente(this);
+        }
     }
+
+//    public List<Endereco> getEnderecos() {
+//        return enderecos;
+//    }
+//
+//    public void setEnderecos(List<Endereco> enderecos) {
+//        this.enderecos = enderecos;
+//    }
+
+//    public Usuario getUsuario() {
+//        return usuario;
+//    }
+//
+//    public void setUsuario(Usuario usuario) {
+//        this.usuario = usuario;
+//    }
 }

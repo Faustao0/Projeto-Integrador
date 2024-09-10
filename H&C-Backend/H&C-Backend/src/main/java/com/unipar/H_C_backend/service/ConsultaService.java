@@ -32,6 +32,7 @@ public class ConsultaService {
         consulta.setData(consultaDetails.getData());
         consulta.setHora(consultaDetails.getHora());
         consulta.setLocal(consultaDetails.getLocal());
+        consulta.setValor(consultaDetails.getValor());
         consulta.setMedicos(consultaDetails.getMedicos());
         return consultaRepository.save(consulta);
     }
