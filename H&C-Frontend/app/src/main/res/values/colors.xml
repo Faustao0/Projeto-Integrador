@@ -8,4 +8,9 @@
     <color name="search_opaque">#ffaa3f</color>
     <color name="selected_background">#ffaa3f</color>
     <color name="default_background">#3d3d3d</color>
+    <color name="backgroundColor">#F5F5F5</color>
+    <color name="titleColor">#1E88E5</color>
+    <color name="textPrimary">#000000</color>
+    <color name="textSecondary">#000000</color>
+    <color name="buttonColor">#1976D2</color>
 </resources>

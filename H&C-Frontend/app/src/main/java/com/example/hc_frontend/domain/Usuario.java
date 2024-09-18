@@ -13,7 +13,7 @@ public class Usuario implements Serializable{
     private String senha;
     private List<Consulta> consultas;
 
-    public Usuario(Long id, String nome, String telefone, String email, String cpf, String senha, List<Consulta> consultas) {
+    public Usuario() {
         this.id = id;
         this.nome = nome;
         this.telefone = telefone;

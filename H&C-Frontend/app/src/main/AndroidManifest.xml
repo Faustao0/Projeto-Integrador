@@ -25,6 +25,9 @@
         android:theme="@style/Theme.HCFrontend"
         tools:targetApi="31">
         <activity
+            android:name=".RegistroUsuarioActivity"
+            android:exported="false" />
+        <activity
             android:name=".MariaVoltaParaMim"
             android:exported="false" />
         <activity

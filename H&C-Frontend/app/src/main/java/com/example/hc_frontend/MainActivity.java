@@ -75,7 +75,8 @@ public class MainActivity extends AppCompatActivity {
         tvRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(MainActivity.this, "Redirecionar para cadastro de novo usuário", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(MainActivity.this, RegistroUsuarioActivity.class);
+                startActivity(intent);
             }
         });
     }

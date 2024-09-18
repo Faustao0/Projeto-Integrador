@@ -70,21 +70,15 @@
             android:layout_marginBottom="16dp"
             android:backgroundTint="@color/black" />
 
+        <!-- Local da consulta é preenchido automaticamente -->
         <TextView
-            android:id="@+id/tvSelecionarLocal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Selecione o Local:"
-            android:textColor="@color/black"
-            android:textSize="18sp"
-            android:layout_marginBottom="8dp" />
-
-        <Spinner
-            android:id="@+id/spinnerLocais"
+            android:id="@+id/tvLocalConsulta"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:backgroundTint="@color/black" />
+            android:text="Local: "
+            android:textSize="18sp"
+            android:textColor="@color/black"
+            android:layout_marginBottom="16dp" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/tilValorConsulta"
@@ -108,6 +102,6 @@
             android:text="Confirmar Agendamento"
             android:backgroundTint="@color/black"
             android:textColor="@color/white"
-            android:layout_marginTop="16dp" />
+            android:layout_marginTop="16dp"/>
     </LinearLayout>
 </ScrollView>

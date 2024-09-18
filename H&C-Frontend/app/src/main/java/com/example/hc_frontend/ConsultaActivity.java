@@ -6,14 +6,10 @@ import android.widget.Button;
 import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.example.hc_frontend.domain.Consulta;
 import com.example.hc_frontend.domain.Medico;
 import com.example.hc_frontend.domain.Usuario;
 import com.example.hc_frontend.repositories.ConsultaRepository;
-
-import java.util.List;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -67,6 +63,7 @@ public class ConsultaActivity extends AppCompatActivity {
                     ? usuario.getConsultas().get(0).getId()
                     : -1L;  // Para novos usuários sem consulta
             intent.putExtra("consultaId", consultaId);
+            intent.putExtra("usuario", usuario);  // Passar o objeto usuario corretamente
             startActivityForResult(intent, REQUEST_CODE_MARCAR_CONSULTA);
         });
     }
@@ -116,7 +113,13 @@ public class ConsultaActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == REQUEST_CODE_MARCAR_CONSULTA && resultCode == RESULT_OK) {
-            carregarDadosConsulta();  // Recarregar dados da consulta atualizados
+            if (data != null && data.hasExtra("usuario_atualizado")) {
+                // Obter o usuário atualizado que veio da MarcarConsultaActivity
+                usuario = (Usuario) data.getSerializableExtra("usuario_atualizado");
+
+                // Recarregar os dados da consulta atualizados com base no usuário
+                carregarDadosConsulta();
+            }
         }
     }
 }

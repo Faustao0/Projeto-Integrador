@@ -21,7 +21,4 @@ public interface ConsultaRepository {
 
     @PUT("consultas/{id}")
     Call<Consulta> atualizarConsulta(@Path("id") Long id, @Body Consulta consulta);
-
-    @POST("consultas")
-    Call<Consulta> criarConsulta(@Body Consulta consulta);
 }

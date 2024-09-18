@@ -3,136 +3,148 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@color/backgroundColor"
     android:padding="16dp">
 
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:padding="16dp"
+        android:layout_marginTop="70dp"
+        android:background="@drawable/card_background">
 
+        <!-- Título da Consulta -->
         <TextView
             android:id="@+id/tvTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
             android:layout_marginBottom="24dp"
             android:text="Detalhes da Consulta"
-            android:textColor="@color/black"
-            android:textSize="25sp"
-            android:textStyle="bold" />
+            android:textColor="@color/titleColor"
+            android:textSize="26sp"
+            android:textStyle="bold"
+            android:gravity="center" />
 
+        <!-- Detalhes da Consulta -->
         <TextView
             android:id="@+id/tvDateLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="23dp"
-            android:layout_marginBottom="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="8dp"
             android:text="Data:"
-            android:textColor="@color/black"
+            android:textColor="@color/textPrimary"
             android:textSize="18sp" />
 
         <TextView
             android:id="@+id/tvTimeLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
             android:text="Hora:"
-            android:textColor="@color/black"
-            android:textSize="18sp"
-            android:layout_marginBottom="16dp"/>
+            android:textColor="@color/textPrimary"
+            android:textSize="18sp" />
 
         <TextView
             android:id="@+id/tvLocationLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
             android:text="Local da Consulta:"
-            android:textColor="@color/black"
-            android:textSize="18sp"
-            android:layout_marginBottom="16dp"/>
+            android:textColor="@color/textPrimary"
+            android:textSize="18sp" />
 
         <TextView
             android:id="@+id/tvValor"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
             android:text="Valor da Consulta:"
-            android:textColor="@color/black"
-            android:textSize="18sp"
-            android:layout_marginBottom="16dp"/>
+            android:textColor="@color/textPrimary"
+            android:textSize="18sp" />
 
+        <!-- Título do Médico -->
         <TextView
             android:id="@+id/tvMedicoTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="44dp"
+            android:layout_marginTop="32dp"
             android:layout_marginBottom="16dp"
             android:text="Informações do Médico"
-            android:textColor="@color/black"
-            android:textSize="25sp"
-            android:textStyle="bold" />
+            android:textColor="@color/titleColor"
+            android:textSize="26sp"
+            android:textStyle="bold"
+            android:gravity="center" />
 
+        <!-- Detalhes do Médico -->
         <TextView
             android:id="@+id/tvMedicoNomeLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="34dp"
-            android:layout_marginBottom="16dp"
+            android:layout_marginBottom="8dp"
             android:text="Nome:"
-            android:textColor="@color/black"
+            android:textColor="@color/textSecondary"
             android:textSize="18sp" />
 
         <TextView
             android:id="@+id/tvMedicoTelefoneLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
             android:text="Telefone:"
-            android:textColor="@color/black"
-            android:textSize="18sp"
-            android:layout_marginBottom="16dp"/>
+            android:textColor="@color/textSecondary"
+            android:textSize="18sp" />
 
         <TextView
             android:id="@+id/tvMedicoEmailLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
             android:text="Email:"
-            android:textColor="@color/black"
-            android:textSize="18sp"
-            android:layout_marginBottom="16dp"/>
+            android:textColor="@color/textSecondary"
+            android:textSize="18sp" />
 
         <TextView
             android:id="@+id/tvMedicoCpfLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
             android:text="CPF:"
-            android:textColor="@color/black"
-            android:textSize="18sp"
-            android:layout_marginBottom="16dp"/>
+            android:textColor="@color/textSecondary"
+            android:textSize="18sp" />
 
         <TextView
             android:id="@+id/tvMedicoCrmLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
             android:text="CRM:"
-            android:textColor="@color/black"
-            android:textSize="18sp"
-            android:layout_marginBottom="16dp"/>
+            android:textColor="@color/textSecondary"
+            android:textSize="18sp" />
 
         <TextView
             android:id="@+id/tvMedicoEspecialidadeLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
             android:text="Especialidade:"
-            android:textColor="@color/black"
-            android:textSize="18sp"
-            android:layout_marginBottom="16dp"/>
+            android:textColor="@color/textSecondary"
+            android:textSize="18sp" />
 
+        <!-- Botão Marcar Consulta -->
         <Button
             android:id="@+id/button2"
-            android:layout_width="143dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="33dp"
-            android:text="Marcar Consulta" />
+            android:layout_marginTop="80dp"
+            android:backgroundTint="@color/buttonColor"
+            android:text="Marcar Consulta"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:padding="12dp"
+            android:layout_gravity="center" />
 
     </LinearLayout>
 </ScrollView>
