@@ -3,6 +3,7 @@ package com.unipar.H_C_backend.repository;
 
 
 import com.unipar.H_C_backend.domain.Consulta;
+import com.unipar.H_C_backend.domain.Paciente;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

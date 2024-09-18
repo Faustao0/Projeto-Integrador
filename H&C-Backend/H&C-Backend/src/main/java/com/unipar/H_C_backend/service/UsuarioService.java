@@ -4,10 +4,12 @@ package com.unipar.H_C_backend.service;
 
 import com.unipar.H_C_backend.domain.*;
 import com.unipar.H_C_backend.exceptions.BusinessException;
+import com.unipar.H_C_backend.repository.ConsultaRepository;
 import com.unipar.H_C_backend.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,6 +18,8 @@ public class UsuarioService {
 
     @Autowired
     private UsuarioRepository usuarioRepository;
+    @Autowired
+    private ConsultaRepository consultaRepository;
 
     public List<Usuario> findAll() {
         return usuarioRepository.findAll();
@@ -39,13 +43,14 @@ public class UsuarioService {
         usuario.setSenha(usuarioDetails.getSenha());
 
         if (usuarioDetails.getConsultas() != null) {
-            for (Consulta consulta : usuarioDetails.getConsultas()) {
+            List<Consulta> consultas = new ArrayList<>();
+            for (Consulta consultaDetails : usuarioDetails.getConsultas()) {
+                Consulta consulta = consultaRepository.findById(consultaDetails.getId())
+                        .orElseThrow(() -> new BusinessException("Consulta não encontrada com o ID: " + consultaDetails.getId()));
                 consulta.setUsuario(usuario);
-                for (Medico medico : consulta.getMedicos()) {
-                    medico.setConsulta(consulta);
-                }
+                consultas.add(consulta);
             }
-            usuario.setConsultas(usuarioDetails.getConsultas());
+            usuario.setConsultas(consultas);
         }
 
 //        if (usuarioDetails.getPacientes() != null) {
