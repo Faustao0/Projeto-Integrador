@@ -1,6 +1,7 @@
 package com.example.hc_frontend;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -52,14 +53,47 @@ public class RegistroUsuarioActivity extends AppCompatActivity {
             String senha = etSenha.getText().toString();
             String confirmarSenha = etConfirmarSenha.getText().toString();
 
-            // Verificar se as senhas coincidem
+            // Verificar se os campos estão preenchidos
+            if (TextUtils.isEmpty(nome)) {
+                etNome.setError("Nome é obrigatório");
+                return;
+            }
+
+            if (TextUtils.isEmpty(telefone)) {
+                etTelefone.setError("Telefone é obrigatório");
+                return;
+            }
+
+            if (TextUtils.isEmpty(email)) {
+                etEmail.setError("Email é obrigatório");
+                return;
+            }
+
+            if (TextUtils.isEmpty(cpf)) {
+                etCpf.setError("CPF é obrigatório");
+                return;
+            }
+
+            if (TextUtils.isEmpty(senha)) {
+                etSenha.setError("Senha é obrigatória");
+                return;
+            }
+
             if (!senha.equals(confirmarSenha)) {
-                Toast.makeText(RegistroUsuarioActivity.this, "As senhas não coincidem", Toast.LENGTH_SHORT).show();
+                etConfirmarSenha.setError("As senhas não coincidem");
                 return;
             }
 
             // Criar um novo usuário
             Usuario novoUsuario = new Usuario();
+            novoUsuario.setNome(nome);
+            novoUsuario.setTelefone(telefone);
+            novoUsuario.setEmail(email);
+            novoUsuario.setCpf(cpf);
+            novoUsuario.setSenha(senha);
+
+            // Desabilitar o botão enquanto a solicitação está sendo processada
+            btnRegistrar.setEnabled(false);
 
             // Enviar os dados para a API
             usuarioRepository.registrarUsuario(novoUsuario).enqueue(new Callback<Usuario>() {
@@ -71,11 +105,13 @@ public class RegistroUsuarioActivity extends AppCompatActivity {
                     } else {
                         Toast.makeText(RegistroUsuarioActivity.this, "Erro ao registrar usuário", Toast.LENGTH_SHORT).show();
                     }
+                    btnRegistrar.setEnabled(true);  // Reativar o botão
                 }
 
                 @Override
                 public void onFailure(Call<Usuario> call, Throwable t) {
                     Toast.makeText(RegistroUsuarioActivity.this, "Falha na conexão", Toast.LENGTH_SHORT).show();
+                    btnRegistrar.setEnabled(true);  // Reativar o botão
                 }
             });
         });

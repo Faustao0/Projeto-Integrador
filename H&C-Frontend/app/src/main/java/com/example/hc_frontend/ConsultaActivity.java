@@ -4,12 +4,16 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.hc_frontend.domain.Consulta;
 import com.example.hc_frontend.domain.Medico;
 import com.example.hc_frontend.domain.Usuario;
 import com.example.hc_frontend.repositories.ConsultaRepository;
+import com.example.hc_frontend.repositories.UsuarioRepository;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -23,22 +27,23 @@ public class ConsultaActivity extends AppCompatActivity {
     private Usuario usuario;
     private TextView tvDate, tvTime, tvLocation, tvValor;
     private TextView tvMedicoNome, tvMedicoTelefone, tvMedicoEmail, tvMedicoCpf, tvMedicoCrm, tvMedicoEspecialidade;
-    private Button button2;
+    private Button buttonCancelarConsulta, buttonReagendarConsulta;
     private ConsultaRepository consultaRepository;
+    private UsuarioRepository usuarioRepository;
+    private Long consultaId;  // ID da consulta atual
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_consulta);
 
-        // Inicializar Retrofit para buscar consultas atualizadas
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("http://10.0.2.2:8080/")  // URL base da sua API
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
         consultaRepository = retrofit.create(ConsultaRepository.class);
-
+        usuarioRepository = retrofit.create(UsuarioRepository.class);
         usuario = (Usuario) getIntent().getSerializableExtra("usuario");
 
         tvDate = findViewById(R.id.tvDateLabel);
@@ -51,19 +56,19 @@ public class ConsultaActivity extends AppCompatActivity {
         tvMedicoCpf = findViewById(R.id.tvMedicoCpfLabel);
         tvMedicoCrm = findViewById(R.id.tvMedicoCrmLabel);
         tvMedicoEspecialidade = findViewById(R.id.tvMedicoEspecialidadeLabel);
-        button2 = findViewById(R.id.button2);
+        buttonCancelarConsulta = findViewById(R.id.btnCancelarConsulta);
+        buttonReagendarConsulta = findViewById(R.id.btnReagendarConsulta);
 
-        // Se o usuário não tiver consultas, permitir criar uma nova
         carregarDadosConsulta();
 
-        button2.setOnClickListener(v -> {
+        // Cancelar consulta (desvincular do usuário)
+        buttonCancelarConsulta.setOnClickListener(v -> desvincularConsulta());
+
+        // Reagendar consulta
+        buttonReagendarConsulta.setOnClickListener(v -> {
             Intent intent = new Intent(ConsultaActivity.this, MarcarConsultaActivity.class);
-            // Verificar se o usuário tem consultas. Se não, enviar -1 para criar uma nova consulta
-            Long consultaId = (usuario != null && !usuario.getConsultas().isEmpty())
-                    ? usuario.getConsultas().get(0).getId()
-                    : -1L;  // Para novos usuários sem consulta
             intent.putExtra("consultaId", consultaId);
-            intent.putExtra("usuario", usuario);  // Passar o objeto usuario corretamente
+            intent.putExtra("usuario", usuario);
             startActivityForResult(intent, REQUEST_CODE_MARCAR_CONSULTA);
         });
     }
@@ -72,22 +77,39 @@ public class ConsultaActivity extends AppCompatActivity {
     private void carregarDadosConsulta() {
         if (usuario != null && !usuario.getConsultas().isEmpty()) {
             Consulta consulta = usuario.getConsultas().get(0);
-            consultaRepository.getConsultaById(consulta.getId()).enqueue(new Callback<Consulta>() {
+            consultaId = consulta.getId(); // Guardar o ID da consulta
+
+            consultaRepository.getConsultaById(consultaId).enqueue(new Callback<Consulta>() {
                 @Override
                 public void onResponse(Call<Consulta> call, Response<Consulta> response) {
                     if (response.isSuccessful()) {
                         Consulta consultaAtualizada = response.body();
-                        atualizarUI(consultaAtualizada);  // Atualiza a UI com a consulta mais recente
+                        atualizarUI(consultaAtualizada);
                     }
                 }
 
                 @Override
                 public void onFailure(Call<Consulta> call, Throwable t) {
-                    // Tratar falha de conexão ou erro
                 }
             });
+        } else {
+            limparUI();
         }
     }
+
+    private void limparUI() {
+        tvDate.setText("Data: ");
+        tvTime.setText("Hora: ");
+        tvLocation.setText("Local: ");
+        tvValor.setText("Valor: ");
+        tvMedicoNome.setText("Nome: ");
+        tvMedicoTelefone.setText("Telefone: ");
+        tvMedicoEmail.setText("Email: ");
+        tvMedicoCpf.setText("CPF: ");
+        tvMedicoCrm.setText("CRM: ");
+        tvMedicoEspecialidade.setText("Especialidade do médico: ");
+    }
+
 
     // Atualizar a interface com os dados da consulta
     private void atualizarUI(Consulta consulta) {
@@ -107,18 +129,42 @@ public class ConsultaActivity extends AppCompatActivity {
         }
     }
 
-    // Receber dados de retorno da MarcarConsultaActivity
+    // Método para desvincular a consulta do usuário
+    private void desvincularConsulta() {
+        if (usuario.getConsultas() != null && !usuario.getConsultas().isEmpty()) {
+            usuario.getConsultas().clear();  // Remover a consulta vinculada ao usuário
+        }
+
+        // Atualizar o usuário na API
+        usuarioRepository.atualizarUsuario(usuario.getId(), usuario).enqueue(new Callback<Usuario>() {
+            @Override
+            public void onResponse(Call<Usuario> call, Response<Usuario> response) {
+                if (response.isSuccessful()) {
+                    Toast.makeText(ConsultaActivity.this, "Consulta desvinculada com sucesso", Toast.LENGTH_SHORT).show();
+                    usuario = response.body();
+
+                    carregarDadosConsulta();
+                } else {
+                    Toast.makeText(ConsultaActivity.this, "Erro ao desvincular consulta", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Usuario> call, Throwable t) {
+                Toast.makeText(ConsultaActivity.this, "Erro de conexão ao desvincular consulta", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    // Receber resultado do reagendamento
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == REQUEST_CODE_MARCAR_CONSULTA && resultCode == RESULT_OK) {
             if (data != null && data.hasExtra("usuario_atualizado")) {
-                // Obter o usuário atualizado que veio da MarcarConsultaActivity
                 usuario = (Usuario) data.getSerializableExtra("usuario_atualizado");
-
-                // Recarregar os dados da consulta atualizados com base no usuário
-                carregarDadosConsulta();
+                carregarDadosConsulta();  // Atualizar com os dados reagendados
             }
         }
     }

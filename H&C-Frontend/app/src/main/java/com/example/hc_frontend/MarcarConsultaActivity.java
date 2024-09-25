@@ -4,8 +4,10 @@ import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -17,10 +19,14 @@ import com.example.hc_frontend.repositories.ConsultaRepository;
 import com.example.hc_frontend.repositories.MedicosRepository;
 import com.example.hc_frontend.repositories.UsuarioRepository;
 import com.google.android.material.textfield.TextInputEditText;
+
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -32,6 +38,7 @@ public class MarcarConsultaActivity extends AppCompatActivity {
     private TextInputEditText etData, etHora, etValorConsulta;
     private Spinner spinnerMedicos;
     private Button buttonConfirmarAgendamento;
+    private ProgressBar progressBar;
     private MedicosRepository medicosRepository;
     private ConsultaRepository consultaRepository;
     private UsuarioRepository usuarioRepository;
@@ -52,8 +59,9 @@ public class MarcarConsultaActivity extends AppCompatActivity {
         etHora = findViewById(R.id.etHora);
         etValorConsulta = findViewById(R.id.etValorConsulta);
         spinnerMedicos = findViewById(R.id.spinnerMedicos);
-        tvLocalConsulta = findViewById(R.id.tvLocalConsulta); // Local exibido
+        tvLocalConsulta = findViewById(R.id.tvLocalConsulta);
         buttonConfirmarAgendamento = findViewById(R.id.buttonConfirmarAgendamento);
+        progressBar = findViewById(R.id.progressBar);  // Progress bar
 
         // Inicializar Retrofit
         Retrofit retrofit = new Retrofit.Builder()
@@ -63,11 +71,11 @@ public class MarcarConsultaActivity extends AppCompatActivity {
 
         medicosRepository = retrofit.create(MedicosRepository.class);
         consultaRepository = retrofit.create(ConsultaRepository.class);
-        usuarioRepository = retrofit.create(UsuarioRepository.class);  // Inicializar repositório de usuários
+        usuarioRepository = retrofit.create(UsuarioRepository.class);
 
         // Obter o ID da consulta e o usuário do Intent
-        consultaId = getIntent().getLongExtra("consultaId", -1L); // ID da consulta recebido (se -1L, é novo)
-        usuario = (Usuario) getIntent().getSerializableExtra("usuario"); // Obter o usuário do Intent
+        consultaId = getIntent().getLongExtra("consultaId", -1L);
+        usuario = (Usuario) getIntent().getSerializableExtra("usuario");
 
         if (usuario == null) {
             Toast.makeText(this, "Erro: Usuário não encontrado", Toast.LENGTH_SHORT).show();
@@ -75,12 +83,17 @@ public class MarcarConsultaActivity extends AppCompatActivity {
             return;
         }
 
-        // Função para abrir o DatePickerDialog ao clicar no campo de data
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
+
         etData.setOnClickListener(v -> {
             Calendar calendar = Calendar.getInstance();
             DatePickerDialog datePickerDialog = new DatePickerDialog(
                     MarcarConsultaActivity.this,
-                    (view, year, month, dayOfMonth) -> etData.setText(String.format("%04d-%02d-%02d", year, month + 1, dayOfMonth)),
+                    (view, year, month, dayOfMonth) -> {
+                        Calendar selectedDate = Calendar.getInstance();
+                        selectedDate.set(year, month, dayOfMonth);
+                        etData.setText(dateFormat.format(selectedDate.getTime()));
+                    },
                     calendar.get(Calendar.YEAR),
                     calendar.get(Calendar.MONTH),
                     calendar.get(Calendar.DAY_OF_MONTH)
@@ -88,7 +101,6 @@ public class MarcarConsultaActivity extends AppCompatActivity {
             datePickerDialog.show();
         });
 
-        // Função para abrir o TimePickerDialog ao clicar no campo de hora
         etHora.setOnClickListener(v -> {
             Calendar calendar = Calendar.getInstance();
             TimePickerDialog timePickerDialog = new TimePickerDialog(
@@ -104,30 +116,16 @@ public class MarcarConsultaActivity extends AppCompatActivity {
         carregarMedicos();
 
         buttonConfirmarAgendamento.setOnClickListener(v -> {
-            String data = etData.getText().toString();
-            String hora = etHora.getText().toString();
-            String valorConsulta = etValorConsulta.getText().toString();
-
-            if (data.isEmpty() || hora.isEmpty() || valorConsulta.isEmpty()) {
-                Toast.makeText(MarcarConsultaActivity.this, "Preencha todos os campos", Toast.LENGTH_SHORT).show();
-            } else {
-                // Atualizar os dados da consulta antes de salvar
-                if (consultaSelecionada != null) {
-                    consultaSelecionada.setData(data);
-                    consultaSelecionada.setHora(hora);
-                    consultaSelecionada.setValor(Double.parseDouble(valorConsulta));
-
-                    // Atualizar a consulta na API antes de vincular ao usuário
-                    atualizarConsultaNaAPI(consultaSelecionada, usuario);
-                }
-            }
+            validarEConfirmarAgendamento();
         });
     }
 
     private void carregarMedicos() {
+        progressBar.setVisibility(View.VISIBLE);
         medicosRepository.getMedicos().enqueue(new Callback<List<Medico>>() {
             @Override
             public void onResponse(Call<List<Medico>> call, Response<List<Medico>> response) {
+                progressBar.setVisibility(View.GONE);
                 if (response.isSuccessful()) {
                     List<Medico> medicos = response.body();
                     if (medicos != null && !medicos.isEmpty()) {
@@ -138,7 +136,6 @@ public class MarcarConsultaActivity extends AppCompatActivity {
                         ArrayAdapter<String> adapterMedicos = new ArrayAdapter<>(MarcarConsultaActivity.this, android.R.layout.simple_spinner_item, especialidadesMedicos);
                         adapterMedicos.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                         spinnerMedicos.setAdapter(adapterMedicos);
-
                         spinnerMedicos.setOnItemSelectedListener(new android.widget.AdapterView.OnItemSelectedListener() {
                             @Override
                             public void onItemSelected(android.widget.AdapterView<?> parent, android.view.View view, int position, long id) {
@@ -148,6 +145,7 @@ public class MarcarConsultaActivity extends AppCompatActivity {
 
                             @Override
                             public void onNothingSelected(android.widget.AdapterView<?> parent) {
+                                // Ninguém selecionado
                             }
                         });
                     } else {
@@ -160,12 +158,98 @@ public class MarcarConsultaActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<List<Medico>> call, Throwable t) {
+                progressBar.setVisibility(View.GONE);
                 Toast.makeText(MarcarConsultaActivity.this, "Erro de conexão ao carregar médicos", Toast.LENGTH_SHORT).show();
             }
         });
     }
 
-    // Atualizar o local e preencher dados da consulta ao selecionar a especialidade
+    private void validarEConfirmarAgendamento() {
+        String data = etData.getText().toString();
+        String hora = etHora.getText().toString();
+        String valorConsulta = etValorConsulta.getText().toString();
+
+        if (data.isEmpty() || hora.isEmpty() || valorConsulta.isEmpty()) {
+            Toast.makeText(MarcarConsultaActivity.this, "Preencha todos os campos", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        if (!data.matches("\\d{2}-\\d{2}-\\d{4}")) {  // Verifica se a data está no formato dd-MM-yyyy
+            Toast.makeText(MarcarConsultaActivity.this, "Data inválida!", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        // Verificar se o valor é maior que zero
+        if (Double.parseDouble(valorConsulta) <= 0) {
+            Toast.makeText(MarcarConsultaActivity.this, "O valor da consulta deve ser maior que zero", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        // Atualizar os dados da consulta
+        consultaSelecionada.setData(data);
+        consultaSelecionada.setHora(hora);
+        consultaSelecionada.setValor(Double.parseDouble(valorConsulta));
+
+        // Atualizar a consulta na API antes de vincular ao usuário
+        atualizarConsultaNaAPI(consultaSelecionada, usuario);
+    }
+
+    private void atualizarConsultaNaAPI(Consulta consultaAtualizada, Usuario usuario) {
+        if (medicoSelecionado != null) {
+            consultaAtualizada.setMedicos(Collections.singletonList(medicoSelecionado));
+        }
+
+        progressBar.setVisibility(View.VISIBLE);  // Mostrar o progress bar enquanto faz a solicitação
+
+        consultaRepository.atualizarConsulta(consultaAtualizada.getId(), consultaAtualizada).enqueue(new Callback<Consulta>() {
+            @Override
+            public void onResponse(Call<Consulta> call, Response<Consulta> response) {
+                progressBar.setVisibility(View.GONE);
+                if (response.isSuccessful()) {
+                    salvarConsultaAtualizada(usuario, response.body());
+                } else {
+                    Toast.makeText(MarcarConsultaActivity.this, "Erro ao atualizar consulta", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Consulta> call, Throwable t) {
+                progressBar.setVisibility(View.GONE);
+                Toast.makeText(MarcarConsultaActivity.this, "Erro de conexão ao atualizar consulta", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    // Salvar e vincular a consulta atualizada ao usuário
+    private void salvarConsultaAtualizada(Usuario usuario, Consulta consulta) {
+        if (usuario.getConsultas() == null) {
+            usuario.setConsultas(new ArrayList<>());
+        }
+
+        usuario.getConsultas().clear();
+        usuario.getConsultas().add(consulta);
+
+        usuarioRepository.atualizarUsuario(usuario.getId(), usuario).enqueue(new Callback<Usuario>() {
+            @Override
+            public void onResponse(Call<Usuario> call, Response<Usuario> response) {
+                if (response.isSuccessful()) {
+                    Toast.makeText(MarcarConsultaActivity.this, "Consulta registrada com sucesso!", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent();
+                    intent.putExtra("usuario_atualizado", usuario);
+                    setResult(RESULT_OK, intent);
+                    finish();
+                } else {
+                    Toast.makeText(MarcarConsultaActivity.this, "Erro ao registrar consulta", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Usuario> call, Throwable t) {
+                Toast.makeText(MarcarConsultaActivity.this, "Erro de conexão", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
     private void atualizarConsultaPorEspecialidade(String especialidadeSelecionada) {
         consultaRepository.getConsultas().enqueue(new Callback<List<Consulta>>() {
             @Override
@@ -175,19 +259,17 @@ public class MarcarConsultaActivity extends AppCompatActivity {
                     if (consultasDisponiveis != null && !consultasDisponiveis.isEmpty()) {
                         for (Consulta consulta : consultasDisponiveis) {
                             if (consulta.getMedicos() != null && !consulta.getMedicos().isEmpty()) {
+                                // Verifica se a especialidade do médico na consulta é igual à selecionada
                                 if (consulta.getMedicos().get(0).getEspecialidade().equals(especialidadeSelecionada)) {
-                                    // Substituir a consulta e médico atual por esta consulta
                                     consultaSelecionada = consulta;
                                     medicoSelecionado = consulta.getMedicos().get(0);
 
-                                    // Atualizar os campos da UI com os dados da nova consulta e médico
+                                    // Atualiza os campos de texto na UI com os dados da nova consulta
                                     tvLocalConsulta.setText("Local: " + consulta.getLocal());
                                     etData.setText(consulta.getData());
                                     etHora.setText(consulta.getHora());
                                     etValorConsulta.setText(String.valueOf(consulta.getValor()));
-
-                                    consultaId = consulta.getId(); // Atualizar o ID da consulta
-
+                                    consultaId = consulta.getId(); // Atualiza o ID da consulta
                                     break;
                                 }
                             }
@@ -195,74 +277,14 @@ public class MarcarConsultaActivity extends AppCompatActivity {
                     } else {
                         Toast.makeText(MarcarConsultaActivity.this, "Nenhuma consulta disponível", Toast.LENGTH_SHORT).show();
                     }
+                } else {
+                    Toast.makeText(MarcarConsultaActivity.this, "Erro ao carregar consultas", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<List<Consulta>> call, Throwable t) {
-                Toast.makeText(MarcarConsultaActivity.this, "Erro ao carregar consultas", Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
-
-    // Atualizar a consulta na API com os novos dados antes de vincular ao usuário
-    private void atualizarConsultaNaAPI(Consulta consultaAtualizada, Usuario usuario) {
-        // Garanta que o médico selecionado seja mantido
-        if (medicoSelecionado != null) {
-            consultaAtualizada.setMedicos(Collections.singletonList(medicoSelecionado));
-        }
-
-        consultaRepository.atualizarConsulta(consultaAtualizada.getId(), consultaAtualizada).enqueue(new Callback<Consulta>() {
-            @Override
-            public void onResponse(Call<Consulta> call, Response<Consulta> response) {
-                if (response.isSuccessful()) {
-                    Consulta consultaAtualizadaResponse = response.body();
-                    if (consultaAtualizadaResponse != null) {
-                        salvarConsultaAtualizada(usuario, consultaAtualizadaResponse);
-                    } else {
-                        Toast.makeText(MarcarConsultaActivity.this, "Erro ao atualizar consulta: resposta vazia", Toast.LENGTH_SHORT).show();
-                    }
-                } else {
-                    Toast.makeText(MarcarConsultaActivity.this, "Erro ao atualizar consulta", Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<Consulta> call, Throwable t) {
-                Toast.makeText(MarcarConsultaActivity.this, "Erro de conexão ao atualizar consulta", Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
-
-    // Salvar e vincular a consulta atualizada ao usuário
-    private void salvarConsultaAtualizada(Usuario usuario, Consulta consulta) {
-        // Substituir a consulta do usuário em vez de adicionar uma nova
-        if (usuario.getConsultas() == null) {
-            usuario.setConsultas(new ArrayList<>());
-        }
-        // Remover qualquer consulta existente antes de adicionar a nova consulta
-        usuario.getConsultas().clear();
-        usuario.getConsultas().add(consulta);
-
-        usuarioRepository.atualizarUsuario(usuario.getId(), usuario).enqueue(new Callback<Usuario>() {
-            @Override
-            public void onResponse(Call<Usuario> call, Response<Usuario> response) {
-                if (response.isSuccessful()) {
-                    Toast.makeText(MarcarConsultaActivity.this, "Consulta substituída com sucesso!", Toast.LENGTH_SHORT).show();
-
-                    // Retornar o usuário atualizado à ConsultaActivity
-                    Intent intent = new Intent();
-                    intent.putExtra("usuario_atualizado", usuario);
-                    setResult(RESULT_OK, intent);
-                    finish();
-                } else {
-                    Toast.makeText(MarcarConsultaActivity.this, "Erro ao substituir consulta", Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<Usuario> call, Throwable t) {
-                Toast.makeText(MarcarConsultaActivity.this, "Erro de conexão", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MarcarConsultaActivity.this, "Erro de conexão ao carregar consultas", Toast.LENGTH_SHORT).show();
             }
         });
     }

@@ -5,103 +5,128 @@
     android:id="@+id/scrollViewMarcarConsulta"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@color/backgroundColor"
     android:padding="16dp">
 
     <LinearLayout
-        android:orientation="vertical"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <!-- Título -->
+    <TextView
+        android:id="@+id/tvTitleMarcarConsulta"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="24dp"
+        android:text="Marcar Consulta"
+        android:textColor="@color/titleColor"
+        android:layout_marginTop="50dp"
+        android:textSize="26sp"
+        android:textStyle="bold" />
+
+    <!-- Campo Data -->
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tilData"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        app:boxBackgroundMode="outline"
+        android:layout_marginTop="70dp"
+        app:boxStrokeColor="@color/outlineColor"
+        app:hintTextColor="@color/outlineColor">
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/etData"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Selecione a Data"
+        android:inputType="date"
+        android:textColor="@color/textPrimary"
+        android:backgroundTint="@color/black" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Campo Hora -->
+    <com.google.android.material.textfield.TextInputLayout
+    android:id="@+id/tilHora"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="16dp"
+    app:boxBackgroundMode="outline"
+    app:boxStrokeColor="@color/outlineColor"
+    app:hintTextColor="@color/outlineColor">
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/etHora"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Selecione a Hora"
+        android:inputType="time"
+        android:textColor="@color/textPrimary"
+        android:backgroundTint="@color/black" />
+    </com.google.android.material.textfield.TextInputLayout>
 
         <TextView
-            android:id="@+id/tvTitleMarcarConsulta"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="24dp"
-            android:text="Marcar Consulta"
-            android:textColor="@color/black"
-            android:layout_marginTop="50dp"
-            android:textSize="25sp"
-            android:textStyle="bold" />
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/tilData"
-            android:layout_width="match_parent"
-            android:layout_marginTop="70dp"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/etData"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Selecione a Data"
-                android:inputType="date" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/tilHora"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/etHora"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Selecione a Hora"
-                android:inputType="time" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <TextView
-            android:id="@+id/tvSelecionarMedico"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Selecione o tipo de Consulta:"
-            android:textColor="@color/black"
-            android:textSize="18sp"
-            android:layout_marginBottom="8dp" />
+        android:id="@+id/tvSelecionarMedico"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Selecione o tipo de Consulta:"
+        android:textColor="@color/textPrimary"
+        android:textSize="18sp"
+        android:layout_marginBottom="8dp" />
 
         <Spinner
-            android:id="@+id/spinnerMedicos"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:backgroundTint="@color/black" />
+        android:id="@+id/spinnerMedicos"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:backgroundTint="@color/outlineColor" />
 
-        <!-- Local da consulta é preenchido automaticamente -->
         <TextView
-            android:id="@+id/tvLocalConsulta"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Local: "
-            android:textSize="18sp"
-            android:textColor="@color/black"
-            android:layout_marginBottom="16dp" />
+        android:id="@+id/tvLocalConsulta"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Local: "
+        android:textSize="18sp"
+        android:textColor="@color/textPrimary"
+        android:layout_marginBottom="16dp" />
 
+        <!-- Campo Valor -->
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/tilValorConsulta"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="24dp"
-            app:counterEnabled="false">
+        android:id="@+id/tilValorConsulta"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="24dp"
+        app:boxBackgroundMode="outline"
+        app:boxStrokeColor="@color/outlineColor"
+        app:hintTextColor="@color/outlineColor">
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/etValorConsulta"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Valor da Consulta"
-                android:inputType="numberDecimal" />
-        </com.google.android.material.textfield.TextInputLayout>
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/etValorConsulta"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Valor da Consulta"
+        android:inputType="numberDecimal"
+        android:textColor="@color/textPrimary"
+        android:backgroundTint="@color/black" />
+    </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/buttonConfirmarAgendamento"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Confirmar Agendamento"
-            android:backgroundTint="@color/black"
-            android:textColor="@color/white"
-            android:layout_marginTop="16dp"/>
+        android:id="@+id/buttonConfirmarAgendamento"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Confirmar Agendamento"
+        android:textColor="@color/white"
+        android:backgroundTint="@color/buttonColor"
+        android:layout_marginTop="24dp" />
+
+        <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:visibility="gone"
+        android:layout_marginTop="24dp" />
     </LinearLayout>
 </ScrollView>

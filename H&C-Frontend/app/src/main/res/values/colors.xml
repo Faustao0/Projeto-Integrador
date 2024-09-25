@@ -1,16 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Cores básicas -->
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="background_gradient_start">#000000</color>
+
+    <!-- Cores de fundo -->
+    <color name="background_gradient_start">#ECEFF1</color>
     <color name="background_gradient_end">#DDDDDD</color>
     <color name="fastlane_background">#0096a6</color>
-    <color name="search_opaque">#ffaa3f</color>
-    <color name="selected_background">#ffaa3f</color>
     <color name="default_background">#3d3d3d</color>
     <color name="backgroundColor">#F5F5F5</color>
+
+    <!-- Cores de textos -->
     <color name="titleColor">#1E88E5</color>
     <color name="textPrimary">#000000</color>
-    <color name="textSecondary">#000000</color>
+    <color name="textSecondary">#666666</color>
+
+    <!-- Cores de componentes -->
     <color name="buttonColor">#1976D2</color>
+    <color name="outlineColor">#1E88E5</color>
+
+    <!-- Cores de seleção e destaque -->
+    <color name="selected_background">#ffaa3f</color>
+    <color name="search_opaque">#ffaa3f</color>
+
+    <!-- Cores adicionais (se necessário) -->
+    <color name="light_blue">#E3F2FD</color>
+    <color name="dark_blue">#1E88E5</color>>
 </resources>

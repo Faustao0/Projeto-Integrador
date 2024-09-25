@@ -85,7 +85,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
             android:text="Nome:"
-            android:textColor="@color/textSecondary"
+            android:textColor="@color/textPrimary"
             android:textSize="18sp" />
 
         <TextView
@@ -94,7 +94,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
             android:text="Telefone:"
-            android:textColor="@color/textSecondary"
+            android:textColor="@color/textPrimary"
             android:textSize="18sp" />
 
         <TextView
@@ -103,7 +103,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
             android:text="Email:"
-            android:textColor="@color/textSecondary"
+            android:textColor="@color/textPrimary"
             android:textSize="18sp" />
 
         <TextView
@@ -112,7 +112,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
             android:text="CPF:"
-            android:textColor="@color/textSecondary"
+            android:textColor="@color/textPrimary"
             android:textSize="18sp" />
 
         <TextView
@@ -121,7 +121,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
             android:text="CRM:"
-            android:textColor="@color/textSecondary"
+            android:textColor="@color/textPrimary"
             android:textSize="18sp" />
 
         <TextView
@@ -129,22 +129,34 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
-            android:text="Especialidade:"
-            android:textColor="@color/textSecondary"
+            android:text="Especialidade do médico:"
+            android:textColor="@color/textPrimary"
             android:textSize="18sp" />
 
-        <!-- Botão Marcar Consulta -->
-        <Button
-            android:id="@+id/button2"
+        <LinearLayout
+            android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="80dp"
-            android:backgroundTint="@color/buttonColor"
-            android:text="Marcar Consulta"
-            android:textColor="@color/white"
-            android:textStyle="bold"
-            android:padding="12dp"
-            android:layout_gravity="center" />
+            android:gravity="center"
+            android:layout_marginTop="24dp">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnReagendarConsulta"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Marcar Consulta"
+                android:layout_marginEnd="16dp"
+                android:backgroundTint="@color/buttonColor"
+                android:textColor="@color/white" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnCancelarConsulta"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="#F63C3C"
+                android:text="Cancelar Consulta"
+                android:textColor="@color/white" />
+        </LinearLayout>
 
     </LinearLayout>
 </ScrollView>

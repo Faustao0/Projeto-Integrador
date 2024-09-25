@@ -15,6 +15,7 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="8dp"
         android:text="Menu Principal"
+        android:textColor="@color/textPrimary"
         android:textSize="24sp"
         android:textStyle="bold" />
 
@@ -35,6 +36,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="8dp"
+        android:textColor="@color/textPrimary"
         android:text="Perfil" />
 
     <ImageButton
@@ -54,6 +56,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="8dp"
+        android:textColor="@color/textPrimary"
         android:text="Paciente" />
 
     <ImageButton
@@ -73,6 +76,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="8dp"
+        android:textColor="@color/textPrimary"
         android:text="Consultas" />
 
     <ImageButton
@@ -92,6 +96,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="8dp"
+        android:textColor="@color/textPrimary"
         android:text="Exames" />
 
     <ImageButton
@@ -111,6 +116,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="8dp"
+        android:textColor="@color/textPrimary"
         android:text="Medicamentos" />
 
     <ImageButton
@@ -130,6 +136,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="8dp"
+        android:textColor="@color/textPrimary"
         android:text="Mensagens" />
 
 </LinearLayout>
