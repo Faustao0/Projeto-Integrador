@@ -46,7 +46,6 @@ public class UsuarioController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Usuario createUsuario(@Valid @RequestBody Usuario usuario) {
-        // Nenhuma mudança necessária aqui; a validação dos atributos herdados ocorrerá automaticamente.
         return usuarioService.save(usuario);
     }
 
@@ -69,6 +68,15 @@ public class UsuarioController {
             return ResponseEntity.ok(usuario);
         } catch (BusinessException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+    }
+    @GetMapping("/login")
+    public ResponseEntity<Usuario> login(@RequestParam String email, @RequestParam String senha) {
+        try {
+            Usuario usuario = usuarioService.authenticate(email, senha);
+            return ResponseEntity.ok(usuario);
+        } catch (BusinessException e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
         }
     }
 }

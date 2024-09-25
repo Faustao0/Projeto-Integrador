@@ -1,9 +1,8 @@
 package com.unipar.H_C_backend.domain;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.OneToMany;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import java.util.List;
 
@@ -17,18 +16,29 @@ public class Paciente extends Pessoa {
     private String historicoMedico;
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "paciente_id")
+    @JsonManagedReference
     private List<Medicamento> medicamentos;
+
+//    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+//    @JoinColumn(name = "usuario_id")
+//    @JsonManagedReference
+//    private List<Endereco> enderecos;
+
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "usuario_id")
+//    @JsonBackReference
+//    private Usuario usuario;
 
     public Paciente() {
     }
 
-    public Paciente(Long id, String nome, String telefone, String email, String cpf, Integer idade, String historicoMedico) {
+    public Paciente(Long id, String nome, String telefone, String email, String cpf, Integer idade, String historicoMedico, List<Medicamento> medicamentos) {
         super(id, nome, telefone, email, cpf);
         this.idade = idade;
         this.historicoMedico = historicoMedico;
+        this.medicamentos = medicamentos;
     }
-
-    // Getters e Setters
 
     public Integer getIdade() {
         return idade;
@@ -52,9 +62,24 @@ public class Paciente extends Pessoa {
 
     public void setMedicamentos(List<Medicamento> medicamentos) {
         this.medicamentos = medicamentos;
+        for (Medicamento medicamento : medicamentos) {
+            medicamento.setPaciente(this);
+        }
     }
 
-    public void addMedicamento(Medicamento medicamento) {
-        this.medicamentos.add(medicamento);
-    }
+//    public List<Endereco> getEnderecos() {
+//        return enderecos;
+//    }
+//
+//    public void setEnderecos(List<Endereco> enderecos) {
+//        this.enderecos = enderecos;
+//    }
+
+//    public Usuario getUsuario() {
+//        return usuario;
+//    }
+//
+//    public void setUsuario(Usuario usuario) {
+//        this.usuario = usuario;
+//    }
 }
