@@ -1,6 +1,5 @@
 package com.unipar.H_C_backend.controller;
 
-
 import com.unipar.H_C_backend.domain.Consulta;
 import com.unipar.H_C_backend.exceptions.BusinessException;
 import com.unipar.H_C_backend.service.ConsultaService;
@@ -13,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController
@@ -44,12 +42,15 @@ public class ConsultaController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Consulta createConsulta(@Valid @RequestBody Consulta consulta) {
+    public Consulta createConsulta(@Valid @RequestBody Consulta consulta) throws BusinessException {
         return consultaService.save(consulta);
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Consulta> updateConsulta(@PathVariable Long id, @Valid @RequestBody Consulta consultaDetails) throws BusinessException {
+    @PutMapping(value = "/{id}", consumes = "application/json")
+    public ResponseEntity<Consulta> updateConsulta(
+            @PathVariable Long id,
+            @Valid @RequestBody Consulta consultaDetails) throws BusinessException {
+
         Consulta updatedConsulta = consultaService.update(id, consultaDetails);
         return ResponseEntity.ok(updatedConsulta);
     }
@@ -59,15 +60,4 @@ public class ConsultaController {
         consultaService.delete(id);
         return ResponseEntity.noContent().build();
     }
-
-    @GetMapping("/medico/{medico}")
-    public ResponseEntity<Consulta> getConsultaByMedico(@PathVariable("medico") String medico) {
-        try {
-            Consulta consulta = consultaService.findByMedico(medico);
-            return ResponseEntity.ok(consulta);
-        } catch (BusinessException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
-        }
-    }
 }
-

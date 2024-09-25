@@ -2,7 +2,6 @@ package com.unipar.H_C_backend.controller;
 
 import com.unipar.H_C_backend.domain.Paciente;
 import com.unipar.H_C_backend.exceptions.BusinessException;
-import com.unipar.H_C_backend.service.MedicamentoService;
 import com.unipar.H_C_backend.service.PacienteService;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -23,9 +22,6 @@ public class PacienteController {
     @Autowired
     private PacienteService pacienteService;
 
-    @Autowired
-    private MedicamentoService medicamentoService;
-
     @GetMapping
     public List<Paciente> getAllPacientes() {
         return pacienteService.findAll();
@@ -40,11 +36,20 @@ public class PacienteController {
             @ApiResponse(responseCode = "500", description = "Internal server error", content =
                     { @Content(mediaType = "application/json", schema =
                     @Schema(implementation = Exception.class)) }) })
-
     @GetMapping("/{id}")
     public ResponseEntity<Paciente> getPacienteById(@PathVariable("id") Long id) {
         try {
             Paciente paciente = pacienteService.findById(id);
+            return ResponseEntity.ok(paciente);
+        } catch (BusinessException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+    }
+
+    @GetMapping("/nome/{nome}")
+    public ResponseEntity<Paciente> getPacienteByName(@PathVariable("nome") String nome) {
+        try {
+            Paciente paciente = pacienteService.findByName(nome);
             return ResponseEntity.ok(paciente);
         } catch (BusinessException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
@@ -63,27 +68,14 @@ public class PacienteController {
         return ResponseEntity.ok(updatedPaciente);
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deletePaciente(@PathVariable Long id) throws BusinessException {
-        pacienteService.delete(id);
-        return ResponseEntity.noContent().build();
-    }
-    
-    @GetMapping("/nome/{nome}")
-    public ResponseEntity<Paciente> getPacienteByName(@PathVariable("nome") String nome) {
-        try {
-            Paciente paciente = pacienteService.findByName(nome);
-            return ResponseEntity.ok(paciente);
-        } catch (BusinessException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
-        }
+    @PutMapping("/nome/{nome}")
+    public ResponseEntity<Paciente> updatePacienteByName(@PathVariable String nome, @Valid @RequestBody Paciente pacienteDetails) throws BusinessException {
+        Paciente updatedPaciente = pacienteService.updateByName(nome, pacienteDetails);
+        return ResponseEntity.ok(updatedPaciente);
     }
 
     @PostMapping("/nome/{nome}/medicamentos/{medicamentoId}")
-    public ResponseEntity<Paciente> addMedicamentoToPaciente(
-            @PathVariable String nome,
-            @PathVariable Long medicamentoId) {
-
+    public ResponseEntity<Paciente> addMedicamentoToPaciente(@PathVariable String nome, @PathVariable Long medicamentoId) {
         try {
             Paciente paciente = pacienteService.vincularMedicamento(nome, medicamentoId);
             return ResponseEntity.ok(paciente);
@@ -92,22 +84,9 @@ public class PacienteController {
         }
     }
 
-    @PutMapping("/nome/{nome}")
-    public ResponseEntity<Paciente> updatePacienteByName(
-            @PathVariable String nome,
-            @RequestParam(required = false) Long medicamentoId,  // Parâmetro opcional
-            @Valid @RequestBody Paciente pacienteDetails) throws BusinessException {
-
-        try {
-            Paciente updatedPaciente = pacienteService.updateByName(nome, pacienteDetails);
-
-            if (medicamentoId != null) {
-                updatedPaciente = pacienteService.vincularMedicamento(nome, medicamentoId);
-            }
-
-            return ResponseEntity.ok(updatedPaciente);
-        } catch (BusinessException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
-        }
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deletePaciente(@PathVariable Long id) throws BusinessException {
+        pacienteService.delete(id);
+        return ResponseEntity.noContent().build();
     }
 }
