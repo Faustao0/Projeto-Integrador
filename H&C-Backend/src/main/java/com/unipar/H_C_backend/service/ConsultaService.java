@@ -31,7 +31,6 @@ public class ConsultaService {
     }
 
     public Consulta save(Consulta consulta) throws BusinessException {
-        // Se houver médicos vinculados, garantir que não há duplicatas
         if (consulta.getMedicos() != null && !consulta.getMedicos().isEmpty()) {
             List<Medico> medicosGerenciados = buscarMedicos(consulta.getMedicos());
             consulta.setMedicos(removeMedicosDuplicados(medicosGerenciados, consulta.getId()));
@@ -42,18 +41,15 @@ public class ConsultaService {
     public Consulta update(Long id, Consulta consultaDetails) throws BusinessException {
         Consulta consulta = findById(id);
 
-        // Atualize os atributos da consulta existente
         consulta.setData(consultaDetails.getData());
         consulta.setHora(consultaDetails.getHora());
         consulta.setLocal(consultaDetails.getLocal());
         consulta.setValor(consultaDetails.getValor());
 
-        // Mantenha os médicos existentes se nenhum novo for fornecido
         if (consultaDetails.getMedicos() != null && !consultaDetails.getMedicos().isEmpty()) {
             List<Medico> medicosGerenciados = buscarMedicos(consultaDetails.getMedicos());
             consulta.setMedicos(medicosGerenciados);
         }
-        // Não faça nada se a lista de médicos for nula ou vazia, mantendo os médicos existentes
 
         return consultaRepository.save(consulta);
     }
@@ -77,9 +73,7 @@ public class ConsultaService {
         return medicosGerenciados;
     }
 
-    // Função para remover médicos duplicados
     private List<Medico> removeMedicosDuplicados(List<Medico> medicos, Long consultaId) throws BusinessException {
-        // Obtenha a consulta existente para evitar vinculações duplicadas de médicos
         Consulta consultaExistente = consultaRepository.findById(consultaId).orElse(null);
         if (consultaExistente != null) {
             List<Medico> medicosExistentes = consultaExistente.getMedicos();
