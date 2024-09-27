@@ -13,7 +13,6 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <!-- Título -->
     <TextView
         android:id="@+id/tvTitleMarcarConsulta"
         android:layout_width="wrap_content"
@@ -22,18 +21,17 @@
         android:layout_marginBottom="24dp"
         android:text="Marcar Consulta"
         android:textColor="@color/titleColor"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="90dp"
         android:textSize="26sp"
         android:textStyle="bold" />
 
-    <!-- Campo Data -->
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/tilData"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
         app:boxBackgroundMode="outline"
-        android:layout_marginTop="70dp"
+        android:layout_marginTop="100dp"
         app:boxStrokeColor="@color/outlineColor"
         app:hintTextColor="@color/outlineColor">
 
@@ -47,7 +45,6 @@
         android:backgroundTint="@color/black" />
     </com.google.android.material.textfield.TextInputLayout>
 
-        <!-- Campo Hora -->
     <com.google.android.material.textfield.TextInputLayout
     android:id="@+id/tilHora"
     android:layout_width="match_parent"
@@ -92,7 +89,6 @@
         android:textColor="@color/textPrimary"
         android:layout_marginBottom="16dp" />
 
-        <!-- Campo Valor -->
         <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/tilValorConsulta"
         android:layout_width="match_parent"

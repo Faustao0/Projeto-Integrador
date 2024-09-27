@@ -1,19 +1,19 @@
 package com.example.hc_frontend;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.hc_frontend.domain.Consulta;
 import com.example.hc_frontend.domain.Medico;
 import com.example.hc_frontend.domain.Usuario;
 import com.example.hc_frontend.repositories.ConsultaRepository;
 import com.example.hc_frontend.repositories.UsuarioRepository;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -38,7 +38,7 @@ public class ConsultaActivity extends AppCompatActivity {
         setContentView(R.layout.activity_consulta);
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://10.0.2.2:8080/")  // URL base da sua API
+                .baseUrl("http://10.0.2.2:8080/")  // URL base da API
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
@@ -61,8 +61,7 @@ public class ConsultaActivity extends AppCompatActivity {
 
         carregarDadosConsulta();
 
-        // Cancelar consulta (desvincular do usuário)
-        buttonCancelarConsulta.setOnClickListener(v -> desvincularConsulta());
+        buttonCancelarConsulta.setOnClickListener(v -> mostrarConfirmacaoCancelarConsulta());
 
         // Reagendar consulta
         buttonReagendarConsulta.setOnClickListener(v -> {
@@ -73,7 +72,15 @@ public class ConsultaActivity extends AppCompatActivity {
         });
     }
 
-    // Carregar dados da consulta (caso exista)
+    private void mostrarConfirmacaoCancelarConsulta() {
+        new AlertDialog.Builder(this)
+                .setTitle("Cancelamento de Consulta")
+                .setMessage("Tem certeza que deseja cancelar a consulta?")
+                .setPositiveButton("Sim", (dialog, which) -> desvincularConsulta())
+                .setNegativeButton("Não", (dialog, which) -> dialog.dismiss())
+                .show();
+    }
+
     private void carregarDadosConsulta() {
         if (usuario != null && !usuario.getConsultas().isEmpty()) {
             Consulta consulta = usuario.getConsultas().get(0);
@@ -110,7 +117,6 @@ public class ConsultaActivity extends AppCompatActivity {
         tvMedicoEspecialidade.setText("Especialidade do médico: ");
     }
 
-
     // Atualizar a interface com os dados da consulta
     private void atualizarUI(Consulta consulta) {
         tvDate.setText("Data: " + consulta.getData());
@@ -129,34 +135,33 @@ public class ConsultaActivity extends AppCompatActivity {
         }
     }
 
-    // Método para desvincular a consulta do usuário
     private void desvincularConsulta() {
         if (usuario.getConsultas() != null && !usuario.getConsultas().isEmpty()) {
-            usuario.getConsultas().clear();  // Remover a consulta vinculada ao usuário
+            usuario.getConsultas().clear();
         }
 
-        // Atualizar o usuário na API
         usuarioRepository.atualizarUsuario(usuario.getId(), usuario).enqueue(new Callback<Usuario>() {
             @Override
             public void onResponse(Call<Usuario> call, Response<Usuario> response) {
                 if (response.isSuccessful()) {
-                    Toast.makeText(ConsultaActivity.this, "Consulta desvinculada com sucesso", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ConsultaActivity.this, "Consulta cancelada com sucesso", Toast.LENGTH_SHORT).show();
                     usuario = response.body();
-
-                    carregarDadosConsulta();
+                    carregarDadosConsulta();  // Atualizar os dados na UI
                 } else {
-                    Toast.makeText(ConsultaActivity.this, "Erro ao desvincular consulta", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ConsultaActivity.this, "Erro ao cancelar consulta", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<Usuario> call, Throwable t) {
-                Toast.makeText(ConsultaActivity.this, "Erro de conexão ao desvincular consulta", Toast.LENGTH_SHORT).show();
+                String errorMessage = "Erro de conexão ao cancelar consulta: " + t.getMessage();
+                Toast.makeText(ConsultaActivity.this, errorMessage, Toast.LENGTH_LONG).show();
+
+                t.printStackTrace();
             }
         });
     }
 
-    // Receber resultado do reagendamento
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);

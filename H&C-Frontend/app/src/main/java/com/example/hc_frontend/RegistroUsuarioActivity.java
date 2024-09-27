@@ -28,7 +28,6 @@ public class RegistroUsuarioActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registro_usuario);
 
-        // Inicializar os campos de entrada
         etNome = findViewById(R.id.etNome);
         etTelefone = findViewById(R.id.etTelefone);
         etEmail = findViewById(R.id.etEmail);
@@ -37,14 +36,12 @@ public class RegistroUsuarioActivity extends AppCompatActivity {
         etConfirmarSenha = findViewById(R.id.etConfirmarSenha);
         btnRegistrar = findViewById(R.id.btnRegistrar);
 
-        // Inicializar Retrofit
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("http://10.0.2.2:8080/")  // URL da API
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         usuarioRepository = retrofit.create(UsuarioRepository.class);
 
-        // Lógica do botão de registrar
         btnRegistrar.setOnClickListener(v -> {
             String nome = etNome.getText().toString();
             String telefone = etTelefone.getText().toString();
@@ -53,7 +50,6 @@ public class RegistroUsuarioActivity extends AppCompatActivity {
             String senha = etSenha.getText().toString();
             String confirmarSenha = etConfirmarSenha.getText().toString();
 
-            // Verificar se os campos estão preenchidos
             if (TextUtils.isEmpty(nome)) {
                 etNome.setError("Nome é obrigatório");
                 return;
@@ -84,7 +80,6 @@ public class RegistroUsuarioActivity extends AppCompatActivity {
                 return;
             }
 
-            // Criar um novo usuário
             Usuario novoUsuario = new Usuario();
             novoUsuario.setNome(nome);
             novoUsuario.setTelefone(telefone);
@@ -92,7 +87,6 @@ public class RegistroUsuarioActivity extends AppCompatActivity {
             novoUsuario.setCpf(cpf);
             novoUsuario.setSenha(senha);
 
-            // Desabilitar o botão enquanto a solicitação está sendo processada
             btnRegistrar.setEnabled(false);
 
             // Enviar os dados para a API
@@ -101,11 +95,11 @@ public class RegistroUsuarioActivity extends AppCompatActivity {
                 public void onResponse(Call<Usuario> call, Response<Usuario> response) {
                     if (response.isSuccessful()) {
                         Toast.makeText(RegistroUsuarioActivity.this, "Usuário registrado com sucesso!", Toast.LENGTH_SHORT).show();
-                        finish();  // Fechar a tela de registro
+                        finish();
                     } else {
                         Toast.makeText(RegistroUsuarioActivity.this, "Erro ao registrar usuário", Toast.LENGTH_SHORT).show();
                     }
-                    btnRegistrar.setEnabled(true);  // Reativar o botão
+                    btnRegistrar.setEnabled(true);
                 }
 
                 @Override

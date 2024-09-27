@@ -54,7 +54,6 @@ public class MarcarConsultaActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_marcar_consulta);
 
-        // Inicializar componentes
         etData = findViewById(R.id.etData);
         etHora = findViewById(R.id.etHora);
         etValorConsulta = findViewById(R.id.etValorConsulta);
@@ -65,7 +64,7 @@ public class MarcarConsultaActivity extends AppCompatActivity {
 
         // Inicializar Retrofit
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://10.0.2.2:8080/") // URL base correta da sua API
+                .baseUrl("http://10.0.2.2:8080/") // URL base da  API
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
@@ -73,7 +72,6 @@ public class MarcarConsultaActivity extends AppCompatActivity {
         consultaRepository = retrofit.create(ConsultaRepository.class);
         usuarioRepository = retrofit.create(UsuarioRepository.class);
 
-        // Obter o ID da consulta e o usuário do Intent
         consultaId = getIntent().getLongExtra("consultaId", -1L);
         usuario = (Usuario) getIntent().getSerializableExtra("usuario");
 
@@ -179,13 +177,11 @@ public class MarcarConsultaActivity extends AppCompatActivity {
             return;
         }
 
-        // Verificar se o valor é maior que zero
         if (Double.parseDouble(valorConsulta) <= 0) {
             Toast.makeText(MarcarConsultaActivity.this, "O valor da consulta deve ser maior que zero", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        // Atualizar os dados da consulta
         consultaSelecionada.setData(data);
         consultaSelecionada.setHora(hora);
         consultaSelecionada.setValor(Double.parseDouble(valorConsulta));
@@ -199,7 +195,7 @@ public class MarcarConsultaActivity extends AppCompatActivity {
             consultaAtualizada.setMedicos(Collections.singletonList(medicoSelecionado));
         }
 
-        progressBar.setVisibility(View.VISIBLE);  // Mostrar o progress bar enquanto faz a solicitação
+        progressBar.setVisibility(View.VISIBLE);
 
         consultaRepository.atualizarConsulta(consultaAtualizada.getId(), consultaAtualizada).enqueue(new Callback<Consulta>() {
             @Override
