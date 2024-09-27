@@ -2,6 +2,7 @@ package com.unipar.H_C_backend.domain;
 
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -25,6 +26,11 @@ public class Exame {
 
     @NotBlank(message = "A data do exame é obrigatória")
     private LocalDate data;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "paciente_id", nullable = false)
+    @JsonBackReference
+    private Paciente paciente;
 
     // Construtores, Getters e Setters
     public Exame() {}
@@ -65,5 +71,13 @@ public class Exame {
 
     public void setData(LocalDate data) {
         this.data = data;
+    }
+
+    public Paciente getPaciente() {
+        return paciente;
+    }
+
+    public void setPaciente(Paciente paciente) {
+        this.paciente = paciente;
     }
 }

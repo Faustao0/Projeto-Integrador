@@ -20,6 +20,11 @@ public class Paciente extends Pessoa {
     @JsonManagedReference
     private List<Medicamento> medicamentos;
 
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "paciente_id")
+    @JsonManagedReference
+    private List<Exame> exames;
+
 //    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 //    @JoinColumn(name = "usuario_id")
 //    @JsonManagedReference
@@ -67,7 +72,15 @@ public class Paciente extends Pessoa {
         }
     }
 
-//    public List<Endereco> getEnderecos() {
+    public List<Exame> getExames() {
+        return exames;
+    }
+
+    public void setExames(List<Exame> exames) {
+        this.exames = exames;
+    }
+
+    //    public List<Endereco> getEnderecos() {
 //        return enderecos;
 //    }
 //
