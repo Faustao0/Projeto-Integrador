@@ -89,4 +89,14 @@ public class PacienteController {
         pacienteService.delete(id);
         return ResponseEntity.noContent().build();
     }
+
+    @GetMapping("/usuario/{usuarioId}")
+    public ResponseEntity<List<Paciente>> getPacientesByUsuarioId(@PathVariable("usuarioId") Long usuarioId) {
+        try {
+            List<Paciente> pacientes = pacienteService.findByUsuarioId(usuarioId);
+            return ResponseEntity.ok(pacientes);
+        } catch (BusinessException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+    }
 }

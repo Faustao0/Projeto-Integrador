@@ -36,6 +36,7 @@ public class EnderecoService {
         endereco.setEstado(enderecoDetails.getEstado());
         endereco.setCep(enderecoDetails.getCep());
         endereco.setBairro(enderecoDetails.getBairro());
+        endereco.setPessoa(enderecoDetails.getPessoa());
         return enderecoRepository.save(endereco);
     }
 

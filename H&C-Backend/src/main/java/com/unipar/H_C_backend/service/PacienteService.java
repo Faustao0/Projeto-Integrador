@@ -44,8 +44,11 @@ public class PacienteService {
         paciente.setEmail(pacienteDetails.getEmail());
         paciente.setCpf(pacienteDetails.getCpf());
         paciente.setIdade(pacienteDetails.getIdade());
-        paciente.setHistoricoMedico(pacienteDetails.getHistoricoMedico());
-        paciente.setMedicamentos(pacienteDetails.getMedicamentos());
+        if (pacienteDetails.getMedicamentos() != null) {
+            paciente.setMedicamentos(pacienteDetails.getMedicamentos());
+        }
+        paciente.setEnderecos(pacienteDetails.getEnderecos());
+        paciente.setUsuario(pacienteDetails.getUsuario());
 
         return pacienteRepository.save(paciente);
     }
@@ -58,8 +61,11 @@ public class PacienteService {
         paciente.setEmail(pacienteDetails.getEmail());
         paciente.setCpf(pacienteDetails.getCpf());
         paciente.setIdade(pacienteDetails.getIdade());
-        paciente.setHistoricoMedico(pacienteDetails.getHistoricoMedico());
-        paciente.setMedicamentos(pacienteDetails.getMedicamentos());
+        if (pacienteDetails.getMedicamentos() != null) {
+            paciente.setMedicamentos(pacienteDetails.getMedicamentos());
+        }
+        paciente.setEnderecos(pacienteDetails.getEnderecos());
+        paciente.setUsuario(pacienteDetails.getUsuario());
 
         return pacienteRepository.save(paciente);
     }
@@ -76,5 +82,13 @@ public class PacienteService {
     public void delete(Long id) throws BusinessException {
         Paciente paciente = findById(id);
         pacienteRepository.delete(paciente);
+    }
+
+    public List<Paciente> findByUsuarioId(Long usuarioId) throws BusinessException {
+        List<Paciente> pacientes = pacienteRepository.findByUsuarioId(usuarioId);
+        if (pacientes.isEmpty()) {
+            throw new BusinessException("Nenhum paciente encontrado para o usuário com ID: " + usuarioId);
+        }
+        return pacientes;
     }
 }

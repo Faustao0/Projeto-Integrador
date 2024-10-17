@@ -22,22 +22,15 @@ public class Usuario extends Pessoa {
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "usuario_id")
     @JsonManagedReference
-    private List<Endereco> enderecos;
-
-//    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-//    @JoinColumn(name = "usuario_id")
-//    @JsonManagedReference
-//    private List<Paciente> pacientes;
+    private List<Paciente> pacientes;
 
     public Usuario() {
         super();
     }
 
-    public Usuario(Long id, String nome, String telefone, String email, String cpf, String senha, List<Consulta> consultas, List<Endereco> enderecos) {
-        super(id, nome, telefone, email, cpf);
+    public Usuario(String senha, List<Consulta> consultas) {
         this.senha = senha;
         this.consultas = consultas;
-        this.enderecos = enderecos;
     }
 
     public String getSenha() {
@@ -59,22 +52,14 @@ public class Usuario extends Pessoa {
         }
     }
 
-    public List<Endereco> getEnderecos() {
-        return enderecos;
+    public List<Paciente> getPacientes() {
+        return pacientes;
     }
 
-    public void setEnderecos(List<Endereco> enderecos) {
-        this.enderecos = enderecos;
+    public void setPacientes(List<Paciente> pacientes) {
+        this.pacientes = pacientes;
+        for (Paciente paciente : pacientes) {
+            paciente.setUsuario(this);
+        }
     }
-
-//    public List<Paciente> getPacientes() {
-//        return pacientes;
-//    }
-//
-//    public void setPacientes(List<Paciente> pacientes) {
-//        this.pacientes = pacientes;
-//        for (Paciente paciente : pacientes) {
-//            paciente.setUsuario(this);
-//        }
-//    }
 }

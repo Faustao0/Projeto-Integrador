@@ -1,12 +1,12 @@
 package com.unipar.H_C_backend.domain;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import org.hibernate.validator.constraints.Length;
+
+import java.util.List;
 
 @Entity
 public class Pessoa {
@@ -31,13 +31,10 @@ public class Pessoa {
     @Length(min = 11, max = 14, message = "O CPF deve ter entre 11 e 14 caracteres.")
     private String cpf;
 
-    public Pessoa(Long id, String nome, String telefone, String email, String cpf) {
-        this.id = id;
-        this.nome = nome;
-        this.telefone = telefone;
-        this.email = email;
-        this.cpf = cpf;
-    }
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name = "usuario_id")
+    @JsonManagedReference
+    private List<Endereco> enderecos;
 
     public Pessoa() {}
 
@@ -79,5 +76,13 @@ public class Pessoa {
 
     public void setCpf(String cpf) {
         this.cpf = cpf;
+    }
+
+    public List<Endereco> getEnderecos() {
+        return enderecos;
+    }
+
+    public void setEnderecos(List<Endereco> enderecos) {
+        this.enderecos = enderecos;
     }
 }

@@ -24,9 +24,6 @@ public class Medicamento {
     @NotBlank(message = "A frequência de administração do medicamento é obrigatória.")
     private String frequencia;
 
-    @NotNull(message = "A data de validade do medicamento é obrigatória.")
-    private String validade;
-
     @NotBlank(message = "O fabricante do medicamento é obrigatório.")
     private String fabricante;
 
@@ -36,16 +33,6 @@ public class Medicamento {
     private Paciente paciente;
 
     public Medicamento() {
-    }
-
-    public Medicamento(Long id, String nome, String dosagem, String frequencia, String validade, String fabricante, Paciente paciente) {
-        this.id = id;
-        this.nome = nome;
-        this.dosagem = dosagem;
-        this.frequencia = frequencia;
-        this.validade = validade;
-        this.fabricante = fabricante;
-        this.paciente = paciente;
     }
 
     public Long getId() {
@@ -78,14 +65,6 @@ public class Medicamento {
 
     public void setFrequencia(String frequencia) {
         this.frequencia = frequencia;
-    }
-
-    public String getValidade() {
-        return validade;
-    }
-
-    public void setValidade(String validade) {
-        this.validade = validade;
     }
 
     public String getFabricante() {
