@@ -1,8 +1,9 @@
 package com.example.hc_frontend.domain;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class Paciente {
+public class Paciente implements Serializable {
 
     private Long id;
     private String nome;
@@ -10,8 +11,9 @@ public class Paciente {
     private String email;
     private String cpf;
     private Integer idade;
-    private String historicoMedico;
     private List<Medicamento> medicamentos;
+    private List<Endereco> enderecos;
+    private Usuario usuario;
 
     public Long getId() {
         return id;
@@ -61,19 +63,27 @@ public class Paciente {
         this.idade = idade;
     }
 
-    public String getHistoricoMedico() {
-        return historicoMedico;
-    }
-
-    public void setHistoricoMedico(String historicoMedico) {
-        this.historicoMedico = historicoMedico;
-    }
-
     public List<Medicamento> getMedicamentos() {
         return medicamentos;
     }
 
     public void setMedicamentos(List<Medicamento> medicamentos) {
         this.medicamentos = medicamentos;
+    }
+
+    public List<Endereco> getEnderecos() {
+        return enderecos;
+    }
+
+    public void setEnderecos(List<Endereco> endereco) {
+        this.enderecos = endereco;
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 }

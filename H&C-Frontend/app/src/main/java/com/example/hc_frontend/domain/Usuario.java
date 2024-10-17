@@ -12,6 +12,8 @@ public class Usuario implements Serializable{
     private String cpf;
     private String senha;
     private List<Consulta> consultas;
+    private List<Endereco> enderecos;
+    private List<Paciente> pacientes;
 
     public Usuario() {
         this.id = id;
@@ -21,6 +23,7 @@ public class Usuario implements Serializable{
         this.cpf = cpf;
         this.senha = senha;
         this.consultas = consultas;
+        this.enderecos = enderecos;
     }
 
     public Long getId() {
@@ -77,5 +80,21 @@ public class Usuario implements Serializable{
 
     public void setConsultas(List<Consulta> consultas) {
         this.consultas = consultas;
+    }
+
+    public List<Endereco> getEndereco() {
+        return enderecos;
+    }
+
+    public void setEndereco(List<Endereco> endereco) {
+        this.enderecos = endereco;
+    }
+
+    public List<Paciente> getPacientes() {
+        return pacientes;
+    }
+
+    public void setPacientes(List<Paciente> pacientes) {
+        this.pacientes = pacientes;
     }
 }

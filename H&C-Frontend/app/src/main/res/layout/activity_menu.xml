@@ -1,142 +1,124 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.drawerlayout.widget.DrawerLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="20dp"
-    tools:context=".MenuActivity">
+    tools:context=".view.MenuActivity">
 
-    <TextView
-        android:id="@+id/tvMenuTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="8dp"
-        android:text="Menu Principal"
-        android:textColor="@color/textPrimary"
-        android:textSize="24sp"
-        android:textStyle="bold" />
+    <!-- Layout principal da tela -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="20dp">
 
-    <ImageButton
-        android:id="@+id/btnProfile"
-        android:layout_width="64dp"
-        android:layout_height="64dp"
-        android:layout_gravity="center_horizontal"
-        android:src="@drawable/profile"
-        android:layout_marginTop="32dp"
-        android:scaleType="fitCenter"
-        android:background="?attr/selectableItemBackgroundBorderless"
-        android:contentDescription="Perfil" />
+        <!-- Toolbar com o ícone de hambúrguer para abrir o menu -->
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#AD3EAFED"
+            android:elevation="4dp"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+            app:title="Menu Principal"
+            app:titleTextColor="#000000"
+            app:titleTextAppearance="@style/BoldToolbarTitle"/>
 
-    <TextView
-        android:id="@+id/tvProfile"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="8dp"
-        android:textColor="@color/textPrimary"
-        android:text="Perfil" />
+        <!-- Botões principais (ImageButton) com ícones -->
+        <ImageButton
+            android:id="@+id/btnProfile"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:layout_gravity="center_horizontal"
+            android:src="@drawable/profile"
+            android:layout_marginTop="32dp"
+            android:scaleType="fitCenter"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="Perfil" />
 
-    <ImageButton
-        android:id="@+id/btnPaciente"
-        android:layout_width="64dp"
-        android:layout_height="64dp"
-        android:layout_gravity="center_horizontal"
-        android:src="@drawable/elder"
-        android:layout_marginTop="32dp"
-        android:scaleType="fitCenter"
-        android:background="?attr/selectableItemBackgroundBorderless"
-        android:contentDescription="Paciente"/>
+        <TextView
+            android:id="@+id/tvProfile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="8dp"
+            android:textColor="@color/textPrimary"
+            android:text="Perfil" />
 
-    <TextView
-        android:id="@+id/tvPaciente"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="8dp"
-        android:textColor="@color/textPrimary"
-        android:text="Paciente" />
+        <ImageButton
+            android:id="@+id/btnPaciente"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:layout_gravity="center_horizontal"
+            android:src="@drawable/elder"
+            android:layout_marginTop="32dp"
+            android:scaleType="fitCenter"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="Paciente"/>
 
-    <ImageButton
-        android:id="@+id/btnAppointments"
-        android:layout_width="75dp"
-        android:layout_height="66dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="24dp"
-        android:background="?attr/selectableItemBackgroundBorderless"
-        android:contentDescription="Consultas"
-        android:scaleType="fitCenter"
-        android:src="@drawable/consulta" />
+        <TextView
+            android:id="@+id/tvPaciente"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="8dp"
+            android:textColor="@color/textPrimary"
+            android:text="Paciente" />
 
-    <TextView
-        android:id="@+id/tvAppointments"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="8dp"
-        android:textColor="@color/textPrimary"
-        android:text="Consultas" />
+        <ImageButton
+            android:id="@+id/btnAppointments"
+            android:layout_width="75dp"
+            android:layout_height="66dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="24dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="Consultas"
+            android:scaleType="fitCenter"
+            android:src="@drawable/consulta" />
 
-    <ImageButton
-        android:id="@+id/btnExams"
-        android:layout_width="85dp"
-        android:layout_height="74dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="24dp"
-        android:background="?attr/selectableItemBackgroundBorderless"
-        android:contentDescription="Exames"
-        android:scaleType="fitCenter"
-        android:src="@drawable/exames" />
+        <TextView
+            android:id="@+id/tvAppointments"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="8dp"
+            android:textColor="@color/textPrimary"
+            android:text="Consultas" />
 
-    <TextView
-        android:id="@+id/tvExams"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="8dp"
-        android:textColor="@color/textPrimary"
-        android:text="Exames" />
+        <ImageButton
+            android:id="@+id/btnMedications"
+            android:layout_width="62dp"
+            android:layout_height="53dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="24dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="Medicamentos"
+            android:scaleType="fitCenter"
+            android:src="@drawable/pills" />
 
-    <ImageButton
-        android:id="@+id/btnMedications"
-        android:layout_width="62dp"
-        android:layout_height="53dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="24dp"
-        android:background="?attr/selectableItemBackgroundBorderless"
-        android:contentDescription="Medicamentos"
-        android:scaleType="fitCenter"
-        android:src="@drawable/pills" />
+        <TextView
+            android:id="@+id/tvMedications"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="8dp"
+            android:textColor="@color/textPrimary"
+            android:text="Medicamentos" />
 
-    <TextView
-        android:id="@+id/tvMedications"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="8dp"
-        android:textColor="@color/textPrimary"
-        android:text="Medicamentos" />
+    </LinearLayout>
 
-    <ImageButton
-        android:id="@+id/btnMessages"
-        android:layout_width="64dp"
-        android:layout_height="64dp"
-        android:layout_gravity="center_horizontal"
-        android:src="@drawable/messagens"
-        android:layout_marginTop="24dp"
-        android:scaleType="fitCenter"
-        android:background="?attr/selectableItemBackgroundBorderless"
-        android:contentDescription="Mensagens" />
-
-    <TextView
-        android:id="@+id/tvMessages"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="8dp"
-        android:textColor="@color/textPrimary"
-        android:text="Mensagens" />
-
-</LinearLayout>
+    <!-- NavigationView para o menu de navegação -->
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/navigation_view"
+        android:layout_width="300dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        app:itemIconSize="45dp"
+        app:itemIconTint="@null"
+        app:headerLayout="@layout/hearder"
+        app:menu="@menu/main_menu" />
+</androidx.drawerlayout.widget.DrawerLayout>

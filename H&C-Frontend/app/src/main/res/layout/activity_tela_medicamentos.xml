@@ -1,109 +1,94 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main_browse_fragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="16dp"
-    tools:context=".TelaMedicamentosActivity" >
+    android:background="#f3f4f6">
 
-    <EditText
-        android:id="@+id/etPatientName"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Digite o nome do paciente" />
-
-    <Button
-        android:id="@+id/BotaoPesquisarPaceinte"
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Pesquisar" />
+        android:text="Medicação"
+        android:textSize="24sp"
+        android:textColor="#333333"
+        android:layout_gravity="center_horizontal"
+        android:paddingBottom="16dp"
+        android:fontFamily="sans-serif-medium"/>
 
-    <TextView
-        android:id="@+id/tvNome"
+    <EditText
+        android:id="@+id/nome_remedio"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Nome do Paciente:"
-        android:textSize="18sp"
-        android:paddingTop="16dp"/>
+        android:hint="Nome do Remédio"
+        android:padding="12dp"
+        android:background="#FFFFFF"
+        android:layout_marginBottom="12dp"
+        android:layout_marginTop="8dp"
+        android:elevation="2dp"
+        android:textColorHint="#888888"
+        android:textColor="#000000"
+        android:fontFamily="sans-serif"/>
 
-    <TextView
-        android:id="@+id/tvTelefone"
+    <EditText
+        android:id="@+id/dosagem_remedio"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Telefone"
-        android:textSize="18sp"
-        android:paddingTop="16dp"/>
+        android:hint="Dosagem (mg)"
+        android:padding="12dp"
+        android:background="#FFFFFF"
+        android:layout_marginBottom="12dp"
+        android:elevation="2dp"
+        android:textColorHint="#888888"
+        android:textColor="#000000"
+        android:fontFamily="sans-serif"/>
 
-    <TextView
-        android:id="@+id/tvEmail"
+    <EditText
+        android:id="@+id/frequência"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Email"
-        android:textSize="18sp"
-        android:paddingTop="16dp"/>
+        android:hint="Frequência"
+        android:padding="12dp"
+        android:background="#FFFFFF"
+        android:layout_marginBottom="12dp"
+        android:elevation="2dp"
+        android:textColorHint="#888888"
+        android:textColor="#000000"
+        android:fontFamily="sans-serif"/>
 
-    <TextView
-        android:id="@+id/tvCpf"
+    <EditText
+        android:id="@+id/fabricante"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="CPF"
-        android:textSize="18sp"
-        android:paddingTop="16dp"/>
+        android:hint="Fabricante"
+        android:padding="12dp"
+        android:background="#FFFFFF"
+        android:layout_marginBottom="12dp"
+        android:elevation="2dp"
+        android:textColorHint="#888888"
+        android:textColor="#000000"
+        android:fontFamily="sans-serif"/>
 
-    <TextView
-        android:id="@+id/tvIdade"
+    <EditText
+        android:id="@+id/horario_tomar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Idade"
-        android:textSize="18sp"
-        android:paddingTop="16dp"/>
+        android:hint="Horário de Tomar"
+        android:padding="12dp"
+        android:background="#FFFFFF"
+        android:layout_marginBottom="12dp"
+        android:elevation="2dp"
+        android:textColorHint="#888888"
+        android:textColor="#000000"
+        android:fontFamily="sans-serif"/>
 
-    <TextView
-        android:id="@+id/tvHistorico"
+    <Button
+        android:id="@+id/salvar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="16dp"
-        android:text="Histórico Médico"
-        android:textSize="18sp" />
-
-    <TextView
-        android:id="@+id/tvMedicamentoNome"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Nome do Medicamento"
-        android:textSize="18sp"
-        android:paddingTop="16dp"/>
-
-    <TextView
-        android:id="@+id/tvDosagem"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Dosagem"
-        android:textSize="18sp"
-        android:paddingTop="16dp"/>
-
-    <TextView
-        android:id="@+id/tvFrequencia"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Frequência"
-        android:textSize="18sp"
-        android:paddingTop="16dp"/>
-
-    <TextView
-        android:id="@+id/tvValidade"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Validade"
-        android:textSize="18sp"
-        android:paddingTop="16dp"/>
-
-    <TextView
-        android:id="@+id/tvFabricante"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingTop="16dp"
-        android:text="Fabricante"
-        android:textSize="18sp" />
+        android:text="Salvar"
+        android:backgroundTint="#3F51B5"
+        android:textColor="#ffffff"
+        android:layout_marginTop="16dp"
+        android:elevation="2dp"
+        android:fontFamily="sans-serif-medium"/>
 </LinearLayout>

@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.drawerlayout.widget.DrawerLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawer_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ECEFF1"
+    tools:context=".view.TelaUsuarioActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- Adiciona a Toolbar -->
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#AD3EAFED"
+            android:elevation="4dp"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+            app:title="Informações do Usuário"
+            app:titleTextColor="#000000"
+            app:titleTextAppearance="@style/BoldToolbarTitle"/>
+
+        <!-- ScrollView para o conteúdo do usuário -->
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="40dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:paddingBottom="32dp">
+
+                <TextView
+                    android:id="@+id/tvTitulo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Detalhes do Usuário"
+                    android:textColor="#000"
+                    android:textSize="24sp"
+                    android:fontFamily="sans-serif-medium"
+                    android:gravity="center"
+                    android:padding="16dp"
+                    android:textStyle="bold" />
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:cardCornerRadius="30dp"
+                    app:cardElevation="20dp"
+                    android:layout_marginBottom="16dp"
+                    android:padding="16dp"
+                    android:backgroundTint="#FFFFFF">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/tvNome"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Nome:"
+                            android:textColor="#000000"
+                            android:textSize="16sp"
+                            android:padding="12dp" />
+
+                        <TextView
+                            android:id="@+id/tvTelefone"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Telefone:"
+                            android:textColor="#000000"
+                            android:textSize="16sp"
+                            android:padding="12dp" />
+
+                        <TextView
+                            android:id="@+id/tvEmail"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Email:"
+                            android:textColor="#000000"
+                            android:textSize="16sp"
+                            android:padding="12dp" />
+
+                        <TextView
+                            android:id="@+id/tvCpf"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="CPF:"
+                            android:textColor="#000000"
+                            android:textSize="16sp"
+                            android:padding="12dp" />
+
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+
+            <TextView
+            android:id="@+id/tvEndereco"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Endereço do Usuário"
+            android:textColor="#000"
+            android:textSize="24sp"
+            android:fontFamily="sans-serif-medium"
+            android:gravity="center"
+            android:padding="16dp"
+            android:textStyle="bold" />
+
+    <androidx.cardview.widget.CardView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="30dp"
+    app:cardElevation="20dp"
+    android:layout_marginBottom="24dp"
+    android:padding="16dp"
+    android:backgroundTint="#FFFFFF">
+
+    <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <TextView
+    android:id="@+id/tvRua"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:text="Rua:"
+    android:textColor="#000000"
+    android:textSize="16sp"
+    android:padding="12dp" />
+
+    <TextView
+    android:id="@+id/tvBairro"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:text="Bairro:"
+    android:textColor="#000000"
+    android:textSize="16sp"
+    android:padding="12dp" />
+
+    <TextView
+    android:id="@+id/tvNumero"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:text="Número:"
+    android:textColor="#000000"
+    android:textSize="16sp"
+    android:padding="12dp" />
+
+    <TextView
+    android:id="@+id/tvCidade"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:text="Cidade:"
+    android:textColor="#000000"
+    android:textSize="16sp"
+    android:padding="12dp" />
+
+    <TextView
+    android:id="@+id/tvEstado"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:text="Estado:"
+    android:textColor="#000000"
+    android:textSize="16sp"
+    android:padding="12dp" />
+
+    <TextView
+    android:id="@+id/tvCep"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:text="CEP:"
+    android:textColor="#000000"
+    android:textSize="16sp"
+    android:padding="12dp" />
+    </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+                <Button
+                    android:id="@+id/btnAtualizar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:backgroundTint="@color/black"
+                    android:text="Atualizar Informações"
+                    android:textColor="@color/white"
+                    android:textSize="18sp" />
+
+            </LinearLayout>
+        </ScrollView>
+    </LinearLayout>
+
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/navigation_view"
+        android:layout_width="300dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        app:itemIconSize="45dp"
+        app:itemIconTint="@null"
+        app:headerLayout="@layout/hearder"
+        app:menu="@menu/main_menu" />
+</androidx.drawerlayout.widget.DrawerLayout>

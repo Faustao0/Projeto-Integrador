@@ -1,4 +1,4 @@
-package com.example.hc_frontend.domainViewModel;
+package com.example.hc_frontend.domainviewmodel;
 
 import android.os.Build;
 import androidx.annotation.RequiresApi;

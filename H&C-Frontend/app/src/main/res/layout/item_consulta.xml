@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:padding="16dp"
+        android:layout_marginTop="100dp"
+        android:background="@drawable/card_background">
+
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            android:text="Detalhes da Consulta"
+            android:textColor="@color/black"
+            android:textSize="26sp"
+            android:textStyle="bold"
+            android:gravity="center" />
+
+        <TextView
+            android:id="@+id/tvDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="8dp"
+            android:text="Data:"
+            android:textColor="@color/textPrimary"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/tvTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:text="Hora:"
+            android:textColor="@color/textPrimary"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/tvLocation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:text="Local da Consulta:"
+            android:textColor="@color/textPrimary"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/tvValor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:text="Valor da Consulta:"
+            android:textColor="@color/textPrimary"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/tvMedicoTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:layout_marginBottom="16dp"
+            android:gravity="center"
+            android:text="Informações do Médico"
+            android:textColor="@color/black"
+            android:textSize="26sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tvMedicoNome"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:text="Nome:"
+            android:textColor="@color/textPrimary"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/tvMedicoTelefone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:text="Telefone:"
+            android:textColor="@color/textPrimary"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/tvMedicoEmail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:text="Email:"
+            android:textColor="@color/textPrimary"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/tvMedicoCpf"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:text="CPF:"
+            android:textColor="@color/textPrimary"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/tvMedicoCrm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:text="CRM:"
+            android:textColor="@color/textPrimary"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/tvMedicoEspecialidade"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:text="Especialidade do médico:"
+            android:textColor="@color/textPrimary"
+            android:textSize="18sp" />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_marginTop="24dp">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnReagendarConsulta"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Marcar Consulta"
+                android:layout_marginEnd="16dp"
+                android:backgroundTint="@color/buttonColor"
+                android:textColor="@color/white" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnCancelarConsulta"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="#F63C3C"
+                android:text="Cancelar Consulta"
+                android:textColor="@color/white" />
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

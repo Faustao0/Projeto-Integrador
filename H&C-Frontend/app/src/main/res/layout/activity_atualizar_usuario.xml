@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#F3F4F6"
+    android:padding="16dp"
+    tools:context=".view.AtualizarUsuarioActivity">
+
+    <TextView
+        android:id="@+id/tvTitulo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Informações do Usuário"
+        android:textColor="#000"
+        android:textSize="24sp"
+        android:fontFamily="sans-serif-medium"
+        android:gravity="center"
+        android:padding="16dp" />
+
+    <!-- Nome -->
+    <EditText
+        android:id="@+id/etNome"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Nome"
+        android:textColor="#000000"
+        android:background="@drawable/bordered_input"
+        android:padding="12dp"
+        android:textSize="16sp"
+        android:layout_marginBottom="12dp"/>
+
+    <!-- Telefone -->
+    <EditText
+        android:id="@+id/etTelefone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Telefone"
+        android:inputType="phone"
+        android:textColor="#000000"
+        android:background="@drawable/bordered_input"
+        android:padding="12dp"
+        android:textSize="16sp"
+        android:layout_marginBottom="12dp" />
+
+    <!-- Email -->
+    <EditText
+        android:id="@+id/etSenha"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Senha"
+        android:inputType="textEmailAddress"
+        android:textColor="#000000"
+        android:background="@drawable/bordered_input"
+        android:padding="12dp"
+        android:textSize="16sp"
+        android:layout_marginBottom="12dp" />
+
+    <!-- CPF -->
+    <EditText
+        android:id="@+id/etCpf"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="CPF"
+        android:inputType="number"
+        android:textColor="#000000"
+        android:background="@drawable/bordered_input"
+        android:padding="12dp"
+        android:textSize="16sp"
+        android:layout_marginBottom="12dp" />
+
+    <TextView
+        android:id="@+id/tvEndereco"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Endereço do Usuário"
+        android:textColor="#000"
+        android:textSize="24sp"
+        android:fontFamily="sans-serif-medium"
+        android:gravity="center"
+        android:padding="16dp" />
+
+    <!-- Rua -->
+    <EditText
+        android:id="@+id/etRua"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Rua"
+        android:textColor="#000000"
+        android:background="@drawable/bordered_input"
+        android:padding="12dp"
+        android:textSize="16sp"
+        android:layout_marginBottom="12dp" />
+
+    <EditText
+        android:id="@+id/etBairro"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Bairro"
+        android:textColor="#000000"
+        android:background="@drawable/bordered_input"
+        android:padding="12dp"
+        android:textSize="16sp"
+        android:layout_marginBottom="12dp"/>
+
+    <!-- Número -->
+    <EditText
+        android:id="@+id/etNumero"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Número"
+        android:textColor="#000000"
+        android:background="@drawable/bordered_input"
+        android:padding="12dp"
+        android:textSize="16sp"
+        android:layout_marginBottom="12dp" />
+
+    <EditText
+        android:id="@+id/etCidade"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Cidade"
+        android:textColor="#000000"
+        android:background="@drawable/bordered_input"
+        android:padding="12dp"
+        android:textSize="16sp"
+        android:layout_marginBottom="12dp" />
+
+    <!-- Estado -->
+    <EditText
+        android:id="@+id/etEstado"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Estado"
+        android:textColor="#000000"
+        android:background="@drawable/bordered_input"
+        android:padding="12dp"
+        android:textSize="16sp"
+        android:layout_marginBottom="12dp" />
+
+    <EditText
+        android:id="@+id/etCep"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="CEP"
+        android:inputType="number"
+        android:textColor="#000000"
+        android:background="@drawable/bordered_input"
+        android:padding="12dp"
+        android:textSize="16sp"
+        android:layout_marginBottom="24dp" />
+
+    <Button
+        android:id="@+id/btnAtualizar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Salvar atualizações"
+        android:textColor="@color/white"
+        android:backgroundTint="@color/black"
+        android:padding="16dp"
+        android:textSize="18sp" />
+</LinearLayout>

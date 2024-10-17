@@ -25,19 +25,28 @@
         android:theme="@style/Theme.HCFrontend"
         tools:targetApi="31">
         <activity
-            android:name=".RegistroUsuarioActivity"
+            android:name=".view.RegistrarPacienteActivity"
             android:exported="false" />
         <activity
-            android:name=".MariaVoltaParaMim"
+            android:name=".view.PacienteActivity"
             android:exported="false" />
         <activity
-            android:name=".MarcarConsultaActivity"
+            android:name=".view.AtualizarUsuarioActivity"
             android:exported="false" />
         <activity
-            android:name=".ConsultaActivity"
+            android:name=".view.TelaUsuarioActivity"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".view.RegistroUsuarioActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.MarcarConsultaActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.ConsultaActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -45,20 +54,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".DetailsActivity2"
-            android:exported="false" />
-        <activity
-            android:name=".PlaybackActivity"
-            android:exported="false" />
-        <activity
-            android:name=".BrowseErrorActivity"
-            android:exported="false" />
-        <activity
-            android:name=".DetailsActivity"
-            android:exported="false" />
-        <activity android:name=".TelaMedicamentosActivity" />
-        <activity android:name=".MenuActivity" />
+        <activity android:name=".view.TelaMedicamentosActivity" />
+        <activity android:name=".view.MenuActivity" />
     </application>
 
 </manifest>
