@@ -36,23 +36,8 @@ public class Endereco {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "usuario_id")
     @JsonBackReference
-    private Usuario usuario;
+    private Pessoa pessoa;
 
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "paciente_id")
-//    @JsonBackReference
-//    private Paciente paciente;
-
-    public Endereco(Long id, String rua, String numero, String cidade, String estado, String bairro, String cep, Usuario usuario) {
-        this.id = id;
-        this.rua = rua;
-        this.numero = numero;
-        this.cidade = cidade;
-        this.estado = estado;
-        this.bairro = bairro;
-        this.cep = cep;
-        this.usuario = usuario;
-    }
 
     public Endereco() {
     }
@@ -113,21 +98,13 @@ public class Endereco {
         this.bairro = bairro;
     }
 
-    public Usuario getUsuario() {
-        return usuario;
+    public Pessoa getPessoa() {
+        return pessoa;
     }
 
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
+    public void setPessoa(Pessoa pessoa) {
+        this.pessoa = pessoa;
     }
-
-//    public Paciente getPaciente() {
-//        return paciente;
-//    }
-//
-//    public void setPaciente(Paciente paciente) {
-//        this.paciente = paciente;
-//    }
 }
 
 

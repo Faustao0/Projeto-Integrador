@@ -20,13 +20,6 @@ public class Medico extends Pessoa {
     @JsonBackReference
     private Consulta consulta;
 
-    public Medico(Long id, String nome, String telefone, String email, String cpf, String crm, String especialidade, Consulta consulta) {
-        super(id, nome, telefone, email, cpf);
-        this.crm = crm;
-        this.especialidade = especialidade;
-        this.consulta = consulta;
-    }
-
     public Medico() {}
 
     public String getCrm() {

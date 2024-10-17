@@ -34,7 +34,6 @@ public class MedicamentoService {
         medicamento.setNome(medicamentoDetails.getNome());
         medicamento.setDosagem(medicamentoDetails.getDosagem());
         medicamento.setFrequencia(medicamentoDetails.getFrequencia());
-        medicamento.setValidade(medicamentoDetails.getValidade());
         medicamento.setFabricante(medicamentoDetails.getFabricante());
 
         return medicamentoRepository.save(medicamento);

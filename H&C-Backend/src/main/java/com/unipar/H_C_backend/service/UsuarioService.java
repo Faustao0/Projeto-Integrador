@@ -36,33 +36,33 @@ public class UsuarioService {
 
     public Usuario update(Long id, Usuario usuarioDetails) throws BusinessException {
         Usuario usuario = findById(id);
+
         usuario.setNome(usuarioDetails.getNome());
         usuario.setTelefone(usuarioDetails.getTelefone());
         usuario.setEmail(usuarioDetails.getEmail());
         usuario.setCpf(usuarioDetails.getCpf());
         usuario.setSenha(usuarioDetails.getSenha());
+        usuario.setEnderecos(usuarioDetails.getEnderecos());
+        usuario.setPacientes(usuarioDetails.getPacientes());
 
         if (usuarioDetails.getConsultas() != null) {
             List<Consulta> consultas = new ArrayList<>();
+
             for (Consulta consultaDetails : usuarioDetails.getConsultas()) {
+                if (consultaDetails.getId() == null) {
+                    throw new BusinessException("O ID da consulta não pode ser nulo.");
+                }
+
                 Consulta consulta = consultaRepository.findById(consultaDetails.getId())
                         .orElseThrow(() -> new BusinessException("Consulta não encontrada com o ID: " + consultaDetails.getId()));
+
                 consulta.setUsuario(usuario);
                 consultas.add(consulta);
             }
+
             usuario.setConsultas(consultas);
         }
 
-//        if (usuarioDetails.getPacientes() != null) {
-//            for (Paciente paciente : usuarioDetails.getPacientes()) {
-//                paciente.setUsuario(usuario);
-//                for (Medicamento medicamento : paciente.getMedicamentos()) {
-//                    medicamento.setPaciente(paciente);
-//                }
-//            }
-//            usuario.setPacientes(usuarioDetails.getPacientes());
-//        }
-        usuario.setEnderecos(usuarioDetails.getEnderecos());
         return usuarioRepository.save(usuario);
     }
 

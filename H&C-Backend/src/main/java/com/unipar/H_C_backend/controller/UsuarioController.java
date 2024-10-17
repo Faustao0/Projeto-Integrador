@@ -51,6 +51,9 @@ public class UsuarioController {
 
     @PutMapping("/{id}")
     public ResponseEntity<Usuario> updateUsuario(@PathVariable Long id, @Valid @RequestBody Usuario usuarioDetails) throws BusinessException {
+        if (id == null) {
+            return ResponseEntity.badRequest().build();
+        }
         Usuario updatedUsuario = usuarioService.update(id, usuarioDetails);
         return ResponseEntity.ok(updatedUsuario);
     }
