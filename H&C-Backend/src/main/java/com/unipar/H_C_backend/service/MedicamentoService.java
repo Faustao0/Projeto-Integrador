@@ -35,6 +35,7 @@ public class MedicamentoService {
         medicamento.setDosagem(medicamentoDetails.getDosagem());
         medicamento.setFrequencia(medicamentoDetails.getFrequencia());
         medicamento.setFabricante(medicamentoDetails.getFabricante());
+        medicamento.setHorarioTomar(medicamentoDetails.getHorarioTomar());
 
         return medicamentoRepository.save(medicamento);
     }
@@ -47,5 +48,13 @@ public class MedicamentoService {
     public Medicamento findByName(String nome) throws BusinessException {
         return medicamentoRepository.findByNome(nome)
                 .orElseThrow(() -> new BusinessException("Medicamento não encontrado com o nome: " + nome));
+    }
+
+    public List<Medicamento> findMedicamentosByUsuarioId(Long usuarioId) throws BusinessException {
+        List<Medicamento> medicamentos = medicamentoRepository.findMedicamentosByUsuarioId(usuarioId);
+        if (medicamentos.isEmpty()) {
+            throw new BusinessException("Nenhum medicamento encontrado para o usuário com ID: " + usuarioId);
+        }
+        return medicamentos;
     }
 }

@@ -6,9 +6,10 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
+import java.time.LocalTime;
+
 @Entity
 public class Medicamento {
-
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,6 +21,9 @@ public class Medicamento {
 
     @NotBlank(message = "A dosagem do medicamento é obrigatória.")
     private String dosagem;
+
+    @NotNull(message = "A hora para tomar o medicamento é obrigatória.")
+    private LocalTime horarioTomar;
 
     @NotBlank(message = "A frequência de administração do medicamento é obrigatória.")
     private String frequencia;
@@ -81,5 +85,13 @@ public class Medicamento {
 
     public void setPaciente(Paciente paciente) {
         this.paciente = paciente;
+    }
+
+    public LocalTime getHorarioTomar() {
+        return horarioTomar;
+    }
+
+    public void setHorarioTomar(LocalTime horarioTomar) {
+        this.horarioTomar = horarioTomar;
     }
 }

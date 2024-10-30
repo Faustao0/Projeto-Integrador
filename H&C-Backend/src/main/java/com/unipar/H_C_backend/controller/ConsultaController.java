@@ -60,4 +60,24 @@ public class ConsultaController {
         consultaService.delete(id);
         return ResponseEntity.noContent().build();
     }
+
+    @GetMapping("/recentes/{usuarioId}")
+    public ResponseEntity<Consulta> getConsultaMaisRecente(@PathVariable("usuarioId") Long usuarioId) {
+        try {
+            Consulta consultaMaisRecente = consultaService.findConsultaMaisRecenteByUsuarioId(usuarioId);
+            return ResponseEntity.ok(consultaMaisRecente);
+        } catch (BusinessException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+    }
+
+    @GetMapping("/usuario/{usuarioId}")
+    public ResponseEntity<List<Consulta>> getConsultasByUsuarioId(@PathVariable("usuarioId") Long usuarioId) {
+        try {
+            List<Consulta> consultas = consultaService.findConsultasByUsuarioId(usuarioId);
+            return ResponseEntity.ok(consultas);
+        } catch (BusinessException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+    }
 }

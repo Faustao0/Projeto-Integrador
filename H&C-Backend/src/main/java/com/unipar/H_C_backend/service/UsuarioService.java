@@ -85,5 +85,23 @@ public class UsuarioService {
         }
         return usuario;
     }
+
+    public Usuario desvincularConsulta(Long usuarioId, Long consultaId) throws BusinessException {
+        Usuario usuario = findById(usuarioId);
+
+        Consulta consulta = consultaRepository.findById(consultaId)
+                .orElseThrow(() -> new BusinessException("Consulta não encontrada com o ID: " + consultaId));
+
+        if (!usuario.getConsultas().contains(consulta)) {
+            throw new BusinessException("Consulta não vinculada a este usuário.");
+        }
+
+        usuario.getConsultas().remove(consulta);
+
+        consulta.setUsuario(null);
+
+        consultaRepository.save(consulta);
+        return usuarioRepository.save(usuario);
+    }
 }
 
