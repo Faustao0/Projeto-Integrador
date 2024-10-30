@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Cor de fundo do CardView -->
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="@color/light_blue"/>
+        </shape>
+    </item>
+
+    <!-- Borda preta -->
+    <item>
+        <shape android:shape="rectangle">
+            <stroke android:width="2dp" android:color="#000000"/>  <!-- Largura e cor da borda -->
+            <corners android:radius="8dp"/>  <!-- Canto arredondado -->
+        </shape>
+    </item>
+
+</layer-list>

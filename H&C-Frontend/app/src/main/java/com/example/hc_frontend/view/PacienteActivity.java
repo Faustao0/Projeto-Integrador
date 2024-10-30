@@ -1,18 +1,29 @@
 package com.example.hc_frontend.view;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.example.hc_frontend.R;
 import com.example.hc_frontend.domain.Endereco;
 import com.example.hc_frontend.domain.Paciente;
 import com.example.hc_frontend.domain.Usuario;
 import com.example.hc_frontend.repositories.PacienteRepository;
+import com.google.android.material.navigation.NavigationView;
+
+import java.io.Serializable;
 import java.util.List;
 
 import retrofit2.Call;
@@ -28,7 +39,10 @@ public class PacienteActivity extends AppCompatActivity {
     private static final int REQUEST_CODE_ATUALIZAR = 1;
     private PacienteRepository pacienteRepository;
     private Usuario usuario;
+    private DrawerLayout drawerLayout;
+    private ActionBarDrawerToggle toggle;
 
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,6 +82,78 @@ public class PacienteActivity extends AppCompatActivity {
             intent.putExtra("usuario", usuario);
             startActivityForResult(intent, REQUEST_CODE_ATUALIZAR);
         });
+
+        // Configura a Toolbar e o DrawerLayout
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        drawerLayout = findViewById(R.id.drawer_layout);
+        toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.drawer_open, R.string.drawer_close);
+        drawerLayout.addDrawerListener(toggle);
+        toggle.syncState();
+
+        // Recebendo o objeto Usuario passado via Intent
+        usuario = (Usuario) getIntent().getSerializableExtra("usuario");
+
+        // Configura o NavigationView para o menu lateral
+        NavigationView navigationView = findViewById(R.id.navigation_view);
+
+        // Obtém o header do NavigationView
+        View headerView = navigationView.getHeaderView(0);
+
+        // Referencia o TextView no header e configura a mensagem de boas-vindas
+        TextView welcomeMessage = headerView.findViewById(R.id.welcomeMessage);
+        if (usuario != null && usuario.getNome() != null) {
+            String mensagem = "Bem-vindo, " + usuario.getNome() + "!";
+            welcomeMessage.setText(mensagem);
+        }
+
+        // Tornar o Logo clicável e redirecionar para o Menu
+        ImageView logoMenu = headerView.findViewById(R.id.LogoMenu);
+        logoMenu.setOnClickListener(v -> {
+            Intent intentLogo = new Intent(PacienteActivity.this, MenuActivity.class);
+            intentLogo.putExtra("usuario", (Serializable) usuario);
+            startActivity(intentLogo);
+        });
+
+        // Configura o listener para os itens do NavigationView
+        navigationView.setNavigationItemSelectedListener(item -> {
+            switch (item.getItemId()) {
+                case R.id.nav_profile:
+                    Intent intentProfile = new Intent(PacienteActivity.this, TelaUsuarioActivity.class);
+                    intentProfile.putExtra("usuario", (Serializable) usuario);
+                    startActivity(intentProfile);
+                    return true;
+
+                case R.id.nav_paciente:
+                    Intent intentPaciente = new Intent(PacienteActivity.this, PacienteActivity.class);
+                    intentPaciente.putExtra("usuario", usuario);
+                    startActivity(intentPaciente);
+                    return true;
+
+                case R.id.nav_consultas:
+                    Intent intentConsultas = new Intent(PacienteActivity.this, ConsultaActivity.class);
+                    intentConsultas.putExtra("usuario", (Serializable) usuario);
+                    startActivity(intentConsultas);
+                    return true;
+
+                case R.id.nav_medicamentos:
+                    Intent intentMedicamentos = new Intent(PacienteActivity.this, ListaMedicamentosActivity.class);
+                    intentMedicamentos.putExtra("usuario", (Serializable) usuario);
+                    startActivity(intentMedicamentos);
+                    return true;
+
+                case R.id.nav_sair:
+                    Intent intentSair = new Intent(PacienteActivity.this, MainActivity.class);
+                    startActivity(intentSair);
+                    return true;
+
+                default:
+                    return false;
+            }
+        });
+
+        carregarPacientesVinculados();
     }
 
     @Override
@@ -76,6 +162,10 @@ public class PacienteActivity extends AppCompatActivity {
 
         // Recarregar os dados diretamente da API para garantir que estão atualizados
         carregarPacientesAtualizados();
+
+        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            drawerLayout.closeDrawer(GravityCompat.START);
+        }
     }
 
     @Override

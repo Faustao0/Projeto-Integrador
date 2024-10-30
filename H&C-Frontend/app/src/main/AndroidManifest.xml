@@ -5,6 +5,8 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
 
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+
     <uses-feature
         android:name="android.hardware.touchscreen"
         android:required="false" />
@@ -36,6 +38,9 @@
         <activity
             android:name=".view.TelaUsuarioActivity"
             android:exported="false" />
+        <activity android:name=".view.ListaMedicamentosActivity"
+            android:exported="true">
+        </activity>
         <activity
             android:name=".view.RegistroUsuarioActivity"
             android:exported="false" />
@@ -56,6 +61,7 @@
         </activity>
         <activity android:name=".view.TelaMedicamentosActivity" />
         <activity android:name=".view.MenuActivity" />
+        <receiver android:name=".notifications.AlarmReceiver" android:exported="false" />
     </application>
 
 </manifest>

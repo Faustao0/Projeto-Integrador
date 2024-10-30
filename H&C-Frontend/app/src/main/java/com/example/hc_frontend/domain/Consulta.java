@@ -11,14 +11,16 @@ public class Consulta implements Serializable{
     private String local;
     private Double valor;
     private List<Medico> medicos;
+    private Usuario usuario;
 
-    public Consulta(Long id, String data, String hora, String local, Double valor, List<Medico> medicos) {
+    public Consulta(Long id, String data, String hora, String local, Double valor, List<Medico> medicos, Usuario usuario) {
         this.id = id;
         this.data = data;
         this.hora = hora;
         this.local = local;
         this.valor = valor;
         this.medicos = medicos;
+        this.usuario = usuario;
     }
 
     public Consulta() {
@@ -70,5 +72,13 @@ public class Consulta implements Serializable{
 
     public void setMedicos(List<Medico> medicos) {
         this.medicos = medicos;
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 }

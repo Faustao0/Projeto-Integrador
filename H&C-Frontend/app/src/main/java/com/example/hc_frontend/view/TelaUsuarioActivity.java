@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -52,6 +53,11 @@ public class TelaUsuarioActivity extends AppCompatActivity {
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
 
+        Intent intent = getIntent();
+        if (intent != null && intent.hasExtra("usuario")) {
+            usuario = (Usuario) intent.getSerializableExtra("usuario");
+        }
+
         // Configura o NavigationView para o menu lateral
         NavigationView navigationView = findViewById(R.id.navigation_view);
 
@@ -88,9 +94,16 @@ public class TelaUsuarioActivity extends AppCompatActivity {
         usuario = (Usuario) getIntent().getSerializableExtra("usuario");
 
         btnAtualizar.setOnClickListener(view -> {
-            Intent intent = new Intent(TelaUsuarioActivity.this, AtualizarUsuarioActivity.class);
-            intent.putExtra("usuario", usuario);
-            startActivityForResult(intent, REQUEST_CODE_ATUALIZAR);
+            Intent nome = new Intent(TelaUsuarioActivity.this, AtualizarUsuarioActivity.class);
+            nome.putExtra("usuario", usuario);
+            startActivityForResult(nome, REQUEST_CODE_ATUALIZAR);
+        });
+
+        ImageView logoMenu = headerView.findViewById(R.id.LogoMenu);
+        logoMenu.setOnClickListener(v -> {
+            Intent intentLogo = new Intent(TelaUsuarioActivity.this, MenuActivity.class);
+            intentLogo.putExtra("usuario", (Serializable) usuario);
+            startActivity(intentLogo);
         });
 
         navigationView.setNavigationItemSelectedListener(item -> {
@@ -118,8 +131,14 @@ public class TelaUsuarioActivity extends AppCompatActivity {
 
                 case R.id.nav_medicamentos:
                     // Abrir tela de medicamentos
-                    Intent intentMedicamentos = new Intent(TelaUsuarioActivity.this, TelaMedicamentosActivity.class);
+                    Intent intentMedicamentos = new Intent(TelaUsuarioActivity.this, ListaMedicamentosActivity.class);
+                    intentMedicamentos.putExtra("usuario", (Serializable) usuario);
                     startActivity(intentMedicamentos);
+                    return true;
+
+                case R.id.nav_sair:
+                    Intent intentSair = new Intent(TelaUsuarioActivity.this, MainActivity.class);
+                    startActivity(intentSair);
                     return true;
 
                 default:

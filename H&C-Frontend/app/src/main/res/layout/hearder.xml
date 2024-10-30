@@ -7,6 +7,7 @@
     android:padding="16dp">
 
     <ImageView
+        android:id="@+id/LogoMenu"
         android:layout_width="188dp"
         android:layout_height="128dp"
         android:src="@drawable/logo_copia" />

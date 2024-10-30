@@ -1,6 +1,9 @@
 package com.example.hc_frontend.domain;
 
-public class Medicamento {
+import java.io.Serializable;
+import java.util.List;
+
+public class Medicamento implements Serializable {
 
     private Long id;
     private String nome;
@@ -8,6 +11,16 @@ public class Medicamento {
     private String frequencia;
     private String validade;
     private String fabricante;
+    private String horarioTomar;
+    private List<Paciente> pacientes;
+
+    public Medicamento(String nome, String dosagem, String frequencia, String fabricante, String horarioTomar) {
+        this.nome = nome;
+        this.dosagem = dosagem;
+        this.frequencia = frequencia;
+        this.fabricante = fabricante;
+        this.horarioTomar = horarioTomar;
+    }
 
     public Long getId() {
         return id;
@@ -55,5 +68,21 @@ public class Medicamento {
 
     public void setFabricante(String fabricante) {
         this.fabricante = fabricante;
+    }
+
+    public String getHorarioTomar() {
+        return horarioTomar;
+    }
+
+    public void setHorarioTomar(String horarioTomar) {
+        this.horarioTomar = horarioTomar;
+    }
+
+    public List<Paciente> getPacientes() {
+        return pacientes;
+    }
+
+    public void setPacientes(List<Paciente> pacientes) {
+        this.pacientes = pacientes;
     }
 }

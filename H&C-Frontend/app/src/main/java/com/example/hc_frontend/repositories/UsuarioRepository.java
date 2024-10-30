@@ -21,6 +21,12 @@ public interface UsuarioRepository {
     @PUT("/usuarios/{id}")
     Call<Usuario> atualizarUsuario(@Path("id") Long id, @Body Usuario usuario);
 
+    @PUT("/usuarios/{usuarioId}/desvincular-consulta/{consultaId}")
+    Call<Usuario> desvincularConsulta(
+            @Path("usuarioId") Long usuarioId,
+            @Path("consultaId") Long consultaId
+    );
+
     @POST("/usuarios")
     Call<Usuario> registrarUsuario(@Body Usuario usuario);
 }

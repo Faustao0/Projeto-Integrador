@@ -3,7 +3,7 @@
     <item
         android:id="@+id/nav_profile"
         android:title="Perfil"
-        android:icon="@drawable/profile" />
+        android:icon="@drawable/profile"/>
     <item
         android:id="@+id/nav_paciente"
         android:title="Paciente"
@@ -11,9 +11,14 @@
     <item
         android:id="@+id/nav_consultas"
         android:title="Consultas"
-        android:icon="@drawable/consulta" />
+        android:icon="@drawable/consulta"/>
     <item
         android:id="@+id/nav_medicamentos"
         android:title="Medicamentos"
         android:icon="@drawable/baseline_medication_24" />
+
+    <item
+        android:id="@+id/nav_sair"
+        android:title="Sair"
+        android:icon="@drawable/baseline_logout_24" />
 </menu>
