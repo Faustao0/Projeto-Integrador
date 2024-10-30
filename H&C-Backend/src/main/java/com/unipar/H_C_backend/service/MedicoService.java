@@ -2,6 +2,7 @@ package com.unipar.H_C_backend.service;
 
 
 
+import com.unipar.H_C_backend.domain.Medicamento;
 import com.unipar.H_C_backend.domain.Medico;
 import com.unipar.H_C_backend.exceptions.BusinessException;
 import com.unipar.H_C_backend.repository.MedicoRepository;

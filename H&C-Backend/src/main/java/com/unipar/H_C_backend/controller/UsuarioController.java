@@ -82,4 +82,14 @@ public class UsuarioController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
         }
     }
+
+    @PutMapping("/{usuarioId}/desvincular-consulta/{consultaId}")
+    public ResponseEntity<Usuario> desvincularConsulta(@PathVariable Long usuarioId, @PathVariable Long consultaId) {
+        try {
+            Usuario usuarioAtualizado = usuarioService.desvincularConsulta(usuarioId, consultaId);
+            return ResponseEntity.ok(usuarioAtualizado);
+        } catch (BusinessException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+        }
+    }
 }

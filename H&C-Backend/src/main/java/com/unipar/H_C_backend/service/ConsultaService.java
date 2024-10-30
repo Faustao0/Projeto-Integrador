@@ -5,6 +5,8 @@ import com.unipar.H_C_backend.domain.Medico;
 import com.unipar.H_C_backend.exceptions.BusinessException;
 import com.unipar.H_C_backend.repository.ConsultaRepository;
 import com.unipar.H_C_backend.repository.MedicoRepository;
+import jakarta.persistence.EntityManager;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -33,8 +35,9 @@ public class ConsultaService {
     public Consulta save(Consulta consulta) throws BusinessException {
         if (consulta.getMedicos() != null && !consulta.getMedicos().isEmpty()) {
             List<Medico> medicosGerenciados = buscarMedicos(consulta.getMedicos());
-            consulta.setMedicos(removeMedicosDuplicados(medicosGerenciados, consulta.getId()));
+            consulta.setMedicos(medicosGerenciados);
         }
+
         return consultaRepository.save(consulta);
     }
 
@@ -54,7 +57,7 @@ public class ConsultaService {
         return consultaRepository.save(consulta);
     }
 
-
+    @Transactional
     public void delete(Long id) throws BusinessException {
         Consulta consulta = findById(id);
         consultaRepository.delete(consulta);
@@ -73,14 +76,16 @@ public class ConsultaService {
         return medicosGerenciados;
     }
 
-    private List<Medico> removeMedicosDuplicados(List<Medico> medicos, Long consultaId) throws BusinessException {
-        Consulta consultaExistente = consultaRepository.findById(consultaId).orElse(null);
-        if (consultaExistente != null) {
-            List<Medico> medicosExistentes = consultaExistente.getMedicos();
-            // Remover os médicos que já estão vinculados à consulta
-            medicos.removeIf(medico -> medicosExistentes.stream()
-                    .anyMatch(medicoExistente -> medicoExistente.getId().equals(medico.getId())));
+    public Consulta findConsultaMaisRecenteByUsuarioId(Long usuarioId) throws BusinessException {
+        Optional<Consulta> consultaMaisRecente = consultaRepository.findConsultaMaisRecenteByUsuarioId(usuarioId);
+        return consultaMaisRecente.orElseThrow(() -> new BusinessException("Nenhuma consulta futura encontrada para o usuário com ID: " + usuarioId));
+    }
+
+    public List<Consulta> findConsultasByUsuarioId(Long usuarioId) throws BusinessException {
+        List<Consulta> consultas = consultaRepository.findConsultasByUsuarioId(usuarioId);
+        if (consultas.isEmpty()) {
+            throw new BusinessException("Nenhuma consulta encontrada para o usuário com ID: " + usuarioId);
         }
-        return medicos;
+        return consultas;
     }
 }

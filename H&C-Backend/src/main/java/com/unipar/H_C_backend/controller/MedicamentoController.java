@@ -69,4 +69,14 @@ public class MedicamentoController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
     }
+
+    @GetMapping("/usuario/{usuarioId}")
+    public ResponseEntity<List<Medicamento>> getMedicamentosByUsuarioId(@PathVariable("usuarioId") Long usuarioId) {
+        try {
+            List<Medicamento> medicamentos = medicamentoService.findMedicamentosByUsuarioId(usuarioId);
+            return ResponseEntity.ok(medicamentos);
+        } catch (BusinessException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+    }
 }

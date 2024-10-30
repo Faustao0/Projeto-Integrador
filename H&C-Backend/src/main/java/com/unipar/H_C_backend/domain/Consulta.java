@@ -35,7 +35,10 @@ public class Consulta {
     @JsonBackReference
     private Usuario usuario;
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH})
+    @JoinTable(name = "consulta_medicos",
+            joinColumns = @JoinColumn(name = "consulta_id"),
+            inverseJoinColumns = @JoinColumn(name = "medico_id"))
     @JsonManagedReference
     private List<Medico> medicos;
 
