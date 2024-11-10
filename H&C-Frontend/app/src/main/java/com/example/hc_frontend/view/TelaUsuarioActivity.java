@@ -18,6 +18,7 @@ import com.example.hc_frontend.R;
 import com.example.hc_frontend.domain.Endereco;
 import com.example.hc_frontend.domain.Usuario;
 import com.example.hc_frontend.repositories.UsuarioRepository;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 
 import java.io.Serializable;
@@ -33,7 +34,7 @@ public class TelaUsuarioActivity extends AppCompatActivity {
     private static final int REQUEST_CODE_ATUALIZAR = 1;
 
     private TextView tvNome, tvTelefone, tvEmail, tvCpf, tvRua, tvNumero, tvCidade, tvEstado, tvCep, tvBairro;
-    private Button btnAtualizar;
+    private FloatingActionButton btnAtualizar;
     private UsuarioRepository usuarioRepository;
     private Usuario usuario;
     private DrawerLayout drawerLayout;

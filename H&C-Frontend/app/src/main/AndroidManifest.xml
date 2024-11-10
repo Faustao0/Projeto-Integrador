@@ -4,7 +4,6 @@
     tools:ignore="MissingLeanbackLauncher">
 
     <uses-permission android:name="android.permission.INTERNET" />
-
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 
     <uses-feature
@@ -19,13 +18,19 @@
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:exported="false"
         android:fullBackupContent="@xml/backup_rules"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/logo_copia"
         android:label="@string/app_name"
         android:networkSecurityConfig="@xml/network_security_config"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.HCFrontend"
         tools:targetApi="31">
+        <activity
+            android:name=".view.ConfirmarMedicamentoActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.RecuperarSenhaActivity"
+            android:exported="false" />
         <activity
             android:name=".view.RegistrarPacienteActivity"
             android:exported="false" />
@@ -38,9 +43,9 @@
         <activity
             android:name=".view.TelaUsuarioActivity"
             android:exported="false" />
-        <activity android:name=".view.ListaMedicamentosActivity"
-            android:exported="true">
-        </activity>
+        <activity
+            android:name=".view.ListaMedicamentosActivity"
+            android:exported="true" />
         <activity
             android:name=".view.RegistroUsuarioActivity"
             android:exported="false" />

@@ -31,6 +31,7 @@ import com.example.hc_frontend.domain.Paciente;
 import com.example.hc_frontend.domain.Usuario;
 import com.example.hc_frontend.domainviewmodel.MedicamentoViewModel;
 import com.example.hc_frontend.notifications.AlarmHelper;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 
 import java.io.Serializable;
@@ -40,7 +41,7 @@ public class ListaMedicamentosActivity extends AppCompatActivity {
 
     private static final int REQUEST_CODE_ATUALIZAR = 1;
     private RecyclerView recyclerView;
-    private Button btnCadastroMedicamento;
+    private FloatingActionButton btnCadastroMedicamento;
     private MedicamentoAdapter adapter;
     private MedicamentoViewModel medicamentoViewModel;
     private static final int REQUEST_NOTIFICATION_PERMISSION = 1;
@@ -113,7 +114,7 @@ public class ListaMedicamentosActivity extends AppCompatActivity {
                 adapter.setMedicamentos(newMedicamentos);
                 // Agende notificações para cada medicamento
                 for (Medicamento medicamento : newMedicamentos) {
-                    AlarmHelper.setAlarm(this, medicamento);
+                    AlarmHelper.setAlarm(this, medicamento, usuario);
                 }
             } else {
                 Log.d("ListaMedicamentos", "Nenhum medicamento recebido.");

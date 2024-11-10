@@ -31,7 +31,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class TelaMedicamentosActivity extends AppCompatActivity {
 
     private EditText nomeRemedio, dosagemRemedio, frequencia, fabricante;
-    private TextView horarioTomar;
+    private TextView horarioTomar, tvTituloMedicamento;
     private Button salvar;
     private MedicamentoRepository medicamentoRepository;
     private PacienteRepository pacienteRepository;
@@ -79,12 +79,17 @@ public class TelaMedicamentosActivity extends AppCompatActivity {
         fabricante = findViewById(R.id.fabricante);
         horarioTomar = findViewById(R.id.horario_tomar);
         salvar = findViewById(R.id.salvar);
+        tvTituloMedicamento = findViewById(R.id.tvTituloMedicamento);
+
+        // Define o título com base no contexto
+        if (medicamentoAtual != null) {
+            tvTituloMedicamento.setText("Atualização do Medicamento");
+            preencherCamposParaEdicao();
+        } else {
+            tvTituloMedicamento.setText("Cadastro do Medicamento");
+        }
 
         horarioTomar.setOnClickListener(v -> showTimePickerDialog());
-
-        if (medicamentoAtual != null) {
-            preencherCamposParaEdicao();
-        }
 
         salvar.setOnClickListener(v -> {
             String nome = nomeRemedio.getText().toString();

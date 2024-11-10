@@ -239,8 +239,8 @@ public class MarcarConsultaActivity extends AppCompatActivity {
             return;
         }
 
-        // Cria uma nova consulta e vincula ao médico e ao usuário
-        criarConsultaNaAPI(data, hora, Double.parseDouble(valorConsulta), localSelecionado, medicoSelecionado, usuario);
+        // Chama a função de verificação para evitar agendamento duplicado no mesmo horário
+        verificarHorarioConsultaExistente(data, hora, Double.parseDouble(valorConsulta), localSelecionado, medicoSelecionado, usuario);
     }
 
     // Cria uma nova consulta na API e vincula ao médico e ao usuário
@@ -252,17 +252,19 @@ public class MarcarConsultaActivity extends AppCompatActivity {
         novaConsulta.setLocal(local);
         novaConsulta.setMedicos(new ArrayList<>());
         novaConsulta.getMedicos().add(medico);
-
-        // Vincula o usuário à consulta antes de enviar para o backend
         novaConsulta.setUsuario(usuario);
 
-        consultaRepository.marcarConsulta(novaConsulta).enqueue(new Callback<Consulta>() {
+        consultaRepository.agendarConsulta(novaConsulta).enqueue(new Callback<Consulta>() {
             @Override
             public void onResponse(Call<Consulta> call, Response<Consulta> response) {
                 if (response.isSuccessful()) {
-                    Consulta consultaCriada = response.body();
-                    // Vincular a consulta ao usuário no backend
-                    adicionarConsultaAoUsuario(consultaCriada, usuario);
+                    Toast.makeText(MarcarConsultaActivity.this, "Consulta marcada com sucesso", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(MarcarConsultaActivity.this, ConsultaActivity.class);
+                    intent.putExtra("usuario", usuario);
+                    startActivity(intent);
+                    finish();
+                } else if (response.code() == 409) {  // Trata o código de conflito
+                    Toast.makeText(MarcarConsultaActivity.this, "Este horário já está ocupado. Escolha outro horário.", Toast.LENGTH_LONG).show();
                 } else {
                     Toast.makeText(MarcarConsultaActivity.this, "Erro ao criar consulta", Toast.LENGTH_SHORT).show();
                 }
@@ -295,6 +297,40 @@ public class MarcarConsultaActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<Usuario> call, Throwable t) {
                 Toast.makeText(MarcarConsultaActivity.this, "Erro de conexão", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void verificarHorarioConsultaExistente(String dataConsulta, String horaConsulta, double valor, String local, Medico medico, Usuario usuario) {
+        consultaRepository.getConsultasByUsuario(usuario.getId()).enqueue(new Callback<List<Consulta>>() {
+            @Override
+            public void onResponse(Call<List<Consulta>> call, Response<List<Consulta>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    List<Consulta> consultas = response.body();
+                    boolean horarioOcupado = false;
+
+                    // Verifica se já existe uma consulta marcada para a mesma data e hora
+                    for (Consulta consulta : consultas) {
+                        if (consulta.getData().equals(dataConsulta) && consulta.getHora().equals(horaConsulta)) {
+                            horarioOcupado = true;
+                            break;
+                        }
+                    }
+
+                    if (horarioOcupado) {
+                        Toast.makeText(MarcarConsultaActivity.this, "Já existe uma consulta marcada para este horário. Escolha outro horário.", Toast.LENGTH_LONG).show();
+                    } else {
+                        // Data e horário disponíveis; prosseguir com o agendamento
+                        criarConsultaNaAPI(dataConsulta, horaConsulta, valor, local, medico, usuario);
+                    }
+                } else {
+                    Toast.makeText(MarcarConsultaActivity.this, "Erro ao verificar a data e horário da consulta.", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Consulta>> call, Throwable t) {
+                Toast.makeText(MarcarConsultaActivity.this, "Erro de conexão ao verificar a data e horário.", Toast.LENGTH_SHORT).show();
             }
         });
     }

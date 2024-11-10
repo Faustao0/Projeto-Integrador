@@ -21,6 +21,7 @@ import com.example.hc_frontend.domain.Endereco;
 import com.example.hc_frontend.domain.Paciente;
 import com.example.hc_frontend.domain.Usuario;
 import com.example.hc_frontend.repositories.PacienteRepository;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 
 import java.io.Serializable;
@@ -35,7 +36,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class PacienteActivity extends AppCompatActivity {
 
     private TextView tvNome, tvIdade, tvTelefone, tvEmail, tvCpf, tvRua, tvBairro, tvNumero, tvCidade, tvEstado, tvCep;
-    private Button btnAtualizar;
+    private FloatingActionButton btnAtualizar;
     private static final int REQUEST_CODE_ATUALIZAR = 1;
     private PacienteRepository pacienteRepository;
     private Usuario usuario;
@@ -213,11 +214,17 @@ public class PacienteActivity extends AppCompatActivity {
                 public void onResponse(Call<List<Paciente>> call, Response<List<Paciente>> response) {
                     if (response.isSuccessful() && response.body() != null) {
                         List<Paciente> pacientes = response.body();
-                        for (Paciente paciente : pacientes) {
-                            preencherDadosPaciente(paciente);
+
+                        // Ajuste do ícone do FloatingActionButton de acordo com a existência de pacientes
+                        if (pacientes.isEmpty()) {
+                            btnAtualizar.setImageResource(R.drawable.baseline_add_24);
+                            Toast.makeText(PacienteActivity.this, "Nenhum paciente encontrado", Toast.LENGTH_SHORT).show();
+                        } else {
+                            btnAtualizar.setImageResource(R.drawable.baseline_edit_24);
+                            preencherDadosPaciente(pacientes.get(0));  // Exibir dados do primeiro paciente, por exemplo
                         }
                     } else {
-                        Toast.makeText(PacienteActivity.this, "Nenhum paciente encontrado", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(PacienteActivity.this, "Erro ao carregar pacientes", Toast.LENGTH_SHORT).show();
                     }
                 }
 

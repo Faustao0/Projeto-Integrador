@@ -3,7 +3,7 @@
     <solid android:color="#F5F5F5" />
 
     <!-- Bordas arredondadas -->
-    <corners android:radius="16dp" />
+    <corners android:radius="36dp" />
 
     <stroke
         android:width="2dp"

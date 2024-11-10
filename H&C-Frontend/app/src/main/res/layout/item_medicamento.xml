@@ -3,6 +3,7 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:layout_marginTop="25dp"
+    android:layout_marginBottom="47dp"
     android:padding="16dp"
     android:background="@drawable/card_background">
 
@@ -61,14 +62,20 @@
             android:layout_width="130dp"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/buttonColor"
-            android:text="Editar" />
+            android:text="Editar"
+            android:drawableLeft="@drawable/baseline_edit_24"
+            android:textColor="@color/black"
+            android:paddingStart="10dp"/>
 
         <Button
             android:id="@+id/btnExcluir"
             android:layout_width="130dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="70dp"
+            android:layout_marginLeft="72dp"
             android:backgroundTint="#F63C3C"
-            android:text="Excluir" />
+            android:text="Excluir"
+            android:drawableLeft="@drawable/baseline_delete_24"
+            android:textColor="@color/black"
+            android:paddingStart="16dp"/>
     </LinearLayout>
 </LinearLayout>

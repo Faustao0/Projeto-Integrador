@@ -70,7 +70,8 @@ public class MainActivity extends AppCompatActivity {
         tvForgotPassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(MainActivity.this, "Redirecionar para recuperação de senha", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(MainActivity.this, RecuperarSenhaActivity.class);
+                    startActivity(intent);
             }
         });
 

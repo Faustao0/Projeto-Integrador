@@ -3,7 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="16dp">
+    android:padding="16dp"
+    android:background="@color/white">
 
     <LinearLayout
         android:orientation="vertical"
@@ -137,20 +138,27 @@
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnReagendarConsulta"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="Marcar Consulta"
-                android:layout_marginEnd="16dp"
+                android:layout_weight="1"
+                android:layout_marginEnd="8dp"
                 android:backgroundTint="@color/buttonColor"
-                android:textColor="@color/white" />
+                android:drawableLeft="@drawable/baseline_schedule_24"
+                android:paddingStart="12dp"
+                android:text="Marcar Consulta"
+                android:textColor="@color/black" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnCancelarConsulta"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginStart="8dp"
                 android:backgroundTint="#F63C3C"
                 android:text="Cancelar Consulta"
-                android:textColor="@color/white" />
+                android:drawableLeft="@drawable/baseline_delete_24"
+                android:textColor="@color/black"
+                android:paddingStart="12dp" />
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>

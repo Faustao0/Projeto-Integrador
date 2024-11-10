@@ -29,4 +29,7 @@ public interface UsuarioRepository {
 
     @POST("/usuarios")
     Call<Usuario> registrarUsuario(@Body Usuario usuario);
+
+    @GET("/usuarios/buscarSenha")
+    Call<Usuario> buscarSenhaPorEmail(@Query("email") String email);
 }

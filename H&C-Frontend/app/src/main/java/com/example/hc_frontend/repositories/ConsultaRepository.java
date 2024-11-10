@@ -29,4 +29,7 @@ public interface ConsultaRepository {
 
     @GET("consultas/recentes/{usuarioId}")
     Call<Consulta> ConsultaMaisRecente(@Path("usuarioId") Long usuarioId);
+
+    @POST("consultas/agendar")
+    Call<Consulta> agendarConsulta(@Body Consulta consulta);
 }
