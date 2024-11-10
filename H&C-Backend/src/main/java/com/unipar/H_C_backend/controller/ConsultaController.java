@@ -80,4 +80,14 @@ public class ConsultaController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
     }
+
+    @PostMapping("/agendar")
+    public ResponseEntity<?> agendarConsulta(@RequestBody Consulta consulta) {
+        try {
+            Consulta consultaCriada = consultaService.agendarConsulta(consulta);
+            return new ResponseEntity<>(consultaCriada, HttpStatus.CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
+        }
+    }
 }

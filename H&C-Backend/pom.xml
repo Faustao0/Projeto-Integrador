@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.unipar</groupId>
-	<artifactId>venda-bankend</artifactId>
+	<artifactId><![CDATA[h&c-backend]]></artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>venda-bankend</name>
 	<description>Demo project for Spring Boot</description>

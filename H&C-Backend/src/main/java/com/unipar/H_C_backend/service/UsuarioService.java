@@ -1,7 +1,5 @@
 package com.unipar.H_C_backend.service;
 
-
-
 import com.unipar.H_C_backend.domain.*;
 import com.unipar.H_C_backend.exceptions.BusinessException;
 import com.unipar.H_C_backend.repository.ConsultaRepository;
@@ -102,6 +100,15 @@ public class UsuarioService {
 
         consultaRepository.save(consulta);
         return usuarioRepository.save(usuario);
+    }
+
+    public Usuario buscarUsuarioPorEmail(String email) {
+        Optional<Usuario> user = usuarioRepository.findByEmail(email);
+        if (user.isPresent()) {
+            return user.get();
+        } else {
+            throw new RuntimeException("Usuário com e-mail " + email + " não encontrado.");
+        }
     }
 }
 

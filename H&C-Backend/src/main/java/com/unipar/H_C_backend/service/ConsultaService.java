@@ -10,6 +10,8 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -87,5 +89,16 @@ public class ConsultaService {
             throw new BusinessException("Nenhuma consulta encontrada para o usuário com ID: " + usuarioId);
         }
         return consultas;
+    }
+
+    public boolean horarioOcupado(LocalDate data, LocalTime hora, Long usuarioId) {
+        return consultaRepository.findByDataAndHoraAndUsuarioId(data, hora, usuarioId).isPresent();
+    }
+
+    public Consulta agendarConsulta(Consulta consulta) throws Exception {
+        if (horarioOcupado(consulta.getData(), consulta.getHora(), consulta.getUsuario().getId())) {
+            throw new Exception("Horário já ocupado para este usuário.");
+        }
+        return consultaRepository.save(consulta);
     }
 }

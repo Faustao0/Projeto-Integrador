@@ -92,4 +92,14 @@ public class UsuarioController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }
     }
+
+    @GetMapping("/buscarSenha")
+    public ResponseEntity<Usuario> buscarSenhaPorEmail(@RequestParam String email) {
+        try {
+            Usuario usuario = usuarioService.buscarUsuarioPorEmail(email);
+            return ResponseEntity.ok(usuario);
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+    }
 }
