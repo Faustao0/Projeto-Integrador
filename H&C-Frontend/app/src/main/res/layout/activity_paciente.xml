@@ -41,21 +41,35 @@
                     app:titleTextColor="#000000"
                     app:titleTextAppearance="@style/BoldToolbarTitle"/>
 
+                <!-- Patient Information Card -->
                 <TextView
                     android:id="@+id/tvTitulo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Detalhes do Paciente"
-                    android:textColor="#000"
-                    android:textSize="24sp"
+                    android:layout_marginTop="40dp"
                     android:fontFamily="sans-serif-medium"
                     android:gravity="center"
                     android:padding="16dp"
-                    android:textStyle="bold"
-                    android:layout_marginTop="40dp"/>
+                    android:text="Detalhes do Paciente"
+                    android:textColor="#000"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
 
-                <!-- Patient Information Card -->
+                <TextView
+                    android:id="@+id/tvMensagemSemPacientes"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:gravity="center"
+                    android:padding="16dp"
+                    android:text="Você não possui nenhum paciente cadastrado"
+                    android:textColor="#000000"
+                    android:textSize="24sp"
+                    android:visibility="gone" />
+
+
                 <androidx.cardview.widget.CardView
+                    android:id="@+id/cardInformacoesPaciente"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="16dp"
@@ -130,6 +144,7 @@
 
                 <!-- Address Information Card -->
                 <androidx.cardview.widget.CardView
+                    android:id="@+id/cardEnderecoPaciente"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:cardCornerRadius="30dp"

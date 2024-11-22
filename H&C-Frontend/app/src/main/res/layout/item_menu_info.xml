@@ -5,7 +5,6 @@
     android:orientation="vertical"
     android:padding="8dp">
 
-    <!-- CardView para Medicamento -->
     <androidx.cardview.widget.CardView
         android:id="@+id/medicamentoMenu"
         android:layout_width="match_parent"
@@ -22,24 +21,30 @@
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/tvMedicamentoTitulo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Horário para tomar o medicamento"
+                android:textStyle="bold"
+                android:textSize="19sp"
+                android:textColor="@android:color/black"
+                android:layout_gravity="center" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="8dp" />
+
+            <TextView
                 android:id="@+id/tvMedicamentoMessage"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Medicamento"
-                android:layout_gravity="center"
-                android:textStyle="bold"
-                android:textSize="18sp"
-                android:textColor="@android:color/black" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginTop="4dp"
-                android:background="@android:color/darker_gray" />
+                android:textSize="19sp"
+                android:textColor="@android:color/black"
+                android:layout_marginBottom="8dp" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 
-    <!-- CardView para Consulta -->
     <androidx.cardview.widget.CardView
         android:id="@+id/consultaMenu"
         android:layout_width="match_parent"
@@ -56,20 +61,27 @@
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/tvConsultaTitulo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="A próxima consulta do paciente"
+                android:textStyle="bold"
+                android:textSize="19sp"
+                android:textColor="@android:color/black"
+                android:layout_gravity="center" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="8dp" />
+
+            <TextView
                 android:id="@+id/tvConsultaMessage"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Consulta"
-                android:layout_gravity="center"
-                android:textStyle="bold"
-                android:textSize="18sp"
-                android:textColor="@android:color/black" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginTop="4dp"
-                android:background="@android:color/darker_gray" />
+                android:textSize="19sp"
+                android:textColor="@android:color/black"
+                android:layout_marginBottom="8dp" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 </LinearLayout>

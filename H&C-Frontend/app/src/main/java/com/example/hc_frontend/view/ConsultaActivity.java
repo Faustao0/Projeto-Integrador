@@ -64,25 +64,19 @@ public class ConsultaActivity extends AppCompatActivity {
         consultaRepository = retrofit.create(ConsultaRepository.class);
         usuarioRepository = retrofit.create(UsuarioRepository.class);
 
-        // Recuperar dados do usuário passado na Intent
         usuario = (Usuario) getIntent().getSerializableExtra("usuario");
 
-        // Inicializar views
         recyclerViewConsultas = findViewById(R.id.recyclerViewConsultas);
         recyclerViewConsultas.setLayoutManager(new LinearLayoutManager(this));
         tvNenhumaConsulta = findViewById(R.id.tvNenhumaConsulta);
         btnMarcarConsulta = findViewById(R.id.btnMarcarConsulta);
 
-        // Configura o botão para marcar consulta
         btnMarcarConsulta.setOnClickListener(v -> {
-            // Verifique se o usuário possui pacientes vinculados
             if (usuario != null && usuario.getPacientes() != null && !usuario.getPacientes().isEmpty()) {
-                // Se o usuário possui pelo menos um paciente, inicia a tela de marcação de consulta
                 Intent intent = new Intent(ConsultaActivity.this, MarcarConsultaActivity.class);
-                intent.putExtra("usuario", usuario);  // Passa o objeto usuário
-                startActivityForResult(intent, REQUEST_CODE_MARCAR_CONSULTA);  // Para capturar o resultado
+                intent.putExtra("usuario", usuario);
+                startActivityForResult(intent, REQUEST_CODE_MARCAR_CONSULTA);
             } else {
-                // Exibe uma mensagem caso o usuário não tenha pacientes vinculados
                 Toast.makeText(ConsultaActivity.this, "Não é possível marcar uma consulta pois o usuário não possui pacientes cadastrados.", Toast.LENGTH_LONG).show();
             }
         });
@@ -95,23 +89,18 @@ public class ConsultaActivity extends AppCompatActivity {
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
 
-        // Recebendo o objeto Usuario passado via Intent
         usuario = (Usuario) getIntent().getSerializableExtra("usuario");
 
-        // Configura o NavigationView para o menu lateral
         NavigationView navigationView = findViewById(R.id.navigation_view);
 
-        // Obtém o header do NavigationView
         View headerView = navigationView.getHeaderView(0);
 
-        // Referencia o TextView no header e configura a mensagem de boas-vindas
         TextView welcomeMessage = headerView.findViewById(R.id.welcomeMessage);
         if (usuario != null && usuario.getNome() != null) {
             String mensagem = "Bem-vindo, " + usuario.getNome() + "!";
             welcomeMessage.setText(mensagem);
         }
 
-        // Tornar o Logo clicável e redirecionar para o Menu
         ImageView logoMenu = headerView.findViewById(R.id.LogoMenu);
         logoMenu.setOnClickListener(v -> {
             Intent intentLogo = new Intent(ConsultaActivity.this, MenuActivity.class);
@@ -119,7 +108,6 @@ public class ConsultaActivity extends AppCompatActivity {
             startActivity(intentLogo);
         });
 
-        // Configura o listener para os itens do NavigationView
         navigationView.setNavigationItemSelectedListener(item -> {
             switch (item.getItemId()) {
                 case R.id.nav_profile:
@@ -160,7 +148,6 @@ public class ConsultaActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        // Toda vez que a activity for retomada, recarregar os dados
         carregarDadosUsuarioAtualizado();
 
         if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
@@ -168,9 +155,7 @@ public class ConsultaActivity extends AppCompatActivity {
         }
     }
 
-    // Método para carregar o usuário atualizado da API e suas consultas
     private void carregarDadosUsuarioAtualizado() {
-        // Verifica se o objeto 'usuario' não é nulo antes de prosseguir
         if (usuario != null && usuario.getId() != null) {
             usuarioRepository.getUsuarioById(usuario.getId()).enqueue(new Callback<Usuario>() {
                 @Override
@@ -191,12 +176,10 @@ public class ConsultaActivity extends AppCompatActivity {
         }
     }
 
-    // Carregar dados das consultas do usuário
     private void carregarDadosConsulta() {
         if (usuario != null && usuario.getConsultas() != null && !usuario.getConsultas().isEmpty()) {
-            List<Consulta> consultas = usuario.getConsultas();  // Recupera a lista de consultas
+            List<Consulta> consultas = usuario.getConsultas();
 
-            // Cria e configura o Adapter, passando as consultas e o Listener
             consultaAdapter = new ConsultaAdapter(consultas, new ConsultaAdapter.OnConsultaClickListener() {
                 @Override
                 public void onCancelarClick(Consulta consulta) {
@@ -228,22 +211,20 @@ public class ConsultaActivity extends AppCompatActivity {
     // Mostrar confirmação para desvincular a consulta
     private void mostrarConfirmacaoDesvincularConsulta(Consulta consulta) {
         new AlertDialog.Builder(this)
-                .setTitle("Desvincular Consulta")
-                .setMessage("Tem certeza que deseja desvincular esta consulta?")
+                .setTitle("Cancelar a Consulta")
+                .setMessage("Tem certeza que deseja cancelar esta consulta?")
                 .setPositiveButton("Sim", (dialog, which) -> desvincularConsulta(consulta))
                 .setNegativeButton("Não", (dialog, which) -> dialog.dismiss())
                 .show();
     }
 
-    // Método para desvincular a consulta e atualizar o usuário
     private void desvincularConsulta(Consulta consulta) {
         usuarioRepository.desvincularConsulta(usuario.getId(), consulta.getId()).enqueue(new Callback<Usuario>() {
             @Override
             public void onResponse(Call<Usuario> call, Response<Usuario> response) {
                 if (response.isSuccessful()) {
-                    usuario = response.body();  // Atualiza o usuário local com os dados recebidos
-                    Toast.makeText(ConsultaActivity.this, "Consulta desvinculada com sucesso", Toast.LENGTH_SHORT).show();
-                    // Atualiza a lista de consultas
+                    usuario = response.body();
+                    Toast.makeText(ConsultaActivity.this, "Consulta cancelada com sucesso", Toast.LENGTH_SHORT).show();
                     carregarDadosConsulta();
 
                     // Se não houver mais consultas, exibe a mensagem e o botão de marcar consulta
@@ -253,7 +234,7 @@ public class ConsultaActivity extends AppCompatActivity {
                         recyclerViewConsultas.setVisibility(View.GONE);
                     }
                 } else {
-                    Toast.makeText(ConsultaActivity.this, "Erro ao desvincular consulta", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ConsultaActivity.this, "Erro ao cancelar a consulta", Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -264,13 +245,11 @@ public class ConsultaActivity extends AppCompatActivity {
         });
     }
 
-    // Método para reagendamento da consulta
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == REQUEST_CODE_MARCAR_CONSULTA && resultCode == RESULT_OK) {
-            // Recarregar os dados do usuário da API após o agendamento da consulta
             carregarDadosUsuarioAtualizado();
         }
     }

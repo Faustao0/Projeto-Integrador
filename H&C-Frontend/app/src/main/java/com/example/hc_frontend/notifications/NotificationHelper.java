@@ -1,5 +1,9 @@
 package com.example.hc_frontend.notifications;
 
+import static android.media.AudioAttributes.USAGE_NOTIFICATION;
+import static com.example.hc_frontend.R.raw.android_notification_sound;
+import static com.example.hc_frontend.R.raw.sound;
+
 import android.app.AlarmManager;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -21,10 +25,10 @@ import java.io.Serializable;
 
 public class NotificationHelper {
 
-    private static final String CHANNEL_ID = "medicine_reminder_channel_v5";
+    private static final String CHANNEL_ID = "medicine_reminder_channel_v9";
     private static final String CHANNEL_NAME = "Medicine Reminders";
     private static final String CHANNEL_DESCRIPTION = "Notifies the user to take their medication";
-    private static final int REPEATING_INTERVAL = 30000; // 30 segundos
+    private static final int REPEATING_INTERVAL = 30000;
 
     public static void createNotification(Context context, Usuario usuario, String nomeMedicamento, String horarioTomar) {
         createNotificationChannel(context);
@@ -41,11 +45,9 @@ public class NotificationHelper {
 
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
 
-        // URI para o som personalizado da notificação
-        Uri soundUri = Uri.parse("android.resource://" + context.getPackageName() + "/" + R.raw.android_notification_sound);
+        Uri soundUri = Uri.parse("android.resource://" + context.getPackageName() + "/" + sound);
         Log.d("NotificationHelper", "URI do som da notificação: " + soundUri);
 
-        // Constrói a notificação com o som personalizado
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, CHANNEL_ID)
                 .setSmallIcon(R.drawable.logo_notification)
                 .setContentTitle("Hora de tomar o medicamento")
@@ -53,7 +55,7 @@ public class NotificationHelper {
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
                 .setContentIntent(pendingIntent)
                 .setAutoCancel(true)
-                .setSound(soundUri)  // Adiciona o som personalizado
+                .setSound(soundUri)
                 .setVibrate(new long[]{0, 500, 100, 500});
 
         int notificationId = (int) System.currentTimeMillis();
@@ -96,9 +98,8 @@ public class NotificationHelper {
 
     private static void createNotificationChannel(Context context) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            Uri soundUri = Uri.parse("android.resource://" + context.getPackageName() + "/" + R.raw.android_notification_sound);
+            Uri soundUri = Uri.parse("android.resource://" + context.getPackageName() + "/" + sound);
 
-            // Verifique se o URI é válido
             if (soundUri == null) {
                 Log.e("NotificationHelper", "Erro: URI de som personalizado é null. Verifique o arquivo de som em res/raw.");
             } else {
@@ -109,7 +110,7 @@ public class NotificationHelper {
             channel.setDescription(CHANNEL_DESCRIPTION);
 
             AudioAttributes audioAttributes = new AudioAttributes.Builder()
-                    .setUsage(AudioAttributes.USAGE_NOTIFICATION)
+                    .setUsage(USAGE_NOTIFICATION)
                     .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
                     .build();
 

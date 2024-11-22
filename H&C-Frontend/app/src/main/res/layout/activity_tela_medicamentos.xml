@@ -33,7 +33,7 @@
                 android:layout_gravity="center_horizontal"
                 android:paddingBottom="16dp"
                 android:text="Cadastro do Medicamento"
-                android:textColor="#333333"
+                android:textColor="@color/black"
                 android:textSize="24sp"
                 android:textStyle="bold" />
 

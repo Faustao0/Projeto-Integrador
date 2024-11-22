@@ -4,6 +4,7 @@ import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -305,11 +306,16 @@ public class MarcarConsultaActivity extends AppCompatActivity {
         consultaRepository.getConsultasByUsuario(usuario.getId()).enqueue(new Callback<List<Consulta>>() {
             @Override
             public void onResponse(Call<List<Consulta>> call, Response<List<Consulta>> response) {
-                if (response.isSuccessful() && response.body() != null) {
+                if (response.isSuccessful()) {
                     List<Consulta> consultas = response.body();
+
+                    if (consultas == null || consultas.isEmpty()) {
+                        criarConsultaNaAPI(dataConsulta, horaConsulta, valor, local, medico, usuario);
+                        return;
+                    }
+
                     boolean horarioOcupado = false;
 
-                    // Verifica se já existe uma consulta marcada para a mesma data e hora
                     for (Consulta consulta : consultas) {
                         if (consulta.getData().equals(dataConsulta) && consulta.getHora().equals(horaConsulta)) {
                             horarioOcupado = true;
@@ -320,11 +326,12 @@ public class MarcarConsultaActivity extends AppCompatActivity {
                     if (horarioOcupado) {
                         Toast.makeText(MarcarConsultaActivity.this, "Já existe uma consulta marcada para este horário. Escolha outro horário.", Toast.LENGTH_LONG).show();
                     } else {
-                        // Data e horário disponíveis; prosseguir com o agendamento
                         criarConsultaNaAPI(dataConsulta, horaConsulta, valor, local, medico, usuario);
                     }
                 } else {
-                    Toast.makeText(MarcarConsultaActivity.this, "Erro ao verificar a data e horário da consulta.", Toast.LENGTH_SHORT).show();
+                    // Caso a resposta não seja bem-sucedida (usuário pode ser novo e não ter consultas ainda)
+                    Log.e("MarcarConsultaActivity", "Resposta não bem-sucedida ao verificar consultas. Código: " + response.code());
+                    criarConsultaNaAPI(dataConsulta, horaConsulta, valor, local, medico, usuario);
                 }
             }
 

@@ -26,7 +26,8 @@
 
     <!-- Cores adicionais (se necessário) -->
     <color name="light_blue">#E3F2FD</color>
-    <color name="dark_blue">#1E88E5</color>>
+    <color name="dark_blue">#1E88E5</color>
+    <color name="red">#FF0000</color>>
 
     <style name="BoldToolbarTitle" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
         <item name="android:textStyle">bold</item>

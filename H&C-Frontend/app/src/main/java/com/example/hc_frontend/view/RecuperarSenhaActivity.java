@@ -72,10 +72,12 @@ public class RecuperarSenhaActivity extends AppCompatActivity {
                 if (response.isSuccessful() && response.body() != null) {
                     String senha = response.body().getSenha();
                     tv_senha.setText("Senha: " + senha);
+                    tv_senha.setTextColor(getResources().getColor(R.color.black));
                     tv_senha.setVisibility(View.VISIBLE);
                     Log.d(TAG, "Senha recuperada com sucesso: " + senha);
                 } else {
                     tv_senha.setText("Email não existente no sistema");
+                    tv_senha.setTextColor(getResources().getColor(R.color.red));
                     tv_senha.setVisibility(View.VISIBLE);
                     Log.e(TAG, "Erro: Usuário não encontrado ou corpo de resposta vazio.");
                 }

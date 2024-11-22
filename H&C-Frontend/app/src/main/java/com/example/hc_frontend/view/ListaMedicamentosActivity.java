@@ -36,6 +36,9 @@ import com.google.android.material.navigation.NavigationView;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 public class ListaMedicamentosActivity extends AppCompatActivity {
 
@@ -49,6 +52,7 @@ public class ListaMedicamentosActivity extends AppCompatActivity {
     private Paciente paciente;
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle toggle;
+    private Set<Long> excludedMedicamentoIds = new HashSet<>();
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -89,9 +93,7 @@ public class ListaMedicamentosActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         btnCadastroMedicamento = findViewById(R.id.btnCadastroMedicamento);
 
-        // Configurando o botão para cadastro de medicamento
         btnCadastroMedicamento.setOnClickListener(view -> {
-            // Redireciona para a tela de cadastro de medicamentos e passa o usuário e paciente
             Intent intentCadastroMedicamento = new Intent(ListaMedicamentosActivity.this, TelaMedicamentosActivity.class);
             intentCadastroMedicamento.putExtra("usuario", usuario);
             intentCadastroMedicamento.putExtra("paciente", paciente);
@@ -192,9 +194,10 @@ public class ListaMedicamentosActivity extends AppCompatActivity {
                     return false;
             }
         });
+
+        carregarMedicamentosDoUsuario();
     }
 
-    // Método para verificar a permissão de notificação (Android 13+)
     private void checkNotificationPermission() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             if (ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
@@ -203,16 +206,32 @@ public class ListaMedicamentosActivity extends AppCompatActivity {
         }
     }
 
-    private void carregarMedicamentosDoUsuario() {
+    public void addExcludedMedicamentoId(Long medicamentoId) {
+        excludedMedicamentoIds.add(medicamentoId);
+    }
+
+    public void carregarMedicamentosDoUsuario() {
         if (usuario != null && usuario.getId() != null) {
             medicamentoViewModel.listarMedicamentosPorUsuario(usuario.getId());
+
+            medicamentoViewModel.getListaMedicamentos().observe(this, medicamentos -> {
+                if (medicamentos != null) {
+                    adapter.setMedicamentos(medicamentos);
+                    Log.d("ListaMedicamentos", "Medicamentos atualizados no RecyclerView: " + medicamentos.size());
+                } else {
+                    adapter.setMedicamentos(new ArrayList<>());
+                    Log.d("ListaMedicamentos", "Nenhum medicamento disponível para exibição.");
+                }
+            });
         }
     }
+
     @Override
     protected void onResume() {
         super.onResume();
         if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
             drawerLayout.closeDrawer(GravityCompat.START);
         }
+        carregarMedicamentosDoUsuario();
     }
 }

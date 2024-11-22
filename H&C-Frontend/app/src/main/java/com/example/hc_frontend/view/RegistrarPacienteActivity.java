@@ -71,6 +71,7 @@ public class RegistrarPacienteActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 confirmarSalvacaoDados();
+                validarCampos();
             }
         });
     }
@@ -86,7 +87,7 @@ public class RegistrarPacienteActivity extends AppCompatActivity {
                 if (usuario.getPacientes() == null || usuario.getPacientes().isEmpty()) {
                     salvarNovoPaciente(); // Chama o método para criar novo paciente
                 } else {
-                    salvarDadosPaciente(); // Chama o método para atualizar paciente
+                    salvarDadosPaciente();
                 }
             }
         });
@@ -296,4 +297,111 @@ public class RegistrarPacienteActivity extends AppCompatActivity {
                 }
             });
         }
+
+    private boolean validarCampos() {
+        boolean isValid = true;
+
+        if (etNome.getText().toString().trim().isEmpty()) {
+            etNome.setError("O nome não pode estar vazio.");
+            isValid = false;
+        }
+
+        String telefone = etTelefone.getText().toString().trim();
+        if (telefone.isEmpty() || telefone.length() < 10 || telefone.length() > 15) {
+            etTelefone.setError("O telefone deve ter entre 10 e 15 caracteres, incluindo o DDD.");
+            isValid = false;
+        }
+
+        String email = etEmail.getText().toString().trim();
+        if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            etEmail.setError("Por favor, insira um e-mail válido.");
+            isValid = false;
+        }
+
+        String cpf = etCpf.getText().toString().trim();
+        if (!cpf.matches("\\d{3}\\.\\d{3}\\.\\d{3}-\\d{2}") || !validarCpf(cpf)) {
+            etCpf.setError("O CPF deve estar no formato XXX.XXX.XXX-XX e ser válido.");
+            isValid = false;
+        }
+
+        String idadeStr = etIdade.getText().toString().trim();
+        try {
+            int idade = Integer.parseInt(idadeStr);
+            if (idade <= 0) {
+                etIdade.setError("A idade deve ser maior que zero.");
+                isValid = false;
+            }
+        } catch (NumberFormatException e) {
+            etIdade.setError("Idade inválida. Por favor, insira um número.");
+            isValid = false;
+        }
+
+        if (etRua.getText().toString().trim().isEmpty()) {
+            etRua.setError("A rua não pode estar vazia.");
+            isValid = false;
+        }
+
+        if (etBairro.getText().toString().trim().isEmpty()) {
+            etBairro.setError("O bairro não pode estar vazio.");
+            isValid = false;
+        }
+
+        if (etNumero.getText().toString().trim().isEmpty()) {
+            etNumero.setError("O número não pode estar vazio.");
+            isValid = false;
+        }
+
+        if (etCidade.getText().toString().trim().isEmpty()) {
+            etCidade.setError("A cidade não pode estar vazia.");
+            isValid = false;
+        }
+
+        if (etEstado.getText().toString().trim().isEmpty()) {
+            etEstado.setError("O estado não pode estar vazio");
+            isValid = false;
+        }
+
+        String estado = etEstado.getText().toString().trim();
+        if (!estado.matches("\\d{2}")) {
+            etEstado.setError("Insira uma UF válida (Ex.: SP, RJ, etc.).");
+            isValid = false;
+        }
+
+        String cep = etCep.getText().toString().trim();
+        if (!cep.matches("\\d{8}")) {
+            etCep.setError("O CEP deve conter 8 caracteres numéricos.");
+            isValid = false;
+        }
+
+        return isValid;
+    }
+
+    private boolean validarCpf(String cpf) {
+        cpf = cpf.replace(".", "").replace("-", "");
+
+        if (cpf.length() != 11 || cpf.matches("(\\d)\\1{10}")) {
+            return false;
+        }
+
+        try {
+            int soma = 0, peso = 10;
+            for (int i = 0; i < 9; i++) {
+                soma += (cpf.charAt(i) - '0') * peso--;
+            }
+            int digito1 = 11 - (soma % 11);
+            if (digito1 >= 10) digito1 = 0;
+
+            soma = 0;
+            peso = 11;
+            for (int i = 0; i < 10; i++) {
+                soma += (cpf.charAt(i) - '0') * peso--;
+            }
+            int digito2 = 11 - (soma % 11);
+            if (digito2 >= 10) digito2 = 0;
+
+            return cpf.charAt(9) - '0' == digito1 && cpf.charAt(10) - '0' == digito2;
+        } catch (Exception e) {
+            return false;
+        }
+    }
 }

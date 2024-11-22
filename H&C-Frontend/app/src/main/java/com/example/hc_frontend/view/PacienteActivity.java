@@ -13,6 +13,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.cardview.widget.CardView;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
@@ -35,7 +36,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class PacienteActivity extends AppCompatActivity {
 
-    private TextView tvNome, tvIdade, tvTelefone, tvEmail, tvCpf, tvRua, tvBairro, tvNumero, tvCidade, tvEstado, tvCep;
+    private TextView tvNome, tvIdade, tvTelefone, tvEmail, tvCpf, tvRua, tvBairro, tvNumero, tvCidade, tvEstado, tvCep, tvEndereco;
     private FloatingActionButton btnAtualizar;
     private static final int REQUEST_CODE_ATUALIZAR = 1;
     private PacienteRepository pacienteRepository;
@@ -49,7 +50,6 @@ public class PacienteActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_paciente);
 
-        // Inicializando as views
         tvNome = findViewById(R.id.tvNome);
         tvIdade = findViewById(R.id.tvIdade);
         tvTelefone = findViewById(R.id.tvTelefone);
@@ -62,8 +62,8 @@ public class PacienteActivity extends AppCompatActivity {
         tvEstado = findViewById(R.id.tvEstado);
         tvCep = findViewById(R.id.tvCep);
         btnAtualizar = findViewById(R.id.btnAtualizar);
+        tvEndereco = findViewById(R.id.tvEndereco);
 
-        // Inicializando Retrofit para API de pacientes
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("http://10.0.2.2:8080/")  // URL base de API
                 .addConverterFactory(GsonConverterFactory.create())
@@ -212,8 +212,9 @@ public class PacienteActivity extends AppCompatActivity {
             call.enqueue(new Callback<List<Paciente>>() {
                 @Override
                 public void onResponse(Call<List<Paciente>> call, Response<List<Paciente>> response) {
+                    List<Paciente> pacientes = null;
                     if (response.isSuccessful() && response.body() != null) {
-                        List<Paciente> pacientes = response.body();
+                        pacientes = response.body();
 
                         // Ajuste do ícone do FloatingActionButton de acordo com a existência de pacientes
                         if (pacientes.isEmpty()) {
@@ -225,6 +226,44 @@ public class PacienteActivity extends AppCompatActivity {
                         }
                     } else {
                         Toast.makeText(PacienteActivity.this, "Erro ao carregar pacientes", Toast.LENGTH_SHORT).show();
+                    }
+                    if (pacientes == null || pacientes.isEmpty()) {
+                        findViewById(R.id.tvMensagemSemPacientes).setVisibility(View.VISIBLE);
+
+                        tvNome.setVisibility(View.GONE);
+                        tvIdade.setVisibility(View.GONE);
+                        tvTelefone.setVisibility(View.GONE);
+                        tvEmail.setVisibility(View.GONE);
+                        tvCpf.setVisibility(View.GONE);
+                        tvRua.setVisibility(View.GONE);
+                        tvBairro.setVisibility(View.GONE);
+                        tvNumero.setVisibility(View.GONE);
+                        tvCidade.setVisibility(View.GONE);
+                        tvEstado.setVisibility(View.GONE);
+                        tvCep.setVisibility(View.GONE);
+                        tvEndereco.setVisibility(View.GONE);
+
+                        findViewById(R.id.cardInformacoesPaciente).setVisibility(View.GONE);
+                        findViewById(R.id.cardEnderecoPaciente).setVisibility(View.GONE);
+                    } else {
+                        findViewById(R.id.tvMensagemSemPacientes).setVisibility(View.GONE);
+
+                        // Exibir os elementos
+                        tvNome.setVisibility(View.VISIBLE);
+                        tvIdade.setVisibility(View.VISIBLE);
+                        tvTelefone.setVisibility(View.VISIBLE);
+                        tvEmail.setVisibility(View.VISIBLE);
+                        tvCpf.setVisibility(View.VISIBLE);
+                        tvRua.setVisibility(View.VISIBLE);
+                        tvBairro.setVisibility(View.VISIBLE);
+                        tvNumero.setVisibility(View.VISIBLE);
+                        tvCidade.setVisibility(View.VISIBLE);
+                        tvEstado.setVisibility(View.VISIBLE);
+                        tvCep.setVisibility(View.VISIBLE);
+                        tvEndereco.setVisibility(View.VISIBLE);
+
+                        findViewById(R.id.cardInformacoesPaciente).setVisibility(View.VISIBLE);
+                        findViewById(R.id.cardEnderecoPaciente).setVisibility(View.VISIBLE);
                     }
                 }
 

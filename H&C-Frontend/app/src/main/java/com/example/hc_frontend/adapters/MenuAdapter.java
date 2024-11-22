@@ -172,6 +172,7 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.MenuViewHolder
     static class MenuViewHolder extends RecyclerView.ViewHolder {
         CardView cardViewMedicamento, cardViewConsulta;
         TextView tvMedicamentoMessage, tvConsultaMessage;
+        TextView tvMedicamentoTitulo, tvConsultaTitulo;
 
         public MenuViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -179,6 +180,8 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.MenuViewHolder
             cardViewConsulta = itemView.findViewById(R.id.consultaMenu);
             tvMedicamentoMessage = itemView.findViewById(R.id.tvMedicamentoMessage);
             tvConsultaMessage = itemView.findViewById(R.id.tvConsultaMessage);
+            tvMedicamentoTitulo = itemView.findViewById(R.id.tvMedicamentoTitulo);
+            tvConsultaTitulo = itemView.findViewById(R.id.tvConsultaTitulo);
         }
     }
 }

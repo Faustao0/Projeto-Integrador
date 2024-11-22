@@ -9,7 +9,10 @@ import androidx.lifecycle.ViewModel;
 import com.example.hc_frontend.controller.MedicamentoController;
 import com.example.hc_frontend.domain.Medicamento;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class MedicamentoViewModel extends ViewModel {
 
@@ -17,6 +20,7 @@ public class MedicamentoViewModel extends ViewModel {
     private MutableLiveData<List<Medicamento>> listaMedicamentos;
     private MutableLiveData<Boolean> medicamentoCadastrado;
     private MedicamentoController repository;
+    private Set<Long> medicamentosExcluidosIds = new HashSet<>();
 
     public MedicamentoViewModel() {
         medicamento = new MutableLiveData<>();
@@ -108,8 +112,9 @@ public class MedicamentoViewModel extends ViewModel {
         repository.getMedicamentosByUsuario(usuarioId).observeForever(medicamentos -> {
             if (medicamentos != null) {
                 listaMedicamentos.setValue(medicamentos);
-                Log.d("MedicamentoViewModel", "Medicamentos retornados: " + medicamentos.size());
+                Log.d("MedicamentoViewModel", "Medicamentos ativos retornados: " + medicamentos.size());
             } else {
+                listaMedicamentos.setValue(new ArrayList<>());
                 Log.d("MedicamentoViewModel", "Nenhum medicamento retornado.");
             }
         });

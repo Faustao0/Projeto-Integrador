@@ -72,7 +72,7 @@ public class RegistroUsuarioActivity extends AppCompatActivity {
             String numero = etNumero.getText().toString();
             String bairro = etBairro.getText().toString();
             String cidade = etCidade.getText().toString();
-            String estado = etEstado.getText().toString();
+            String estado = etEstado.getText().toString().trim().toUpperCase();
             String cep = etCep.getText().toString();
 
             // Validação de dados
@@ -127,7 +127,12 @@ public class RegistroUsuarioActivity extends AppCompatActivity {
             }
 
             if (TextUtils.isEmpty(estado)) {
-                etEstado.setError("O estado é obrigatório!");
+                etEstado.setError("O estado não pode estar vazio");
+                return;
+            }
+
+            if (!estado.matches("^[A-Z]{2}$")) {
+                etEstado.setError("Insira uma UF válida (Ex.: SP, RJ, etc.).");
                 return;
             }
 

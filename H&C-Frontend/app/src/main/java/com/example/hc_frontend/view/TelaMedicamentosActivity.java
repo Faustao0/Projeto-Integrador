@@ -20,7 +20,9 @@ import com.example.hc_frontend.repositories.UsuarioRepository;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -39,6 +41,7 @@ public class TelaMedicamentosActivity extends AppCompatActivity {
     private Paciente paciente;
     private Usuario usuario;
     private Medicamento medicamentoAtual;
+    private Set<Long> medicamentosExcluidosIds = new HashSet<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -127,8 +130,16 @@ public class TelaMedicamentosActivity extends AppCompatActivity {
         if (medicamentos == null) {
             medicamentos = new ArrayList<>();
         }
-        medicamentos.add(novoMedicamento);
-        paciente.setMedicamentos(medicamentos);
+
+        List<Medicamento> medicamentosFiltrados = new ArrayList<>();
+        for (Medicamento medicamento : medicamentos) {
+            if (!medicamentosExcluidosIds.contains(medicamento.getId())) {
+                medicamentosFiltrados.add(medicamento);
+            }
+        }
+        medicamentosFiltrados.add(novoMedicamento);
+
+        paciente.setMedicamentos(medicamentosFiltrados);
 
         atualizarPaciente(paciente);
     }
@@ -159,6 +170,14 @@ public class TelaMedicamentosActivity extends AppCompatActivity {
     }
 
     private void atualizarPaciente(Paciente paciente) {
+        List<Medicamento> medicamentosAtivos = new ArrayList<>();
+        for (Medicamento medicamento : paciente.getMedicamentos()) {
+            if (!medicamentosExcluidosIds.contains(medicamento.getId())) {
+                medicamentosAtivos.add(medicamento);
+            }
+        }
+        paciente.setMedicamentos(medicamentosAtivos);
+
         List<Paciente> pacientes = usuario.getPacientes();
         for (int i = 0; i < pacientes.size(); i++) {
             if (pacientes.get(i).getId().equals(paciente.getId())) {

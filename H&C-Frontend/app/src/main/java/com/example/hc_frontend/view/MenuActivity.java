@@ -74,7 +74,6 @@ public class MenuActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
 
-        // Configura a Toolbar e o DrawerLayout
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -83,11 +82,10 @@ public class MenuActivity extends AppCompatActivity {
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
 
-        tvNenhumaInfo = findViewById(R.id.tvNenhumaInfo);  // Mensagem "Nenhuma informação"
+        tvNenhumaInfo = findViewById(R.id.tvNenhumaInfo);
         recyclerView = findViewById(R.id.recyclerViewMenu);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        // Configura o Retrofit para conectar com a API
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("http://10.0.2.2:8080/")  // URL base da API
                 .addConverterFactory(GsonConverterFactory.create())
@@ -96,13 +94,11 @@ public class MenuActivity extends AppCompatActivity {
         consultaRepository = retrofit.create(ConsultaRepository.class);
         medicamentoRepository = retrofit.create(MedicamentoRepository.class);
 
-        // Recebe o objeto Usuario da MainActivity
         Intent intent = getIntent();
         if (intent != null && intent.hasExtra("usuario")) {
             usuario = (Usuario) intent.getSerializableExtra("usuario");
         }
 
-        // Configura o NavigationView para o menu lateral
         NavigationView navigationView = findViewById(R.id.navigation_view);
         View headerView = navigationView.getHeaderView(0);
 
@@ -113,14 +109,12 @@ public class MenuActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
-        // Referencia o TextView no header e configura a mensagem de boas-vindas
         TextView welcomeMessage = headerView.findViewById(R.id.welcomeMessage);
         if (usuario != null && usuario.getNome() != null) {
             String mensagem = "Bem-vindo, " + usuario.getNome() + "!";
             welcomeMessage.setText(mensagem);
         }
 
-        // Listener para os itens do NavigationView
         navigationView.setNavigationItemSelectedListener(item -> {
             switch (item.getItemId()) {
                 case R.id.nav_profile:
@@ -157,10 +151,8 @@ public class MenuActivity extends AppCompatActivity {
             }
         });
 
-        // Carrega dados de consultas e medicamentos
         carregarDados();
 
-        // Cria o canal de notificação
         createNotificationChannel();
     }
 
@@ -215,10 +207,8 @@ public class MenuActivity extends AppCompatActivity {
                             }
                         }
 
-                        // Remove a consulta existente da lista, se já estiver presente
                         items.removeIf(item -> item instanceof Consulta);
 
-                        // Adiciona a consulta mais próxima no início da lista
                         if (consultaMaisProxima != null) {
                             items.add(0, consultaMaisProxima);
                             menuAdapter.notifyDataSetChanged();
@@ -246,7 +236,7 @@ public class MenuActivity extends AppCompatActivity {
                     List<Medicamento> medicamentos = response.body();
 
                     for (Medicamento medicamento : medicamentos) {
-                        if (uniqueMedicamentos.add(medicamento.getNome())) {  // Verifica e adiciona medicamentos únicos
+                        if (uniqueMedicamentos.add(medicamento.getNome())) {
                             items.add(medicamento);
                         }
                     }
@@ -275,7 +265,6 @@ public class MenuActivity extends AppCompatActivity {
         }
     }
 
-    // Cria o canal de notificação para Android 8.0 ou superior
     private void createNotificationChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             CharSequence name = "ConsultaChannel";
@@ -292,7 +281,7 @@ public class MenuActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        carregarDados();  // Recarregar os dados ao voltar para a tela
+        carregarDados();
         if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
             drawerLayout.closeDrawer(GravityCompat.START);
         }

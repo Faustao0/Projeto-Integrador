@@ -19,9 +19,13 @@ import com.example.hc_frontend.domain.Medicamento;
 import com.example.hc_frontend.domain.Paciente;
 import com.example.hc_frontend.domain.Usuario;
 import com.example.hc_frontend.repositories.MedicamentoRepository;
+import com.example.hc_frontend.view.ListaMedicamentosActivity;
 import com.example.hc_frontend.view.TelaMedicamentosActivity;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -36,6 +40,7 @@ public class MedicamentoAdapter extends RecyclerView.Adapter<MedicamentoAdapter.
     private Context context;
     private Usuario usuario;
     private Paciente paciente;
+    private Set<Long> medicamentosExcluidosIds = new HashSet<>();
 
     // Construtor atualizado para aceitar paciente e usuário
     public MedicamentoAdapter(List<Medicamento> medicamentos, Paciente paciente, Usuario usuario, Context context) {
@@ -53,7 +58,6 @@ public class MedicamentoAdapter extends RecyclerView.Adapter<MedicamentoAdapter.
         medicamentoRepository = retrofit.create(MedicamentoRepository.class);
     }
 
-    // Método para atualizar a lista de medicamentos
     public void setMedicamentos(List<Medicamento> medicamentos) {
         this.medicamentos = medicamentos;
         notifyDataSetChanged();  // Notifica o adapter que os dados mudaram
@@ -101,17 +105,20 @@ public class MedicamentoAdapter extends RecyclerView.Adapter<MedicamentoAdapter.
         return medicamentos != null ? medicamentos.size() : 0;
     }
 
-    // Método para excluir medicamento da API e da lista local
     private void excluirMedicamento(Medicamento medicamento, int position) {
         Call<Void> call = medicamentoRepository.deleteMedicamento(medicamento.getId());
         call.enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
                 if (response.isSuccessful()) {
-                    // Remove da lista local e atualiza a UI
+                    Toast.makeText(context, "Medicamento excluído com sucesso!", Toast.LENGTH_SHORT).show();
+
+                    medicamentosExcluidosIds.add(medicamento.getId());
+
                     medicamentos.remove(position);
                     notifyItemRemoved(position);
-                    Toast.makeText(context, "Medicamento excluído com sucesso!", Toast.LENGTH_SHORT).show();
+
+                    ((ListaMedicamentosActivity) context).carregarMedicamentosDoUsuario();
                 } else {
                     Toast.makeText(context, "Erro ao excluir o medicamento.", Toast.LENGTH_SHORT).show();
                 }

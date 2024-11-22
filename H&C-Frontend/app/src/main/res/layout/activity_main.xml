@@ -20,7 +20,6 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <!-- Logo Image -->
             <ImageView
                 android:id="@+id/imageView"
                 android:layout_width="250dp"
@@ -114,7 +113,6 @@
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
-            <!-- Login Button -->
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnLogin"
                 android:layout_width="match_parent"
@@ -130,7 +128,6 @@
                 android:elevation="8dp"
                 android:layout_marginHorizontal="32dp" />
 
-            <!-- Forgot Password Text -->
             <TextView
                 android:id="@+id/tvForgotPassword"
                 android:layout_width="wrap_content"
@@ -142,7 +139,6 @@
                 android:layout_marginTop="40dp"
                 android:layout_gravity="center" />
 
-            <!-- Register Text -->
             <TextView
                 android:id="@+id/tvRegister"
                 android:layout_width="wrap_content"
@@ -153,7 +149,6 @@
                 android:textStyle="bold"
                 android:layout_marginTop="16dp"
                 android:layout_gravity="center" />
-
         </LinearLayout>
     </ScrollView>
 
