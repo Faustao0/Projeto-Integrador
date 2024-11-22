@@ -11,7 +11,7 @@
 	<groupId>com.unipar</groupId>
 	<artifactId><![CDATA[h&c-backend]]></artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>venda-bankend</name>
+	<name>HC-bankend</name>
 	<description>Demo project for Spring Boot</description>
 	<properties>
 		<java.version>21</java.version>
